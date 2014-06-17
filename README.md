@@ -1,4 +1,4 @@
 PointAEclipsePlugin
 ===================
 
-Eclipse plugin, for managing PointA
+* Eclipse plugin, for managing PointA
