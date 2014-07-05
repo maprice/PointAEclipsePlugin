@@ -1,125 +1,159 @@
 package pointaeclipseplugin;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
-<<<<<<< HEAD
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
-=======
->>>>>>> origin/master
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 
 public class View extends ViewPart {
+	
 	public static final String ID = "PointAEclipsePlugin.view";
-
 	private TableViewer viewer;
+	
+	//Service Specific Variables
+	String[] AdsServiceProviders = { "Admob", "AdSense", "Burstly" };
+	String[] AdSizes = { "Banner", "Interstitial" };
+	
+	String[] AnalyticsServiceProviders = { "Google Analytics", "Parse Analytics" };
+	String[] CrashServiceProviders = { "BugSense", "BugSnag", "Crittercism" };
+	String[] PushServiceProviders = { "Parse" };
+	String[] RatingServiceProviders = { "Amazon", "Google Play" };
+	
+	class ViewContentProvider implements IStructuredContentProvider{
+		public void inputChanged(Viewer v, Object oldInput, Object newInput){}
 
-	/**
-	 * The content provider class is responsible for providing objects to the
-	 * view. It can wrap existing objects in adapters or simply return objects
-	 * as-is. These objects may be sensitive to the current input of the view,
-	 * or ignore it and always show the same content (like Task List, for
-	 * example).
-	 */
-	class ViewContentProvider implements IStructuredContentProvider {
-		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
-		}
+		public void dispose(){}
 
-		public void dispose() {
-		}
-
-		public Object[] getElements(Object parent) {
-			if (parent instanceof Object[]) {
+		public Object[] getElements(Object parent){
+			if (parent instanceof Object[]){
 				return (Object[]) parent;
 			}
 	        return new Object[0];
 		}
 	}
-
-	class ViewLabelProvider extends LabelProvider implements
-			ITableLabelProvider {
-		public String getColumnText(Object obj, int index) {
-			return getText(obj);
-		}
-
-		public Image getColumnImage(Object obj, int index) {
-			return getImage(obj);
-		}
-
-		public Image getImage(Object obj) {
-			return PlatformUI.getWorkbench().getSharedImages().getImage(
-					ISharedImages.IMG_OBJ_ELEMENT);
-		}
+	
+	private void makeTextInput(Composite c, String label){
+		new Label(c, SWT.LEFT).setText(label);
+		new Text(c, SWT.BORDER);
+	}
+	
+	private void makeDropdown(Composite c, String label, String [] options){
+		new Label(c,SWT.LEFT).setText(label);
+		new Combo(c, SWT.DROP_DOWN).setItems(options);
 	}
 
-	/**
-	 * This is a callback that will allow us to create the viewer and initialize
-	 * it.
-	 */
+	private Control AdsTabControl(TabFolder tabFolder){
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 2;
+		Composite composite = new Composite(tabFolder, SWT.NONE);
+		composite.setLayout(gridLayout);
+		makeDropdown(composite, "Service Provider", AdsServiceProviders);
+		makeDropdown(composite, "Ad Size", AdSizes);
+		makeTextInput(composite, "Unit ID");
+		return composite; 
+	}
+	
+	private Control AnalyticsTabControl(TabFolder tabFolder){
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 2;
+		Composite composite = new Composite(tabFolder, SWT.NONE);
+		composite.setLayout(gridLayout);
+		makeDropdown(composite, "Service Provider", AdsServiceProviders);
+		makeTextInput(composite, "App ID");
+		makeTextInput(composite, "Client Key");
+		return composite;   
+	}
+	
+	private Control CrashTabControl(TabFolder tabFolder){
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 2;
+		Composite composite = new Composite(tabFolder, SWT.NONE);
+		composite.setLayout(gridLayout);
+		makeDropdown(composite, "Service Provider", CrashServiceProviders);
+		makeTextInput(composite, "App ID");
+		return composite;   
+	}
+	
+	private Control RatingTabControl(TabFolder tabFolder){
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 2;
+		Composite composite = new Composite(tabFolder, SWT.NONE);
+		composite.setLayout(gridLayout);
+		makeDropdown(composite, "Service Provider", RatingServiceProviders);
+		makeTextInput(composite, "URI");
+		return composite;   
+	}
+	
+	private Control PushNotificationsTabControl(TabFolder tabFolder){
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 2;
+		Composite composite = new Composite(tabFolder, SWT.NONE);
+		composite.setLayout(gridLayout);
+		makeDropdown(composite, "Service Provider", PushServiceProviders);
+		makeTextInput(composite, "App ID");
+		makeTextInput(composite, "Client Key");
+		return composite;   
+	}
+	
+	private Control TwitterTabControl(TabFolder tabFolder){
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 2;
+		Composite composite = new Composite(tabFolder, SWT.NONE);
+		composite.setLayout(gridLayout);
+		makeTextInput(composite, "Consumer Key");
+		makeTextInput(composite, "Consumer Secret");
+		return composite;   
+	}
+	
 	public void createPartControl(Composite parent) {
-<<<<<<< HEAD
+		final TabFolder tabFolder = new TabFolder(parent, SWT.NONE);
 		
-		//viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL	| SWT.V_SCROLL);
-		//viewer.setContentProvider(new ViewContentProvider());
-		//viewer.setLabelProvider(new ViewLabelProvider());
-		// Provide the input to the ContentProvider
-		//viewer.setInput(new String[] {"A", "B", "C"});
-		
-	//	Composite top = new Composite(parent, SWT.NONE);
-		
-		GridLayout layout = new GridLayout();
-		
-		Composite banner = new Composite(parent, SWT.NONE);
-		banner.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL, GridData.VERTICAL_ALIGN_BEGINNING, true, false));
-		layout = new GridLayout();
-		layout.marginHeight = 10;
-		layout.marginWidth = 30;
-		layout.numColumns = 2;
-		banner.setLayout(layout);
-		
-		Button checkbox1 = new Button(banner, SWT.CHECK);
-		
-		checkbox1.setText("Checkbox 1");
-		
-		Button checkbox2 = new Button(banner, SWT.CHECK);
-		
-		checkbox2.setText("Checkbox 2");
-		
-		Combo comboDropDown = new Combo(banner, SWT.DROP_DOWN | SWT.BORDER);
-		
-	    for(int i=0; i<3; i++) {
-	        comboDropDown.add("item " + i);
-	    }
-		
-		Button pushButton = new Button(banner, SWT.PUSH);
-		
-		pushButton.setText("Push Button");
-		
-		
-		
-=======
-		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL
-				| SWT.V_SCROLL);
-		viewer.setContentProvider(new ViewContentProvider());
-		viewer.setLabelProvider(new ViewLabelProvider());
-		// Provide the input to the ContentProvider
-		viewer.setInput(new String[] {"One", "Two", "Three"});
->>>>>>> origin/master
+		//Ads Tab
+		TabItem Tab_Ads = new TabItem(tabFolder, SWT.NONE);
+        Tab_Ads.setText("Ads");
+        Tab_Ads.setToolTipText("Ads Configurations");  
+        Tab_Ads.setControl(AdsTabControl(tabFolder));
+        
+        //Analytics Tab
+        TabItem Tab_Analytics = new TabItem(tabFolder, SWT.NONE);
+        Tab_Analytics.setText("Analytics");
+        Tab_Analytics.setToolTipText("Analytics Configurations");
+        Tab_Analytics.setControl(AnalyticsTabControl(tabFolder));
+        
+        //Crash Reporting Tab
+        TabItem Tab_Crash = new TabItem(tabFolder, SWT.NONE);
+        Tab_Crash.setText("Crash Reporting");
+        Tab_Crash.setToolTipText("Crash Reporting Configurations");
+        Tab_Crash.setControl(CrashTabControl(tabFolder));
+        
+        //Rating Tab
+        TabItem Tab_Rating = new TabItem(tabFolder, SWT.NONE);
+        Tab_Rating.setText("Rating");
+        Tab_Rating.setToolTipText("Rating Configurations");
+        Tab_Rating.setControl(RatingTabControl(tabFolder));
+        
+        //Push Notifications Tab
+        TabItem Tab_PushNotifications = new TabItem(tabFolder, SWT.NONE);
+        Tab_PushNotifications.setText("Push Notifications");
+        Tab_PushNotifications.setToolTipText("Push Notifications Configurations");
+        Tab_PushNotifications.setControl(PushNotificationsTabControl(tabFolder));
+        
+        //Twitter Tab
+        TabItem Tab_Twitter = new TabItem(tabFolder, SWT.NONE);
+        Tab_Twitter.setText("Twitter");
+        Tab_Twitter.setToolTipText("Twitter Configurations");
+        Tab_Twitter.setControl(TwitterTabControl(tabFolder));
 	}
 
-	/**
-	 * Passing the focus request to the viewer's control.
-	 */
 	public void setFocus() {
 		viewer.getControl().setFocus();
 	}
