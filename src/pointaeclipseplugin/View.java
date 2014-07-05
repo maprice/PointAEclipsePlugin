@@ -7,10 +7,13 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
+<<<<<<< HEAD
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
+=======
+>>>>>>> origin/master
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
@@ -64,6 +67,7 @@ public class View extends ViewPart {
 	 * it.
 	 */
 	public void createPartControl(Composite parent) {
+<<<<<<< HEAD
 		
 		//viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL	| SWT.V_SCROLL);
 		//viewer.setContentProvider(new ViewContentProvider());
@@ -103,6 +107,14 @@ public class View extends ViewPart {
 		
 		
 		
+=======
+		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL
+				| SWT.V_SCROLL);
+		viewer.setContentProvider(new ViewContentProvider());
+		viewer.setLabelProvider(new ViewLabelProvider());
+		// Provide the input to the ContentProvider
+		viewer.setInput(new String[] {"One", "Two", "Three"});
+>>>>>>> origin/master
 	}
 
 	/**
