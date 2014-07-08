@@ -1,4 +1,4 @@
-package pointaeclipseplugin;
+package com.pointaeclipseplugin.view;
 
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;

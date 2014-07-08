@@ -1,4 +1,4 @@
-package pointaeclipseplugin;
+package com.pointaeclipseplugin.view;
 
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;

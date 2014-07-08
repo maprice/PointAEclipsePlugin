@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: PointAEclipsePlugin
 Bundle-SymbolicName: PointAEclipsePlugin;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-Activator: pointaeclipseplugin.Activator
+Bundle-Activator: com.pointaeclipseplugin.view.Activator
 Bundle-Vendor: Tony Wu
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime

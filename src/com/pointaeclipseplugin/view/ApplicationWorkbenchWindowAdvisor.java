@@ -1,4 +1,4 @@
-package pointaeclipseplugin;
+package com.pointaeclipseplugin.view;
 
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.application.ActionBarAdvisor;

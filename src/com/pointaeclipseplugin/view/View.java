@@ -1,4 +1,4 @@
-package pointaeclipseplugin;
+package com.pointaeclipseplugin.view;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
