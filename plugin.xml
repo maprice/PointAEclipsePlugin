@@ -23,7 +23,7 @@
          point="org.eclipse.ui.views">
       <view
             name="View"
-            class="com.pointaeclipseplugin.view.View"
+            class="com.pointaeclipseplugin.view.PointAView"
             id="PointAEclipsePlugin.view">
       </view>
    </extension>

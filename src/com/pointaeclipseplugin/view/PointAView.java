@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 
-public class View extends ViewPart {
+public class PointAView extends ViewPart {
 	
 	public static final String ID = "PointAEclipsePlugin.view";
 	private TableViewer viewer;

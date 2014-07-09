@@ -17,7 +17,6 @@ public class JarDownloader implements Runnable{
 
 	static final String LOG_TAG =  JarDownloader.class.getSimpleName();
 
-
 	// ===========================================================
 	// Fields
 	// ===========================================================
