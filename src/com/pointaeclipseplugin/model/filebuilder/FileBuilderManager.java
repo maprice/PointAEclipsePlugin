@@ -40,9 +40,11 @@ public class FileBuilderManager {
 		lClassPath = buildClassPath(pNewConfig);
 		lConfig = buildConfig(pNewConfig);
 
+		// Synchronous start
 		lManifest.writeToFile(FileConstants.MANIFEST_PATH);
 		lClassPath.writeToFile(FileConstants.CLASSPATH_PATH);
 		lConfig.writeToFile(FileConstants.CONFIG_PATH);
+		// Synchronous end
 
 	}
 
