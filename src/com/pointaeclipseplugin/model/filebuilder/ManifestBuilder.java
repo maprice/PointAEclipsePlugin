@@ -9,7 +9,7 @@ package com.pointaeclipseplugin.model.filebuilder;
  *
  */
 
-public class ManifestBuilder {
+public class ManifestBuilder extends FileBuilder{
 
 	// ===========================================================
 	// Constants
@@ -17,12 +17,12 @@ public class ManifestBuilder {
 
 	static final String LOG_TAG =  ManifestBuilder.class.getSimpleName();
 
+	private String mPermissionInject =  "<uses-permission android:name=\"android.permission.%s\" />";
+
 	// ===========================================================
 	// Fields
 	// ===========================================================
 
-
-	
 
 	// ===========================================================
 	// Constructors
@@ -32,4 +32,10 @@ public class ManifestBuilder {
 	// Methods
 	// ===========================================================
 
+	@Override
+	public FileBuilder addInject(String pInject) {
+		String lPremission = String.format(mPermissionInject, pInject);
+		this.mInject += lPremission;
+		return this;
+	}
 }

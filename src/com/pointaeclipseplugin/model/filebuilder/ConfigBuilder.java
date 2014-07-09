@@ -9,7 +9,7 @@ package com.pointaeclipseplugin.model.filebuilder;
  *
  */
 
-public class ConfigBuilder {
+public class ConfigBuilder extends FileBuilder{
 
 	// ===========================================================
 	// Constants
@@ -31,5 +31,11 @@ public class ConfigBuilder {
 	// ===========================================================
 	// Methods
 	// ===========================================================
+
+	@Override
+	public FileBuilder addInject(String pInject) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

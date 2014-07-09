@@ -21,9 +21,6 @@ public class ConfigManager {
 	// Fields
 	// ===========================================================
 
-
-	
-
 	// ===========================================================
 	// Constructors
 	// ===========================================================
@@ -32,4 +29,19 @@ public class ConfigManager {
 	// Methods
 	// ===========================================================
 
+
+
+	public void parseConfig() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void updateConfig(ConfigSettings pNewConfig) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public ConfigSettings getConfig(){
+		return null;
+	}
 }

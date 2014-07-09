@@ -1,5 +1,7 @@
 package com.pointaeclipseplugin.model.filebuilder;
 
+import com.pointaeclipseplugin.model.filewriter.WritableFile;
+
 
 
 /**
@@ -9,7 +11,7 @@ package com.pointaeclipseplugin.model.filebuilder;
  *
  */
 
-public class FileBuilder {
+public abstract class FileBuilder {
 
 	// ===========================================================
 	// Constants
@@ -21,7 +23,9 @@ public class FileBuilder {
 	// Fields
 	// ===========================================================
 
-
+	protected String mPreInject;
+	protected String mInject;
+	protected String mPostInject;
 	
 
 	// ===========================================================
@@ -31,5 +35,32 @@ public class FileBuilder {
 	// ===========================================================
 	// Methods
 	// ===========================================================
+	
+	public abstract FileBuilder addInject(String pInject);
+	
+	public FileBuilder addPreInject(String pPreInject){
+		mPreInject = pPreInject;
+		return this;
+	}
+	
+	public FileBuilder addPostInject(String pPostInject){
+		mPreInject = pPostInject;
+		return this;
+	}
+	
+	public WritableFile getFile(){
+		return new WritableFile(this);
+	}
 
+	public String preInject() {
+		return mPreInject;
+	}	
+	
+	public String inject() {
+		return mInject;
+	}	
+	
+	public String postInject() {
+		return mPostInject;
+	}	
 }

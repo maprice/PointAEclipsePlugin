@@ -1,28 +1,24 @@
-package com.pointaeclipseplugin.model.filewriter;
-
+package com.pointaeclipseplugin.model.filereader;
 
 
 /**
- * <Class Description>
+ * Contains all necessary information for generating and displaying the PointA.xml file
  * @version 1.0
  * @since July 08, 2014
  *
  */
 
-public class ManifestWritable {
+public class ConfigSettings {
 
 	// ===========================================================
 	// Constants
 	// ===========================================================
 
-	static final String LOG_TAG =  ManifestWritable.class.getSimpleName();
+	static final String LOG_TAG =  ConfigSettings.class.getSimpleName();
 
 	// ===========================================================
 	// Fields
 	// ===========================================================
-
-
-	
 
 	// ===========================================================
 	// Constructors

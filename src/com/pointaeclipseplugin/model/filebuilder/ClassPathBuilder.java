@@ -9,7 +9,7 @@ package com.pointaeclipseplugin.model.filebuilder;
  *
  */
 
-public class ClassPathBuilder {
+public class ClassPathBuilder extends FileBuilder{
 
 	// ===========================================================
 	// Constants
@@ -17,12 +17,13 @@ public class ClassPathBuilder {
 
 	static final String LOG_TAG =  ClassPathBuilder.class.getSimpleName();
 
+	private String mExcludeInject =  "<classpathentry excluding=\"com/pointa/service/%s.java\" kind=\"src\" path=\"src\"/>";
+	
+
 	// ===========================================================
 	// Fields
 	// ===========================================================
 
-
-	
 
 	// ===========================================================
 	// Constructors
@@ -32,4 +33,10 @@ public class ClassPathBuilder {
 	// Methods
 	// ===========================================================
 
+	@Override
+	public FileBuilder addInject(String pInject) {
+		String lExlude = String.format(mExcludeInject, pInject);
+		this.mInject += lExlude;
+		return this;
+	}
 }
