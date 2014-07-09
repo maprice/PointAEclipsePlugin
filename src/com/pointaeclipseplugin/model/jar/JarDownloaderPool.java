@@ -1,5 +1,8 @@
 package com.pointaeclipseplugin.model.jar;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 
 
 
@@ -22,33 +25,22 @@ public class JarDownloaderPool {
 	// Fields
 	// ===========================================================
 
-
-	
+	ExecutorService mPool;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
+	public JarDownloaderPool(){
+		 mPool = Executors.newFixedThreadPool(10);
+	}
+	
 	// ===========================================================
 	// Methods
 	// ===========================================================
 
 	
-	protected JarDownloader onAllocatePoolItem() {
-		return null;
-	}
-
-	/**
-	 * Called when a JarDownloader is sent to the pool
-	 */
-	protected void onHandleRecycleItem(final JarDownloader pDownloader) {
-
-	}
-
-	/**
-	 * Called just before a JarDownloader is returned to the caller
-	 */
-	protected void onHandleObtainItem(final JarDownloader pDownloader) {
-		
+	public void addThread(JarDownloader pThread){
+		   mPool.submit(pThread);
 	}
 }

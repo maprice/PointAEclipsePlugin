@@ -19,8 +19,6 @@ public class JarDownloaderManager {
 
 	static final String LOG_TAG =  JarDownloaderManager.class.getSimpleName();
 
-
-
 	// ===========================================================
 	// Fields
 	// ===========================================================
@@ -40,12 +38,17 @@ public class JarDownloaderManager {
 	// ===========================================================
 
 	public void updateJars(ConfigSettings pNewConfig) {
+		//for(Number of Jars to download){
 		
+			// Get the Jar's URL
+			String URL = "http://JarLocation.com";
 		
-		String URL = "http://JarLocation.com";
+			// Create new thread
+			JarDownloader lJarDownloader = new JarDownloader(URL);
 		
-		JarDownloader lJarDownloader = mPool.onAllocatePoolItem();
-		lJarDownloader.run(URL);
-		
+			// Add thread to pool
+			mPool.addThread(lJarDownloader);
+			
+		//}
 	}
 }

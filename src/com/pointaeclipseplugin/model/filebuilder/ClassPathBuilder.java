@@ -3,7 +3,7 @@ package com.pointaeclipseplugin.model.filebuilder;
 
 
 /**
- * <Class Description>
+ * Builds the .classpath document
  * @version 1.0
  * @since July 08, 2014
  *

@@ -9,7 +9,7 @@ package com.pointaeclipseplugin.model.jar;
  *
  */
 
-public class JarDownloader {
+public class JarDownloader implements Runnable{
 
 	// ===========================================================
 	// Constants
@@ -21,7 +21,9 @@ public class JarDownloader {
 	// ===========================================================
 	// Fields
 	// ===========================================================
-	
+
+	private String mTargetURL;
+
 	// ===========================================================
 	// Constructors
 	// ===========================================================
@@ -29,9 +31,15 @@ public class JarDownloader {
 	// ===========================================================
 	// Methods
 	// ===========================================================
-	
-	public void run(String uRL) {
-	// Download jar and put it in correct folder
+
+
+	public JarDownloader(String pURL) {
+		mTargetURL = pURL;
 	}
 
+	@Override
+	public void run() {
+		// Download Jar from URL
+		System.out.println("Downloaded Jar from:" + mTargetURL);
+	}
 }
