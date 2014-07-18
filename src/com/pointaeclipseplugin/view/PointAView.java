@@ -1,5 +1,7 @@
 package com.pointaeclipseplugin.view;
 
+import java.util.List;
+
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -14,7 +16,11 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 
-import com.pointaeclipseplugin.PointAServiceConstants;
+import com.pointaeclipseplugin.model.PointAServiceConstants;
+import com.pointaeclipseplugin.model.PointAServiceConstants.Services;
+import com.pointaeclipseplugin.model.PointAServiceConstants.Widget;
+
+
 
 public class PointAView extends ViewPart {
 	
@@ -67,6 +73,41 @@ public class PointAView extends ViewPart {
 	// ===========================================================
 	// Tab Control Configuration (FIX: MAKE CONFIGURATIONS DYNAMIC) 
 	// ===========================================================
+	
+	
+	private Control TabControl(TabFolder tabFolder, List<PointAServiceConstants.Field> FieldList ){
+		
+		Composite composite = getGridComposite(tabFolder);
+		
+		for(PointAServiceConstants.Field Field: FieldList){
+			
+			switch(Field.widget){
+			
+			case Dropdown: 
+				
+				makeDropdown(composite, Field.label, Field.values);
+				
+				continue;
+				
+			case TextInput:
+				
+				makeTextInput(composite, Field.label);
+				
+				continue;
+				
+			default:
+				
+				continue;
+			
+			}
+			
+		}
+		
+		return composite;
+		
+	}
+
+/*
 	private Control AdsTabControl(TabFolder tabFolder){
 		Composite composite = getGridComposite(tabFolder);
 		makeDropdown(composite, "Service Provider", PointAServiceConstants.AdsServiceProviders);
@@ -107,6 +148,7 @@ public class PointAView extends ViewPart {
 		return composite;   
 	}
 	
+*/
 	// ===========================================================
 	// Populate Tab Folder
 	// ===========================================================
@@ -114,12 +156,70 @@ public class PointAView extends ViewPart {
 		final TabFolder tabFolder = new TabFolder(parent, SWT.NONE);
 		
 		//Create Tabs
+		
+		PointAServiceConstants.populateUIData();
+		
+		
+		for(Services pluginservice:PointAServiceConstants.Services.values())
+		{
+			
+			switch(pluginservice){
+			
+			case Ads:
+				//Control AdsTabControl = makeTabFields(...);
+				TabItem Tab_Ads = createTab(tabFolder, "Ads", TabControl(tabFolder, PointAServiceConstants.Ads_UI));
+				continue;
+				
+			case Analytics:
+				
+				TabItem Tab_Analytics = createTab(tabFolder, "Analytics", TabControl(tabFolder,PointAServiceConstants.Analytics_UI));
+				continue;
+			
+			case Crash_Reporting:
+				
+		        TabItem Tab_Crash = createTab(tabFolder, "Crash Reporting", TabControl(tabFolder,PointAServiceConstants.Crash_Reporting_UI));
+		    
+		        continue;
+			
+			case Rating:
+				
+		        TabItem Tab_Rating = createTab(tabFolder, "Rating", TabControl(tabFolder,PointAServiceConstants.Rating_UI));
+
+		        continue;
+				
+			case Push_Notifications:
+				
+		        TabItem Tab_PushNotifications = createTab(tabFolder, "Push Notifications", TabControl(tabFolder,PointAServiceConstants.Push_Notifications_UI));
+
+		        continue;
+				
+			case Twitter:
+				
+		        TabItem Tab_Twitter = createTab(tabFolder, "Twitter", TabControl(tabFolder,PointAServiceConstants.Twitter_UI));
+		    
+		        continue;
+		    
+			default:
+		    	
+		    	continue;
+
+				
+			}
+			
+			
+		}
+		
+		
+		
+/*
 		TabItem Tab_Ads = createTab(tabFolder, "Ads", AdsTabControl(tabFolder));
         TabItem Tab_Analytics = createTab(tabFolder, "Analytics", AnalyticsTabControl(tabFolder));
         TabItem Tab_Crash = createTab(tabFolder, "Crash Reporting", CrashTabControl(tabFolder));
         TabItem Tab_Rating = createTab(tabFolder, "Rating", RatingTabControl(tabFolder));
         TabItem Tab_PushNotifications = createTab(tabFolder, "Push Notifications", PushNotificationsTabControl(tabFolder));
         TabItem Tab_Twitter = createTab(tabFolder, "Twitter", TwitterTabControl(tabFolder));
+        
+       */
 	}
 
 	public void setFocus() {
