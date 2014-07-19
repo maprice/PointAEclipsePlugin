@@ -59,7 +59,7 @@ public class PointAServiceConstants {
 
 	public static enum Widget {
 		
-		Checkbox, Dropdown, TextInput, Button
+		Checkbox, Dropdown, TextInput, Button, Label, BlankLine;
 
 		
 	}
@@ -90,70 +90,100 @@ public class PointAServiceConstants {
 	public static Map<String,String> TwitterJars = new HashMap<String,String>();
 
 	
+	//=== Service UI ===//
+	
+	//Helper method to create service provider ranking drop down menu
+	public static String[] createRankDropDown(int n){
+		String[] dropdown = new String[n];
+		for (int i = 0; i < n; i++){
+			dropdown[i] = Integer.toString(i + 1);
+		}
+		return dropdown;
+	}
+	
 	//Ads UI
 	public static void createAdsFieldList(){
-	
 		
-		Ads_UI.add(new Field(Widget.Dropdown,"Service Provider",AdsServiceProviders));
+		String[] rankDropDown = createRankDropDown(AdsServiceProviders.length);
+		Ads_UI.add(new Field(Widget.Label, "Rank Service Providers", null));
 		
+		for (int i = 0; i < AdsServiceProviders.length; i++){
+			Ads_UI.add(new Field(Widget.Dropdown, AdsServiceProviders[i], rankDropDown));
+		}
+		
+		Ads_UI.add(new Field(Widget.BlankLine, null, null));
 		Ads_UI.add(new Field(Widget.Dropdown,"Ad Size",AdSizes));
-		
 		Ads_UI.add(new Field(Widget.TextInput,"Unit ID",null));
 		
 		//...
-
 	}
 	
 	//Analytics UI
 	public static void createAnalyticsFieldList(){
 		
-		Analytics_UI.add(new Field(Widget.Dropdown,"Service Provider",AdsServiceProviders));
+		String[] rankDropDown = createRankDropDown(AnalyticsServiceProviders.length);
+		Analytics_UI.add(new Field(Widget.Label, "Rank Service Providers", null));
 		
+		for (int i = 0; i < AnalyticsServiceProviders.length; i++){
+			Analytics_UI.add(new Field(Widget.Dropdown, AnalyticsServiceProviders[i], rankDropDown));
+		}
+		
+		Analytics_UI.add(new Field(Widget.BlankLine, null, null));
 		Analytics_UI.add(new Field(Widget.TextInput,"App ID", null));
-		
 		Analytics_UI.add(new Field(Widget.TextInput,"Client Key", null));
 		
 		//...
-		
-		
 	}
 	
 	//Crash Reporting UI
 	public static void createCrashReportingFieldList(){
 		
-		Crash_Reporting_UI.add(new Field(Widget.Dropdown,"Service Provider",CrashServiceProviders));
+		String[] rankDropDown = createRankDropDown(CrashServiceProviders.length);
+		Crash_Reporting_UI.add(new Field(Widget.Label, "Rank Service Providers", null));
 		
+		for (int i = 0; i < CrashServiceProviders.length; i++){
+			Crash_Reporting_UI.add(new Field(Widget.Dropdown, CrashServiceProviders[i], rankDropDown));
+		}
+
+		Crash_Reporting_UI.add(new Field(Widget.BlankLine, null, null));
 		Crash_Reporting_UI.add(new Field(Widget.TextInput,"App ID", null));
 		
 		//....
-		
-		
 	}
 	
 
 	//Push Notification UI
 	public static void createPushNotificationsFieldList(){
 		
-		Push_Notifications_UI.add(new Field(Widget.Dropdown,"Service Provider",PushServiceProviders));
+		String[] rankDropDown = createRankDropDown(PushServiceProviders.length);
+		Push_Notifications_UI.add(new Field(Widget.Label, "Rank Service Providers", null));
 		
-		Push_Notifications_UI.add(new Field(Widget.TextInput,"App ID", null));
-		
+		for (int i = 0; i < PushServiceProviders.length; i++){
+			Push_Notifications_UI.add(new Field(Widget.Dropdown, PushServiceProviders[i], rankDropDown));
+		}
+
+		Push_Notifications_UI.add(new Field(Widget.BlankLine, null, null));		
+		Push_Notifications_UI.add(new Field(Widget.TextInput,"App ID", null));	
 		Push_Notifications_UI.add(new Field(Widget.TextInput,"Client Key", null));
 		
 		//....
-		
 	}
 	
 	
 	//Ratings UI
 	public static void createRatingFieldList(){
 		
-		Rating_UI.add(new Field(Widget.Dropdown,"Service Provider",RatingServiceProviders));
+		String[] rankDropDown = createRankDropDown(RatingServiceProviders.length);
+		Rating_UI.add(new Field(Widget.Label, "Rank Service Providers", null));
 		
+		for (int i = 0; i < RatingServiceProviders.length; i++){
+			Rating_UI.add(new Field(Widget.Dropdown, RatingServiceProviders[i], rankDropDown));
+		}
+
+		Rating_UI.add(new Field(Widget.BlankLine, null, null));	
 		Rating_UI.add(new Field(Widget.TextInput,"URI", null));
 		
 		//....
-		
 	}
 	
 	
@@ -161,9 +191,7 @@ public class PointAServiceConstants {
 	public static void createTwitterFieldList(){
 		
 		Twitter_UI.add(new Field(Widget.TextInput,"Consumer Key", null));
-		
 		Twitter_UI.add(new Field(Widget.TextInput,"Consumer Secret", null));
-		
 	}
 	
 	//Popular the jar maps

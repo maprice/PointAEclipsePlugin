@@ -51,6 +51,14 @@ public class PointAView extends ViewPart {
 		new Label(c,SWT.LEFT).setText(label);
 		new Combo(c, SWT.DROP_DOWN).setItems(options);
 	}
+	private void makeLabel(Composite c, String label){
+		new Label(c, SWT.LEFT).setText(label);
+		new Label(c, SWT.LEFT).setText("");
+	}
+	private void makeBlankLine(Composite c){
+		new Label(c, SWT.LEFT).setText("");
+		new Label(c, SWT.LEFT).setText("");
+	}
 	
 	//GridLayout Composite Generator
 	private Composite getGridComposite(TabFolder tabFolder){
@@ -70,7 +78,7 @@ public class PointAView extends ViewPart {
 	}
 	
 	// ===========================================================
-	// Tab Control Configuration (FIX: MAKE CONFIGURATIONS DYNAMIC) 
+	// Tab Control Configuration
 	// ===========================================================
 	
 	
@@ -91,6 +99,18 @@ public class PointAView extends ViewPart {
 			case TextInput:
 				
 				makeTextInput(composite, Field.label);
+				
+				continue;
+			
+			case Label:
+				
+				makeLabel(composite, Field.label);
+				
+				continue;
+				
+			case BlankLine:
+				
+				makeBlankLine(composite);
 				
 				continue;
 				
