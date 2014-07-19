@@ -6,6 +6,8 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -18,7 +20,6 @@ import org.eclipse.ui.part.ViewPart;
 
 import com.pointaeclipseplugin.model.PointAServiceConstants;
 import com.pointaeclipseplugin.model.PointAServiceConstants.Services;
-import com.pointaeclipseplugin.model.PointAServiceConstants.Widget;
 
 
 public class PointAView extends ViewPart {
@@ -47,9 +48,17 @@ public class PointAView extends ViewPart {
 		new Label(c, SWT.LEFT).setText(label);
 		new Text(c, SWT.BORDER);
 	}
-	private void makeDropdown(Composite c, String label, String [] options){
+	private void makeDropdown(Composite c, final String label, String [] options){
 		new Label(c,SWT.LEFT).setText(label);
-		new Combo(c, SWT.DROP_DOWN).setItems(options);
+		final Combo combo = new Combo(c, SWT.DROP_DOWN);
+		combo.setItems(options);
+		combo.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				System.out.println(label + " " + combo.getText());
+			}
+		});
+		
+		
 	}
 	private void makeLabel(Composite c, String label){
 		new Label(c, SWT.LEFT).setText(label);
