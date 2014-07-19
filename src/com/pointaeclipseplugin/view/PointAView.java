@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 
-import com.pointaeclipseplugin.model.constants.PointAServiceConstants;
+import com.pointaeclipseplugin.model.PointAServiceConstants;
 import com.pointaeclipseplugin.model.PointAServiceConstants.Services;
 import com.pointaeclipseplugin.model.PointAServiceConstants.Widget;
 
