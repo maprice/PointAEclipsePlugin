@@ -1,5 +1,6 @@
 package com.pointaeclipseplugin.view;
 
+import java.awt.Button;
 import java.util.List;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -12,7 +13,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
@@ -44,20 +47,141 @@ public class PointAView extends ViewPart {
 	// Helper Methods
 	// ===========================================================
 	//User Input Generator
-	private void makeTextInput(Composite c, String label){
+	private void makeTextInput(Composite c, String label, final Services service, final int index){
 		new Label(c, SWT.LEFT).setText(label);
-		new Text(c, SWT.BORDER);
+		final Text text = new Text(c, SWT.BORDER);
+		
+		  text.addListener(SWT.FocusOut, new Listener() {
+		      public void handleEvent(Event e) {
+		    	  
+		    		switch(service){
+					
+					case Ads:
+						//Control AdsTabControl = makeTabFields(...);
+						PointAServiceConstants.Ads_UI.get(index).actual_value = text.getText();
+						
+						System.out.println(PointAServiceConstants.Ads_UI.get(index).actual_value);
+						
+						break;
+						
+					case Analytics:
+						
+						PointAServiceConstants.Analytics_UI.get(index).actual_value = text.getText();
+						
+						System.out.println(PointAServiceConstants.Analytics_UI.get(index).actual_value);
+						
+						break;
+					
+					case Crash_Reporting:
+						
+						PointAServiceConstants.Crash_Reporting_UI.get(index).actual_value = text.getText();
+						
+						System.out.println(PointAServiceConstants.Crash_Reporting_UI.get(index).actual_value);
+						
+						break;
+					
+					case Rating:
+						
+						PointAServiceConstants.Rating_UI.get(index).actual_value = text.getText();
+						
+						System.out.println(PointAServiceConstants.Rating_UI.get(index).actual_value);
+						
+						break;
+						
+					case Push_Notifications:
+						
+						PointAServiceConstants.Push_Notifications_UI.get(index).actual_value = text.getText();
+						
+						System.out.println(PointAServiceConstants.Push_Notifications_UI.get(index).actual_value);
+						
+						break;
+						
+					case Twitter:
+						
+						PointAServiceConstants.Twitter_UI.get(index).actual_value = text.getText();
+						
+						System.out.println(PointAServiceConstants.Twitter_UI.get(index).actual_value);
+						
+						break;
+				    
+					default:
+				    
+
+						
+					}
+		    	  
+		      }
+		    });
+		
 	}
-	private void makeDropdown(Composite c, final String label, String [] options){
+	
+	
+	private void makeDropdown(Composite c, String label, String [] options, final Services service, final int index){
 		new Label(c,SWT.LEFT).setText(label);
 		final Combo combo = new Combo(c, SWT.DROP_DOWN);
 		combo.setItems(options);
+		
 		combo.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e){
-				System.out.println(label + " " + combo.getText());
+				
+				switch(service){
+				
+				case Ads:
+					//Control AdsTabControl = makeTabFields(...);
+					PointAServiceConstants.Ads_UI.get(index).actual_value = combo.getText();
+					
+					System.out.println(PointAServiceConstants.Ads_UI.get(index).actual_value);
+					
+					break;
+					
+					
+				case Analytics:
+					
+					PointAServiceConstants.Analytics_UI.get(index).actual_value = combo.getText();
+					
+					System.out.println(PointAServiceConstants.Analytics_UI.get(index).actual_value);
+					
+					break;
+				
+				case Crash_Reporting:
+					
+					PointAServiceConstants.Crash_Reporting_UI.get(index).actual_value = combo.getText();
+					
+					System.out.println(PointAServiceConstants.Crash_Reporting_UI.get(index).actual_value);
+					
+					break;
+				
+				case Rating:
+					
+					PointAServiceConstants.Rating_UI.get(index).actual_value = combo.getText();
+					
+					System.out.println(PointAServiceConstants.Rating_UI.get(index).actual_value);
+					
+					break;
+					
+				case Push_Notifications:
+					
+					PointAServiceConstants.Push_Notifications_UI.get(index).actual_value = combo.getText();
+					
+					System.out.println(PointAServiceConstants.Push_Notifications_UI.get(index).actual_value);
+					
+					break;
+					
+				case Twitter:
+					
+					PointAServiceConstants.Twitter_UI.get(index).actual_value = combo.getText();
+					
+					System.out.println(PointAServiceConstants.Twitter_UI.get(index).actual_value);
+					
+					break;
+			    
+				default:
+			    
+
+					
+				}
 			}
 		});
-		
 		
 	}
 	private void makeLabel(Composite c, String label){
@@ -95,26 +219,30 @@ public class PointAView extends ViewPart {
 		
 		Composite composite = getGridComposite(tabFolder);
 		
+		int i = 0;
+		
 		for(PointAServiceConstants.Field Field: FieldList){
 			
+		//	System.out.println(FieldList.indexOf(Field));
+		
 			switch(Field.widget){
 			
-			case Dropdown: 
+			case Dropdown:
 				
-				makeDropdown(composite, Field.label, Field.values);
-				
+				makeDropdown(composite, Field.label, Field.values, Field.service, FieldList.indexOf(Field));
+
 				continue;
 				
 			case TextInput:
 				
-				makeTextInput(composite, Field.label);
-				
+				makeTextInput(composite, Field.label, Field.service, FieldList.indexOf(Field));
+
 				continue;
 			
 			case Label:
 				
 				makeLabel(composite, Field.label);
-				
+
 				continue;
 				
 			case BlankLine:
@@ -129,6 +257,7 @@ public class PointAView extends ViewPart {
 			
 			}
 			
+			
 		}
 		
 		return composite;
@@ -142,7 +271,7 @@ public class PointAView extends ViewPart {
 		final TabFolder tabFolder = new TabFolder(parent, SWT.NONE);
 		
 		//Create Tabs
-		
+				
 		PointAServiceConstants.populateUIData();
 		
 		
@@ -154,6 +283,7 @@ public class PointAView extends ViewPart {
 			case Ads:
 				//Control AdsTabControl = makeTabFields(...);
 				TabItem Tab_Ads = createTab(tabFolder, "Ads", TabControl(tabFolder, PointAServiceConstants.Ads_UI));
+				
 				continue;
 				
 			case Analytics:
@@ -191,7 +321,6 @@ public class PointAView extends ViewPart {
 
 				
 			}
-			
 			
 		}
 	}
