@@ -19,37 +19,6 @@ public class PointAServiceConstants {
 	// ===========================================================
 	// Constants
 	// ===========================================================
-
-	public static class Field{
-		
-		public Widget widget;
-		public String label;
-		public String[] values;
-		
-		public Field(Widget widget, String label, String [] values){
-			this.widget = widget;
-			this.label = label;
-			this.values = values;
-			
-		}
-		
-	}
-
-
-	public static List<Field> Ads_UI = new ArrayList<Field>();
-	
-	public static List<Field> Analytics_UI = new ArrayList<Field>();
-	
-	public static List<Field> Crash_Reporting_UI = new ArrayList<Field>();
-	
-	public static List<Field> Push_Notifications_UI = new ArrayList<Field>();
-	
-	public static List<Field> Rating_UI = new ArrayList<Field>();
-	
-	public static List<Field> Twitter_UI = new ArrayList<Field>();
-	
-	
-
 	public static enum Services {
 		
 		Ads, Analytics, Crash_Reporting, Push_Notifications, Rating, Twitter
@@ -63,6 +32,33 @@ public class PointAServiceConstants {
 
 		
 	}
+
+	public static class Field{
+
+		public Widget widget;//Dropdown, Textinput, label, etc
+		public String label;
+		public String[] values;
+		public String user_input;
+		
+		public Field(Widget widget, String label, String [] values){
+			this.widget = widget;
+			this.label = label;
+			this.values = values;
+			
+		}
+		
+	}
+	
+	//List of Fields for each service
+	public static List<Field> Ads_UI = new ArrayList<Field>();
+	public static List<Field> Analytics_UI = new ArrayList<Field>();
+	public static List<Field> Crash_Reporting_UI = new ArrayList<Field>();
+	public static List<Field> Push_Notifications_UI = new ArrayList<Field>();
+	public static List<Field> Rating_UI = new ArrayList<Field>();
+	public static List<Field> Twitter_UI = new ArrayList<Field>();
+	
+	//Wrapper object to be passed to XML writer
+	public static List<List<Field>> Fields = new ArrayList<List<Field>>();
 
 	
 	//Service Specific Variables
