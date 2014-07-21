@@ -59,10 +59,14 @@ public class PointAServiceConstants {
 	public static EnumMap<Services, List<Field>> ConfigData = new EnumMap<Services,List<Field>>(Services.class);
 	
 	
-	public static enum Services {
-		
-		Ads, Analytics, Crash_Reporting, Push_Notifications, Rating, Twitter;
-	
+	public static enum Services {		
+		Ads,
+		Analytics,
+		CrashReporter,
+		Rating,
+		Push,
+		Twitter
+		//...
 	}
 	
 	public static enum Widget {
@@ -120,7 +124,7 @@ public class PointAServiceConstants {
 				
 				continue;
 			
-			case Crash_Reporting:
+			case CrashReporter:
 				
 				
 				ConfigData.put(service, Crash_Reporting_UI);
@@ -133,7 +137,7 @@ public class PointAServiceConstants {
 				
 				continue;
 				
-			case Push_Notifications:
+			case Push:
 				
 				
 				ConfigData.put(service, Push_Notifications_UI);
@@ -154,14 +158,12 @@ public class PointAServiceConstants {
 		}
 	}
 		
-		
-	
-	
 	//Helper method to create service provider ranking drop down menu
 	public static String[] createRankDropDown(int n){
-		String[] dropdown = new String[n];
-		for (int i = 0; i < n; i++){
-			dropdown[i] = Integer.toString(i + 1);
+		String[] dropdown = new String[n + 1];
+		dropdown[0] = "Disable";
+		for (int i = 1; i < n + 1; i++){
+			dropdown[i] = Integer.toString(i);
 		}
 		return dropdown;
 	}
@@ -204,14 +206,14 @@ public class PointAServiceConstants {
 	public static void createCrashReportingFieldList(){
 		
 		String[] rankDropDown = createRankDropDown(CrashServiceProviders.length);
-		Crash_Reporting_UI.add(new Field(Widget.Label, "Rank Service Providers", null, Services.Crash_Reporting));
+		Crash_Reporting_UI.add(new Field(Widget.Label, "Rank Service Providers", null, Services.CrashReporter));
 		
 		for (int i = 0; i < CrashServiceProviders.length; i++){
-			Crash_Reporting_UI.add(new Field(Widget.Dropdown, CrashServiceProviders[i], rankDropDown, Services.Crash_Reporting));
+			Crash_Reporting_UI.add(new Field(Widget.Dropdown, CrashServiceProviders[i], rankDropDown, Services.CrashReporter));
 		}
 
-		Crash_Reporting_UI.add(new Field(Widget.BlankLine, null, null, Services.Crash_Reporting));
-		Crash_Reporting_UI.add(new Field(Widget.TextInput,"App ID", null, Services.Crash_Reporting));
+		Crash_Reporting_UI.add(new Field(Widget.BlankLine, null, null, Services.CrashReporter));
+		Crash_Reporting_UI.add(new Field(Widget.TextInput,"App ID", null, Services.CrashReporter));
 		
 		
 		//....
@@ -222,15 +224,15 @@ public class PointAServiceConstants {
 	public static void createPushNotificationsFieldList(){
 		
 		String[] rankDropDown = createRankDropDown(PushServiceProviders.length);
-		Push_Notifications_UI.add(new Field(Widget.Label, "Rank Service Providers", null, Services.Push_Notifications));
+		Push_Notifications_UI.add(new Field(Widget.Label, "Rank Service Providers", null, Services.Push));
 		
 		for (int i = 0; i < PushServiceProviders.length; i++){
-			Push_Notifications_UI.add(new Field(Widget.Dropdown, PushServiceProviders[i], rankDropDown, Services.Push_Notifications));
+			Push_Notifications_UI.add(new Field(Widget.Dropdown, PushServiceProviders[i], rankDropDown, Services.Push));
 		}
 
-		Push_Notifications_UI.add(new Field(Widget.BlankLine, null, null, Services.Push_Notifications));		
-		Push_Notifications_UI.add(new Field(Widget.TextInput,"App ID", null, Services.Push_Notifications));	
-		Push_Notifications_UI.add(new Field(Widget.TextInput,"Client Key", null, Services.Push_Notifications));
+		Push_Notifications_UI.add(new Field(Widget.BlankLine, null, null, Services.Push));		
+		Push_Notifications_UI.add(new Field(Widget.TextInput,"App ID", null, Services.Push));	
+		Push_Notifications_UI.add(new Field(Widget.TextInput,"Client Key", null, Services.Push));
 		
 		//....
 	}

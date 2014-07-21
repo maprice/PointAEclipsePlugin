@@ -72,7 +72,7 @@ public class PointAView extends ViewPart {
 						
 						break;
 					
-					case Crash_Reporting:
+					case CrashReporter:
 						
 						PointAServiceConstants.Crash_Reporting_UI.get(index).actual_value = text.getText();
 						
@@ -88,7 +88,7 @@ public class PointAView extends ViewPart {
 						
 						break;
 						
-					case Push_Notifications:
+					case Push:
 						
 						PointAServiceConstants.Push_Notifications_UI.get(index).actual_value = text.getText();
 						
@@ -143,7 +143,7 @@ public class PointAView extends ViewPart {
 					
 					break;
 				
-				case Crash_Reporting:
+				case CrashReporter:
 					
 					PointAServiceConstants.Crash_Reporting_UI.get(index).actual_value = combo.getText();
 					
@@ -159,7 +159,7 @@ public class PointAView extends ViewPart {
 					
 					break;
 					
-				case Push_Notifications:
+				case Push:
 					
 					PointAServiceConstants.Push_Notifications_UI.get(index).actual_value = combo.getText();
 					
@@ -291,7 +291,7 @@ public class PointAView extends ViewPart {
 				TabItem Tab_Analytics = createTab(tabFolder, "Analytics", TabControl(tabFolder,PointAServiceConstants.Analytics_UI));
 				continue;
 			
-			case Crash_Reporting:
+			case CrashReporter:
 				
 		        TabItem Tab_Crash = createTab(tabFolder, "Crash Reporting", TabControl(tabFolder,PointAServiceConstants.Crash_Reporting_UI));
 		    
@@ -303,7 +303,7 @@ public class PointAView extends ViewPart {
 
 		        continue;
 				
-			case Push_Notifications:
+			case Push:
 				
 		        TabItem Tab_PushNotifications = createTab(tabFolder, "Push Notifications", TabControl(tabFolder,PointAServiceConstants.Push_Notifications_UI));
 
