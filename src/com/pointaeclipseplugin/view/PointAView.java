@@ -326,6 +326,6 @@ public class PointAView extends ViewPart {
 	}
 
 	public void setFocus() {
-		viewer.getControl().setFocus();
+		//viewer.getControl().setFocus();
 	}
 }
