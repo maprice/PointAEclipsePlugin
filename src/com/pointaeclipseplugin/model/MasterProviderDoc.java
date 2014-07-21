@@ -19,7 +19,7 @@ public class MasterProviderDoc {
 		// Create admob
 		Provider admob = new Provider();
 		// Populate admob data
-		admob.name = admob;
+		admob.name = "admob";
 		
 		
 		// Add admob to list
