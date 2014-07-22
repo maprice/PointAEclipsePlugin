@@ -23,12 +23,12 @@ public class MasterProviderDoc {
 		admob.params.add("Unit ID");
 		
 		Provider adsense = new Provider("AdSense", Services.Ads, null);
-		adsense.params.add("Size");
-		adsense.params.add("Unit ID");
+		adsense.params.add("Size2");
+		adsense.params.add("Unit ID2");
 		
 		Provider burstly = new Provider("Burstly", Services.Ads, null);
-		burstly.params.add("Size");
-		burstly.params.add("Unit ID");
+		burstly.params.add("Size3");
+		burstly.params.add("Unit ID3");
 		
 		List<Provider> adsList = new ArrayList<Provider>();
 		adsList.add(admob);
@@ -99,6 +99,7 @@ public class MasterProviderDoc {
 		ratingList.add(googleplay);
 		
 		providerMasterList.put(Services.Rating, ratingList);
+		
 		//====================
 		// TWITTER
 		//====================

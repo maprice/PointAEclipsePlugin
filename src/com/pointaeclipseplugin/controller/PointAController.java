@@ -2,8 +2,16 @@ package com.pointaeclipseplugin.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import com.pointaeclipseplugin.model.MasterProviderDoc;
 import com.pointaeclipseplugin.model.PointAModel;
+import com.pointaeclipseplugin.model.PointAServiceConstants;
+import com.pointaeclipseplugin.model.Provider;
+import com.pointaeclipseplugin.model.ProviderMetaData;
+import com.pointaeclipseplugin.model.PointAServiceConstants.Services;
 import com.pointaeclipseplugin.model.filereader.ConfigSettings;
 import com.pointaeclipseplugin.view.PointAView;
 
@@ -47,6 +55,51 @@ public class PointAController {
 	// ===========================================================
 	// Methods
 	// ===========================================================
+	public HashMap<Services, ProviderMetaData[]> getMProviders(){
+		
+		//Get data from MasterProviderDoc
+		MasterProviderDoc mpd = new MasterProviderDoc();
+		HashMap<Services, List<Provider>> mpdProviders = mpd.getProviders();	
+		
+		//Create instance of mProviders to be returned
+		HashMap<Services, ProviderMetaData[]> mProviders = new HashMap<Services, ProviderMetaData[]>();
+		
+		int num_providers;
+		int num_fields;
+		
+		//Populate mProviders
+		
+		//Loop through all Service Types
+		for(Services pluginservice:PointAServiceConstants.Services.values()){
+			List<Provider> providerList = mpdProviders.get(pluginservice);
+			num_providers = providerList.size();
+			
+			ProviderMetaData[] providermetadata = new ProviderMetaData[num_providers];
+			
+			System.out.println("Looking at Service:" + pluginservice.name());
+			//Loop through all Service Providers
+			for(int i = 0; i < num_providers; i++){	
+				Provider provider = providerList.get(i);
+				
+				System.out.println("Provider: " + provider.name);
+				 
+				num_fields = provider.params.size();
+				Map<String, String> pParams = new HashMap<String, String>();
+				
+				pParams.put("Priority", null);
+				
+				//Loop through all Service Provider Fields
+				for(int j = 0; j < num_fields; j++){
+					System.out.println("Adding Field: " + provider.params.get(j));
+					pParams.put(provider.params.get(j), null);
+				}	
+				providermetadata[i] = new ProviderMetaData(provider.name, pParams);
+			}	
+			mProviders.put(pluginservice, providermetadata);
+		}
+		return mProviders;
+	}
+	
 
 	private void setListeners() {
 		 mButtonListener = new ActionListener() {

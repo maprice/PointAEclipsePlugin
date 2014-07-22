@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 
+import com.pointaeclipseplugin.controller.PointAController;
 import com.pointaeclipseplugin.model.ProviderMetaData;
 import com.pointaeclipseplugin.model.MasterProviderDoc;
 import com.pointaeclipseplugin.model.PointAServiceConstants;
@@ -89,27 +90,6 @@ public class PointAView extends ViewPart {
 		return composite;
 	}
 	
-	//custom composite
-	private Control TestComposite(TabFolder tabFolder){
-		Composite c = new Composite(tabFolder, SWT.NONE);
-		
-		GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 3;
-		
-		c.setLayout(gridLayout);
-		
-		/*new Label(c, SWT.NONE).setText("Provider");
-		new Combo(c, SWT.DROP_DOWN);
-		new Button(c, SWT.CHECK).setText("Disable");
-		
-		new Label(c, SWT.NONE).setText("Priority");
-		new Combo(c, SWT.DROP_DOWN);
-		new Label(c, SWT.NONE).setText("");*/
-		
-		
-		return c;
-	}
-	
 	//Tab configuration
 	private TabItem createTab(TabFolder tabFolder, String text, Control c){
 		TabItem tab = new TabItem(tabFolder, SWT.NONE);
@@ -135,15 +115,6 @@ public class PointAView extends ViewPart {
 			priorities[i] = Integer.toString(i + 1);
 		}
 		
-		/*new Label(c, SWT.NONE).setText("Provider");
-		Combo providers_combo = new Combo(c, SWT.DROP_DOWN);
-		providers_combo.setItems(providers);*/
-		
-		//new Button(c, SWT.CHECK).setText("Disable");
-		//new Label(c, SWT.NONE).setText("Priority");
-		//Combo priorities_combo = new Combo(c, SWT.DROP_DOWN);
-		//priorities_combo.setItems(priorities);
-		
 		new Label(c, SWT.NONE).setText("");
 		
 		makeBlankLine(c);
@@ -162,7 +133,7 @@ public class PointAView extends ViewPart {
 			new Label(c, SWT.NONE).setText("");
 			
 			for (String key : mParams.keySet()){
-				makeTextInput(c, key);
+				if (!key.equals("Priority")) makeTextInput(c, key);
 			}
 			makeBlankLine(c);
 		}
@@ -170,56 +141,14 @@ public class PointAView extends ViewPart {
 		return c;
 	}
 
-	
-	private HashMap<Services, ProviderMetaData[]> getMProviders(){
-		
-		//Get data from MasterProviderDoc
-		MasterProviderDoc mpd = new MasterProviderDoc();
-		HashMap<Services, List<Provider>> mpdProviders = mpd.getProviders();	
-		
-		//Create instance of mProviders to be returned
-		HashMap<Services, ProviderMetaData[]> mProviders = new HashMap<Services, ProviderMetaData[]>();
-		
-		int num_providers;
-		int num_fields;
-		
-		//Populate mProviders
-		
-		//Loop through all Service Types
-		for(Services pluginservice:PointAServiceConstants.Services.values()){
-			List<Provider> providerList = mpdProviders.get(pluginservice);
-			num_providers = providerList.size();
-			
-			ProviderMetaData[] providermetadata = new ProviderMetaData[num_providers];
-			
-			System.out.println("Looking at Service:" + pluginservice.name());
-			//Loop through all Service Providers
-			for(int i = 0; i < num_providers; i++){	
-				Provider provider = providerList.get(i);
-				
-				System.out.println("Provider: " + provider.name);
-				 
-				num_fields = provider.params.size();
-				Map<String, String> pParams = new HashMap<String, String>();
-				
-				//Loop through all Service Provider Fields
-				for(int j = 0; j < num_fields; j++){
-					System.out.println("Adding Field: " + provider.params.get(j));
-					pParams.put(provider.params.get(j), null);
-				}	
-				providermetadata[i] = new ProviderMetaData(provider.name, pParams);
-			}	
-			mProviders.put(pluginservice, providermetadata);
-		}
-		return mProviders;
-	}
 	// ===========================================================
 	// Populate Tab Folder
 	// ===========================================================
 	public void createPartControl(Composite parent) {
 	
+		PointAController paController = new PointAController(null, null);
 		
-		HashMap<Services, ProviderMetaData[]> mProviders = getMProviders();
+		HashMap<Services, ProviderMetaData[]> mProviders = paController.getMProviders();
 		
 		final TabFolder tabFolder = new TabFolder(parent, SWT.NONE);
 		
@@ -231,9 +160,6 @@ public class PointAView extends ViewPart {
 			//private Control TabControl(TabFolder tabFolder, Map<String, String> mParams){
 			TabItem test = createTab(tabFolder, pluginservice.name(), TabControl(tabFolder, mProviders.get(pluginservice)));
 		}
-		TabItem Tab_Test = new TabItem(tabFolder, SWT.NONE);
-		Tab_Test.setText("Test");
-		Tab_Test.setControl(TestComposite(tabFolder));
 	}
 
 	public void setFocus() {
