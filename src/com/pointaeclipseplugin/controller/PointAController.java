@@ -76,21 +76,22 @@ public class PointAController {
 			
 			ProviderMetaData[] providermetadata = new ProviderMetaData[num_providers];
 			
-			System.out.println("Looking at Service:" + pluginservice.name());
+			//System.out.println("Looking at Service:" + pluginservice.name());
 			//Loop through all Service Providers
 			for(int i = 0; i < num_providers; i++){	
 				Provider provider = providerList.get(i);
 				
-				System.out.println("Provider: " + provider.name);
+				//System.out.println("Provider: " + provider.name);
 				 
 				num_fields = provider.params.size();
 				Map<String, String> pParams = new HashMap<String, String>();
 				
+				pParams.put("Disabled", "1");
 				pParams.put("Priority", null);
 				
 				//Loop through all Service Provider Fields
 				for(int j = 0; j < num_fields; j++){
-					System.out.println("Adding Field: " + provider.params.get(j));
+					//System.out.println("Adding Field: " + provider.params.get(j));
 					pParams.put(provider.params.get(j), null);
 				}	
 				providermetadata[i] = new ProviderMetaData(provider.name, pParams);

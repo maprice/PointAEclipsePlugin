@@ -35,7 +35,9 @@ import com.pointaeclipseplugin.model.PointAServiceConstants.Services;
 public class PointAView extends ViewPart {
 	
 	public static final String ID = "PointAEclipsePlugin.view";
+	public static HashMap<Services, ProviderMetaData[]> mProviders;
 	private TableViewer viewer;
+	
 	
 	class ViewContentProvider implements IStructuredContentProvider{
 		public void inputChanged(Viewer v, Object oldInput, Object newInput){}
@@ -58,19 +60,48 @@ public class PointAView extends ViewPart {
 	// ===========================================================
 	// Helper Methods
 	// ===========================================================
+	public static void printMProviders(){
+		ProviderMetaData[] providers;
+		
+		for(Services pluginservice:PointAServiceConstants.Services.values()){
+			providers = PointAView.mProviders.get(pluginservice);
+			for(int i = 0; i < providers.length; i++){
+				Map<String, String> params = providers[i].getParams();
+				System.out.println(params.toString());
+			}
+		}
+	}
 	
-	private void makeTextInput(Composite c, String label){
+	private void makeTextInput(Composite c, final String label, final Map<String, String> mParams){
 		new Label(c, SWT.LEFT).setText(label);
 		final Text text = new Text(c, SWT.BORDER);
+		text.addListener(SWT.FocusOut, new Listener(){
+			public void handleEvent(Event e){
+				mParams.put(label, text.getText());
+			}
+		});
 	}
-	private void makeDropDown(Composite c, String label, String[] options){
+	private void makeDropDown(Composite c, String label, String[] options, final Map<String, String> mParams){
 		new Label(c,SWT.LEFT).setText(label);
 		final Combo combo = new Combo(c, SWT.DROP_DOWN);
 		combo.setItems(options);
+		combo.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent e){
+				mParams.put("Priority", combo.getText());
+			}
+		});
 	}
-	private void makeLabelCheckBox(Composite c, String label){
+	private void makeLabelCheckBox(Composite c, String label, final Map<String, String> mParams){
 		new Label(c, SWT.LEFT).setText(label);
-		new Button(c, SWT.CHECK).setText("Disable");
+		final Button button = new Button(c, SWT.CHECK);
+		button.setText("Disable");
+		button.setSelection(true);
+		button.addSelectionListener(new SelectionAdapter(){
+			public void widgetSelected(SelectionEvent e){
+				if (button.getSelection()) mParams.put("Disabled", "1");
+				else mParams.put("Disabled", "0");
+			}
+		});
 	}
 	private void makeBlankLine(Composite c){
 		new Label(c, SWT.LEFT).setText("");
@@ -118,11 +149,11 @@ public class PointAView extends ViewPart {
 			
 			mParams = mProviders[i].getParams();
 			
-			makeLabelCheckBox(c, providers[i]);
-			makeDropDown(c, "Priority", priorities);
+			makeLabelCheckBox(c, providers[i], mParams);
+			makeDropDown(c, "Priority", priorities, mParams);
 			
 			for (String key : mParams.keySet()){
-				if (!key.equals("Priority")) makeTextInput(c, key);
+				if (!key.equals("Priority") && !key.equals("Disabled")) makeTextInput(c, key, mParams);
 			}
 			makeBlankLine(c);
 		}
@@ -136,7 +167,7 @@ public class PointAView extends ViewPart {
 	public void createPartControl(Composite parent) {
 	
 		PointAController paController = new PointAController(null, null);
-		HashMap<Services, ProviderMetaData[]> mProviders = paController.getMProviders();
+		mProviders = paController.getMProviders();
 		
 		final TabFolder tabFolder = new TabFolder(parent, SWT.NONE);
 		

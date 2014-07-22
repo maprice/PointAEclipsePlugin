@@ -4,6 +4,8 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.IWorkbenchWindow;
 
+import com.pointaeclipseplugin.view.PointAView;
+
 
 public class SaveAction extends Action {
 
@@ -20,5 +22,6 @@ public class SaveAction extends Action {
 
     public void run() {
         MessageDialog.openInformation(window.getShell(), "Open", "Rawrrrr!");
+        PointAView.printMProviders();
     }
 }
