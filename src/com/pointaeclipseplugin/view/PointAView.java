@@ -98,13 +98,13 @@ public class PointAView extends ViewPart {
 		
 		c.setLayout(gridLayout);
 		
-		new Label(c, SWT.NONE).setText("Provider");
+		/*new Label(c, SWT.NONE).setText("Provider");
 		new Combo(c, SWT.DROP_DOWN);
 		new Button(c, SWT.CHECK).setText("Disable");
 		
 		new Label(c, SWT.NONE).setText("Priority");
 		new Combo(c, SWT.DROP_DOWN);
-		new Label(c, SWT.NONE).setText("");
+		new Label(c, SWT.NONE).setText("");*/
 		
 		
 		return c;
@@ -135,14 +135,14 @@ public class PointAView extends ViewPart {
 			priorities[i] = Integer.toString(i + 1);
 		}
 		
-		new Label(c, SWT.NONE).setText("Provider");
+		/*new Label(c, SWT.NONE).setText("Provider");
 		Combo providers_combo = new Combo(c, SWT.DROP_DOWN);
-		providers_combo.setItems(providers);
+		providers_combo.setItems(providers);*/
 		
-		new Button(c, SWT.CHECK).setText("Disable");
-		new Label(c, SWT.NONE).setText("Priority");
-		Combo priorities_combo = new Combo(c, SWT.DROP_DOWN);
-		priorities_combo.setItems(priorities);
+		//new Button(c, SWT.CHECK).setText("Disable");
+		//new Label(c, SWT.NONE).setText("Priority");
+		//Combo priorities_combo = new Combo(c, SWT.DROP_DOWN);
+		//priorities_combo.setItems(priorities);
 		
 		new Label(c, SWT.NONE).setText("");
 		
@@ -152,10 +152,19 @@ public class PointAView extends ViewPart {
 		for(int i = 0; i < mProviders.length; i++){
 			
 			mParams = mProviders[i].getParams();
+			new Label(c, SWT.NONE).setText(providers[i]);
+			new Button(c, SWT.CHECK).setText("Disable");
+			new Label(c, SWT.NONE).setText("");
+			
+			new Label(c, SWT.NONE).setText("Priority");
+			Combo priorities_combo = new Combo(c, SWT.DROP_DOWN);
+			priorities_combo.setItems(priorities);
+			new Label(c, SWT.NONE).setText("");
 			
 			for (String key : mParams.keySet()){
 				makeTextInput(c, key);
 			}
+			makeBlankLine(c);
 		}
 		
 		return c;
