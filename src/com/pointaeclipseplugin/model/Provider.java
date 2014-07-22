@@ -10,7 +10,7 @@ public class Provider {
 	public Services type; // make enum
 	public String jarLocation;
 	
-	List<String> params;
+	public List<String> params;
 	
 	public Provider(String name, Services type, String jarLocation){
 		this.name = name;

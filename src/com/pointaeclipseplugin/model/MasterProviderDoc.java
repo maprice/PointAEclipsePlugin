@@ -1,16 +1,19 @@
 package com.pointaeclipseplugin.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List; 
+
 import com.pointaeclipseplugin.model.PointAServiceConstants.Services;
 
 public class MasterProviderDoc {
 	
 	// Could have a list of all providers,  OR a hashmap with key = serviceType value = ArrayList<Providers> (Better) 
-	final ArrayList<Provider> providerMasterList;
-	
+	//final ArrayList<Provider> providerMasterList;
+	final HashMap<Services, List<Provider>> providerMasterList;
 	
 	public MasterProviderDoc(){
-		providerMasterList = new ArrayList<Provider>();
+		providerMasterList = new HashMap<Services, List<Provider>>();
 		
 		//====================
 		// ADS
@@ -20,16 +23,19 @@ public class MasterProviderDoc {
 		admob.params.add("Unit ID");
 		
 		Provider adsense = new Provider("AdSense", Services.Ads, null);
-		admob.params.add("Size");
-		admob.params.add("Unit ID");
+		adsense.params.add("Size");
+		adsense.params.add("Unit ID");
 		
 		Provider burstly = new Provider("Burstly", Services.Ads, null);
-		admob.params.add("Size");
-		admob.params.add("Unit ID");
+		burstly.params.add("Size");
+		burstly.params.add("Unit ID");
 		
-		providerMasterList.add(admob);
-		providerMasterList.add(adsense);
-		providerMasterList.add(burstly);
+		List<Provider> adsList = new ArrayList<Provider>();
+		adsList.add(admob);
+		adsList.add(adsense);
+		adsList.add(burstly);
+		
+		providerMasterList.put(Services.Ads, adsList);
 		
 		//====================
 		// ANALYTICS
@@ -39,11 +45,14 @@ public class MasterProviderDoc {
 		googleanalytics.params.add("Client Key");
 		
 		Provider parseanalytics = new Provider("Parse Analytics", Services.Analytics, null);
-		googleanalytics.params.add("App ID");
-		googleanalytics.params.add("Client Key");
+		parseanalytics.params.add("App ID");
+		parseanalytics.params.add("Client Key");
 		
-		providerMasterList.add(googleanalytics);
-		providerMasterList.add(parseanalytics);
+		List<Provider> analyticsList = new ArrayList<Provider>();
+		analyticsList.add(googleanalytics);
+		analyticsList.add(parseanalytics);
+		
+		providerMasterList.put(Services.Analytics, analyticsList);
 		
 		//====================
 		// CRASH
@@ -57,9 +66,12 @@ public class MasterProviderDoc {
 		Provider crittercism = new Provider("Crittercism", Services.CrashReporter, null);
 		crittercism.params.add("App ID");
 		
-		providerMasterList.add(bugsense);
-		providerMasterList.add(bugsnag);
-		providerMasterList.add(crittercism);
+		List<Provider> crashList = new ArrayList<Provider>();
+		crashList.add(bugsense);
+		crashList.add(bugsnag);
+		crashList.add(crittercism);
+		
+		providerMasterList.put(Services.CrashReporter, crashList);
 		
 		//====================
 		// PUSH
@@ -67,7 +79,11 @@ public class MasterProviderDoc {
 		Provider parse = new Provider("Parse", Services.Push, null);
 		parse.params.add("App ID");
 		parse.params.add("Client Key");
-		providerMasterList.add(parse);
+		
+		List<Provider> parseList = new ArrayList<Provider>();
+		parseList.add(parse);
+		
+		providerMasterList.put(Services.Push, parseList);
 		
 		//====================
 		// RATING
@@ -78,9 +94,11 @@ public class MasterProviderDoc {
 		Provider googleplay = new Provider("Google Play", Services.Rating, null);
 		googleplay.params.add("URI");
 		
-		providerMasterList.add(amazon);
-		providerMasterList.add(googleplay);
+		List<Provider> ratingList = new ArrayList<Provider>();
+		ratingList.add(amazon);
+		ratingList.add(googleplay);
 		
+		providerMasterList.put(Services.Rating, ratingList);
 		//====================
 		// TWITTER
 		//====================
@@ -88,14 +106,17 @@ public class MasterProviderDoc {
 		twitter.params.add("Consumer Key");
 		twitter.params.add("Consumer Secret");
 		
-		providerMasterList.add(twitter);
+		List<Provider> twitterList = new ArrayList<Provider>();
+		twitterList.add(twitter);
+		
+		providerMasterList.put(Services.Twitter, twitterList);
 		
 		//Create other stuff..........
 		
 	}
 	
 	// UI reads me
-	public ArrayList<Provider> getProviders(){
+	public HashMap<Services, List<Provider>> getProviders(){
 		return providerMasterList;
 	}
 }
