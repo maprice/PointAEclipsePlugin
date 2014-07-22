@@ -62,21 +62,17 @@ public class PointAView extends ViewPart {
 	private void makeTextInput(Composite c, String label){
 		new Label(c, SWT.LEFT).setText(label);
 		final Text text = new Text(c, SWT.BORDER);
-		new Label(c, SWT.LEFT).setText("");
 	}
 	private void makeDropDown(Composite c, String label, String[] options){
 		new Label(c,SWT.LEFT).setText(label);
 		final Combo combo = new Combo(c, SWT.DROP_DOWN);
 		combo.setItems(options);
-		new Label(c, SWT.LEFT).setText("");
 	}
-	private void makeLabel(Composite c, String label){
+	private void makeLabelCheckBox(Composite c, String label){
 		new Label(c, SWT.LEFT).setText(label);
-		new Label(c, SWT.LEFT).setText("");
-		new Label(c, SWT.LEFT).setText("");
+		new Button(c, SWT.CHECK).setText("Disable");
 	}
 	private void makeBlankLine(Composite c){
-		new Label(c, SWT.LEFT).setText("");
 		new Label(c, SWT.LEFT).setText("");
 		new Label(c, SWT.LEFT).setText("");
 	}
@@ -104,7 +100,7 @@ public class PointAView extends ViewPart {
 	private Control TabControl(TabFolder tabFolder, ProviderMetaData[] mProviders){
 		Composite c = getGridComposite(tabFolder);
 		GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 3;
+		gridLayout.numColumns = 2;
 		c.setLayout(gridLayout);
 		
 		String[] providers = new String[mProviders.length];
@@ -115,22 +111,15 @@ public class PointAView extends ViewPart {
 			priorities[i] = Integer.toString(i + 1);
 		}
 		
-		new Label(c, SWT.NONE).setText("");
-		
 		makeBlankLine(c);
 		
 		Map<String, String> mParams = new HashMap<String, String>();
 		for(int i = 0; i < mProviders.length; i++){
 			
 			mParams = mProviders[i].getParams();
-			new Label(c, SWT.NONE).setText(providers[i]);
-			new Button(c, SWT.CHECK).setText("Disable");
-			new Label(c, SWT.NONE).setText("");
 			
-			new Label(c, SWT.NONE).setText("Priority");
-			Combo priorities_combo = new Combo(c, SWT.DROP_DOWN);
-			priorities_combo.setItems(priorities);
-			new Label(c, SWT.NONE).setText("");
+			makeLabelCheckBox(c, providers[i]);
+			makeDropDown(c, "Priority", priorities);
 			
 			for (String key : mParams.keySet()){
 				if (!key.equals("Priority")) makeTextInput(c, key);
@@ -147,7 +136,6 @@ public class PointAView extends ViewPart {
 	public void createPartControl(Composite parent) {
 	
 		PointAController paController = new PointAController(null, null);
-		
 		HashMap<Services, ProviderMetaData[]> mProviders = paController.getMProviders();
 		
 		final TabFolder tabFolder = new TabFolder(parent, SWT.NONE);
@@ -157,7 +145,6 @@ public class PointAView extends ViewPart {
 		
 		for(Services pluginservice:PointAServiceConstants.Services.values()){
 			
-			//private Control TabControl(TabFolder tabFolder, Map<String, String> mParams){
 			TabItem test = createTab(tabFolder, pluginservice.name(), TabControl(tabFolder, mProviders.get(pluginservice)));
 		}
 	}
