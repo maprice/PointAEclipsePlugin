@@ -1,7 +1,9 @@
 package com.pointaeclipseplugin.view;
 
-import java.awt.Button;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
@@ -11,6 +13,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -21,7 +24,10 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 
+import com.pointaeclipseplugin.model.ProviderMetaData;
+import com.pointaeclipseplugin.model.MasterProviderDoc;
 import com.pointaeclipseplugin.model.PointAServiceConstants;
+import com.pointaeclipseplugin.model.Provider;
 import com.pointaeclipseplugin.model.PointAServiceConstants.Services;
 
 
@@ -43,152 +49,33 @@ public class PointAView extends ViewPart {
 		}
 	}
 	
+	private Control tabControl(TabFolder tabFolder, HashMap<Services, Provider> FieldList ){
+		Composite composite = getGridComposite(tabFolder);
+		return composite;
+	}
+	
 	// ===========================================================
 	// Helper Methods
 	// ===========================================================
-	//User Input Generator
-	private void makeTextInput(Composite c, String label, final Services service, final int index){
+	
+	private void makeTextInput(Composite c, String label){
 		new Label(c, SWT.LEFT).setText(label);
 		final Text text = new Text(c, SWT.BORDER);
-		
-		  text.addListener(SWT.FocusOut, new Listener() {
-		      public void handleEvent(Event e) {
-		    	  
-		    		switch(service){
-					
-					case Ads:
-						//Control AdsTabControl = makeTabFields(...);
-						PointAServiceConstants.Ads_UI.get(index).actual_value = text.getText();
-						
-						System.out.println(PointAServiceConstants.Ads_UI.get(index).actual_value);
-						
-						break;
-						
-					case Analytics:
-						
-						PointAServiceConstants.Analytics_UI.get(index).actual_value = text.getText();
-						
-						System.out.println(PointAServiceConstants.Analytics_UI.get(index).actual_value);
-						
-						break;
-					
-					case CrashReporter:
-						
-						PointAServiceConstants.Crash_Reporting_UI.get(index).actual_value = text.getText();
-						
-						System.out.println(PointAServiceConstants.Crash_Reporting_UI.get(index).actual_value);
-						
-						break;
-					
-					case Rating:
-						
-						PointAServiceConstants.Rating_UI.get(index).actual_value = text.getText();
-						
-						System.out.println(PointAServiceConstants.Rating_UI.get(index).actual_value);
-						
-						break;
-						
-					case Push:
-						
-						PointAServiceConstants.Push_Notifications_UI.get(index).actual_value = text.getText();
-						
-						System.out.println(PointAServiceConstants.Push_Notifications_UI.get(index).actual_value);
-						
-						break;
-						
-					case Twitter:
-						
-						PointAServiceConstants.Twitter_UI.get(index).actual_value = text.getText();
-						
-						System.out.println(PointAServiceConstants.Twitter_UI.get(index).actual_value);
-						
-						break;
-				    
-					default:
-				    
-
-						
-					}
-		    	  
-		      }
-		    });
-		
+		new Label(c, SWT.LEFT).setText("");
 	}
-	
-	
-	private void makeDropdown(Composite c, String label, String [] options, final Services service, final int index){
+	private void makeDropDown(Composite c, String label, String[] options){
 		new Label(c,SWT.LEFT).setText(label);
 		final Combo combo = new Combo(c, SWT.DROP_DOWN);
 		combo.setItems(options);
-		
-		combo.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e){
-				
-				switch(service){
-				
-				case Ads:
-					//Control AdsTabControl = makeTabFields(...);
-					PointAServiceConstants.Ads_UI.get(index).actual_value = combo.getText();
-					
-					System.out.println(PointAServiceConstants.Ads_UI.get(index).actual_value);
-					
-					break;
-					
-					
-				case Analytics:
-					
-					PointAServiceConstants.Analytics_UI.get(index).actual_value = combo.getText();
-					
-					System.out.println(PointAServiceConstants.Analytics_UI.get(index).actual_value);
-					
-					break;
-				
-				case CrashReporter:
-					
-					PointAServiceConstants.Crash_Reporting_UI.get(index).actual_value = combo.getText();
-					
-					System.out.println(PointAServiceConstants.Crash_Reporting_UI.get(index).actual_value);
-					
-					break;
-				
-				case Rating:
-					
-					PointAServiceConstants.Rating_UI.get(index).actual_value = combo.getText();
-					
-					System.out.println(PointAServiceConstants.Rating_UI.get(index).actual_value);
-					
-					break;
-					
-				case Push:
-					
-					PointAServiceConstants.Push_Notifications_UI.get(index).actual_value = combo.getText();
-					
-					System.out.println(PointAServiceConstants.Push_Notifications_UI.get(index).actual_value);
-					
-					break;
-					
-				case Twitter:
-					
-					PointAServiceConstants.Twitter_UI.get(index).actual_value = combo.getText();
-					
-					System.out.println(PointAServiceConstants.Twitter_UI.get(index).actual_value);
-					
-					break;
-			    
-				default:
-			    
-
-					
-				}
-			}
-		});
-		
+		new Label(c, SWT.LEFT).setText("");
 	}
 	private void makeLabel(Composite c, String label){
 		new Label(c, SWT.LEFT).setText(label);
 		new Label(c, SWT.LEFT).setText("");
+		new Label(c, SWT.LEFT).setText("");
 	}
 	private void makeBlankLine(Composite c){
+		new Label(c, SWT.LEFT).setText("");
 		new Label(c, SWT.LEFT).setText("");
 		new Label(c, SWT.LEFT).setText("");
 	}
@@ -196,10 +83,31 @@ public class PointAView extends ViewPart {
 	//GridLayout Composite Generator
 	private Composite getGridComposite(TabFolder tabFolder){
 		GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 2;
+		gridLayout.numColumns = 3;
 		Composite composite = new Composite(tabFolder, SWT.NONE);
 		composite.setLayout(gridLayout);
 		return composite;
+	}
+	
+	//custom composite
+	private Control TestComposite(TabFolder tabFolder){
+		Composite c = new Composite(tabFolder, SWT.NONE);
+		
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 3;
+		
+		c.setLayout(gridLayout);
+		
+		new Label(c, SWT.NONE).setText("Provider");
+		new Combo(c, SWT.DROP_DOWN);
+		new Button(c, SWT.CHECK).setText("Disable");
+		
+		new Label(c, SWT.NONE).setText("Priority");
+		new Combo(c, SWT.DROP_DOWN);
+		new Label(c, SWT.NONE).setText("");
+		
+		
+		return c;
 	}
 	
 	//Tab configuration
@@ -213,116 +121,110 @@ public class PointAView extends ViewPart {
 	// ===========================================================
 	// Tab Control Configuration
 	// ===========================================================
-	
-	
-	private Control TabControl(TabFolder tabFolder, List<PointAServiceConstants.Field> FieldList ){
+	private Control TabControl(TabFolder tabFolder, ProviderMetaData[] mProviders){
+		Composite c = getGridComposite(tabFolder);
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 3;
+		c.setLayout(gridLayout);
 		
-		Composite composite = getGridComposite(tabFolder);
+		String[] providers = new String[mProviders.length];
+		String[] priorities = new String[mProviders.length];
 		
-		int i = 0;
-		
-		for(PointAServiceConstants.Field Field: FieldList){
-			
-		//	System.out.println(FieldList.indexOf(Field));
-		
-			switch(Field.widget){
-			
-			case Dropdown:
-				
-				makeDropdown(composite, Field.label, Field.values, Field.service, FieldList.indexOf(Field));
-
-				continue;
-				
-			case TextInput:
-				
-				makeTextInput(composite, Field.label, Field.service, FieldList.indexOf(Field));
-
-				continue;
-			
-			case Label:
-				
-				makeLabel(composite, Field.label);
-
-				continue;
-				
-			case BlankLine:
-				
-				makeBlankLine(composite);
-				
-				continue;
-				
-			default:
-				
-				continue;
-			
-			}
-			
-			
+		for(int i = 0; i < mProviders.length; i++){
+			providers[i] = mProviders[i].getName();
+			priorities[i] = Integer.toString(i + 1);
 		}
 		
-		return composite;
+		new Label(c, SWT.NONE).setText("Provider");
+		Combo providers_combo = new Combo(c, SWT.DROP_DOWN);
+		providers_combo.setItems(providers);
 		
+		new Button(c, SWT.CHECK).setText("Disable");
+		new Label(c, SWT.NONE).setText("Priority");
+		Combo priorities_combo = new Combo(c, SWT.DROP_DOWN);
+		priorities_combo.setItems(priorities);
+		
+		new Label(c, SWT.NONE).setText("");
+		
+		makeBlankLine(c);
+		
+		Map<String, String> mParams = new HashMap<String, String>();
+		for(int i = 0; i < mProviders.length; i++){
+			
+			mParams = mProviders[i].getParams();
+			
+			for (String key : mParams.keySet()){
+				makeTextInput(c, key);
+			}
+		}
+		
+		return c;
 	}
 
+	
+	private HashMap<Services, ProviderMetaData[]> getMProviders(){
+		
+		//Get data from MasterProviderDoc
+		MasterProviderDoc mpd = new MasterProviderDoc();
+		HashMap<Services, List<Provider>> mpdProviders = mpd.getProviders();	
+		
+		//Create instance of mProviders to be returned
+		HashMap<Services, ProviderMetaData[]> mProviders = new HashMap<Services, ProviderMetaData[]>();
+		
+		int num_providers;
+		int num_fields;
+		
+		//Populate mProviders
+		
+		//Loop through all Service Types
+		for(Services pluginservice:PointAServiceConstants.Services.values()){
+			List<Provider> providerList = mpdProviders.get(pluginservice);
+			num_providers = providerList.size();
+			
+			ProviderMetaData[] providermetadata = new ProviderMetaData[num_providers];
+			
+			System.out.println("Looking at Service:" + pluginservice.name());
+			//Loop through all Service Providers
+			for(int i = 0; i < num_providers; i++){	
+				Provider provider = providerList.get(i);
+				
+				System.out.println("Provider: " + provider.name);
+				 
+				num_fields = provider.params.size();
+				Map<String, String> pParams = new HashMap<String, String>();
+				
+				//Loop through all Service Provider Fields
+				for(int j = 0; j < num_fields; j++){
+					System.out.println("Adding Field: " + provider.params.get(j));
+					pParams.put(provider.params.get(j), null);
+				}	
+				providermetadata[i] = new ProviderMetaData(provider.name, pParams);
+			}	
+			mProviders.put(pluginservice, providermetadata);
+		}
+		return mProviders;
+	}
 	// ===========================================================
 	// Populate Tab Folder
 	// ===========================================================
 	public void createPartControl(Composite parent) {
+	
+		
+		HashMap<Services, ProviderMetaData[]> mProviders = getMProviders();
+		
 		final TabFolder tabFolder = new TabFolder(parent, SWT.NONE);
 		
-		//Create Tabs
-				
+		//Create Tabs		
 		PointAServiceConstants.populateUIData();
 		
-		
-		for(Services pluginservice:PointAServiceConstants.Services.values())
-		{
+		for(Services pluginservice:PointAServiceConstants.Services.values()){
 			
-			switch(pluginservice){
-			
-			case Ads:
-				//Control AdsTabControl = makeTabFields(...);
-				TabItem Tab_Ads = createTab(tabFolder, "Ads", TabControl(tabFolder, PointAServiceConstants.Ads_UI));
-				
-				continue;
-				
-			case Analytics:
-				
-				TabItem Tab_Analytics = createTab(tabFolder, "Analytics", TabControl(tabFolder,PointAServiceConstants.Analytics_UI));
-				continue;
-			
-			case CrashReporter:
-				
-		        TabItem Tab_Crash = createTab(tabFolder, "Crash Reporting", TabControl(tabFolder,PointAServiceConstants.Crash_Reporting_UI));
-		    
-		        continue;
-			
-			case Rating:
-				
-		        TabItem Tab_Rating = createTab(tabFolder, "Rating", TabControl(tabFolder,PointAServiceConstants.Rating_UI));
-
-		        continue;
-				
-			case Push:
-				
-		        TabItem Tab_PushNotifications = createTab(tabFolder, "Push Notifications", TabControl(tabFolder,PointAServiceConstants.Push_Notifications_UI));
-
-		        continue;
-				
-			case Twitter:
-				
-		        TabItem Tab_Twitter = createTab(tabFolder, "Twitter", TabControl(tabFolder,PointAServiceConstants.Twitter_UI));
-		    
-		        continue;
-		    
-			default:
-		    	
-		    	continue;
-
-				
-			}
-			
+			//private Control TabControl(TabFolder tabFolder, Map<String, String> mParams){
+			TabItem test = createTab(tabFolder, pluginservice.name(), TabControl(tabFolder, mProviders.get(pluginservice)));
 		}
+		TabItem Tab_Test = new TabItem(tabFolder, SWT.NONE);
+		Tab_Test.setText("Test");
+		Tab_Test.setControl(TestComposite(tabFolder));
 	}
 
 	public void setFocus() {
