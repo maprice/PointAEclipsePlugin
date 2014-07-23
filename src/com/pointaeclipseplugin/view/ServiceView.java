@@ -40,7 +40,8 @@ public class ServiceView extends ViewPart {
 				mController.onRevertButtonPressed();
 			}
 			else if(e.widget == mEnableButton){
-				mController.onEnableChanged(mPriorityCombo.getEnabled());
+				mController.onEnableChanged(mEnableButton.getSelection());	
+				setProviderEnabled(mEnableButton.getSelection());
 			}
 		}
 
@@ -99,8 +100,8 @@ public class ServiceView extends ViewPart {
 		// Create all our view elements
 		mServiceTypeLabel = new Label(pParent, SWT.NONE);
 		mProviderNameLabel = new Label(pParent, SWT.NONE);
-		mEnableButton = new Button(pParent, SWT.CHECK);
 		mEnableButtonLabel = new Label(pParent, SWT.NONE);
+		mEnableButton = new Button(pParent, SWT.CHECK);
 		mPriorityComboLabel = new Label(pParent, SWT.NONE);
 		mPriorityCombo = new Combo(pParent, SWT.DROP_DOWN);
 		mTableViewer = new ParameterTableViewer(pParent, mController.getCurrentProviderParams());
@@ -114,8 +115,8 @@ public class ServiceView extends ViewPart {
 		mEnableButton.addSelectionListener(mViewListener);
 
 		// Set Text (Should all be in constants somewhere)
-		mServiceTypeLabel.setText("Service Provider ");
-		mProviderNameLabel.setText("AdMob");
+		mServiceTypeLabel.setText("Provider");
+		mProviderNameLabel.setText("Provider Name");
 		mEnableButtonLabel.setText("Enable");
 		mPriorityComboLabel.setText("Priority");
 		mPriorityCombo.setItems(lPriorities);
@@ -126,13 +127,15 @@ public class ServiceView extends ViewPart {
 		getSite().setSelectionProvider(mTableViewer);
 		getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(mProviderSelectionListener);
 
+		setProviderEnabled(false);
 	}
 
-	public void update(ProviderMetaData x){
-		if(x!= null){
-			mProviderNameLabel.setText(x.getName());
+	public void update(ProviderMetaData pProvider){
+		if(pProvider!= null){
+			mProviderNameLabel.setText(pProvider.getName());
 
-			setProviderEnabled(x.getEnabled());
+			setProviderEnabled(pProvider.getEnabled());
+			mPriorityCombo.select(pProvider.getPriority());
 
 			mTableViewer.refresh();
 		}

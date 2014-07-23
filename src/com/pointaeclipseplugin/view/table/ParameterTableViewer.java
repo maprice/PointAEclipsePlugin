@@ -12,13 +12,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
-import com.pointaeclipseplugin.model.ParamList;
-import com.pointaeclipseplugin.model.ProviderParamSet;
-import com.pointaeclipseplugin.model.constants.MasterProviderMeta;
+import com.pointaeclipseplugin.model.ParamMap;
 
 public class ParameterTableViewer extends TableViewer{
 
-	public ParameterTableViewer(Composite parent, List<ProviderParamSet> mParams) {
+	public ParameterTableViewer(Composite parent, List<ParamMap> mParams) {
 		super(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 		// TODO Auto-generated constructor stub
 		createColumns(parent, this);
@@ -56,8 +54,8 @@ public class ParameterTableViewer extends TableViewer{
 			col.setLabelProvider(new ColumnLabelProvider() {
 				@Override
 				public String getText(Object element) {
-					ProviderParamSet p = (ProviderParamSet) element;
-					return p.getFirstName();
+					ParamMap p = (ParamMap) element;
+					return p.getParameterKey();
 				}
 			});
 
@@ -68,8 +66,8 @@ public class ParameterTableViewer extends TableViewer{
 			col.setLabelProvider(new ColumnLabelProvider() {
 				@Override
 				public String getText(Object element) {
-					ProviderParamSet p = (ProviderParamSet) element;
-					return p.getLastName();
+					ParamMap p = (ParamMap) element;
+					return p.getParameterValue();
 				}
 			});
 

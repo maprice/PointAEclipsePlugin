@@ -1,13 +1,13 @@
 package com.pointaeclipseplugin.controller;
 
-import java.security.Provider.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.pointaeclipseplugin.model.ParamList;
+import com.pointaeclipseplugin.model.PointAModel;
 import com.pointaeclipseplugin.model.ProviderMetaData;
-import com.pointaeclipseplugin.model.ProviderParamSet;
+import com.pointaeclipseplugin.model.ParamMap;
 import com.pointaeclipseplugin.model.constants.MasterProviderInfo;
 import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
 import com.pointaeclipseplugin.model.constants.MasterProviderMeta;
@@ -25,19 +25,27 @@ public enum PointAController {
 	// Fields
 	// ===========================================================
 
-	private ParamList mModel;
+	
 
-	private HashMap<Service, List<ProviderMetaData>> mProviders;
-	private ProviderMetaData currentSelection;
+	private PointAModel mModel;
 
+	private HashMap<Services, List<ProviderMetaData>> mProviders;
+	
+	private ProviderMetaData mCurrentSelection;
+	private ParamList mCurrentSelectionParamList;
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
 	private PointAController(){
-		mModel = new ParamList();
-		// Get from max
-		mProviders = new HashMap<Service, List<ProviderMetaData>>();
+		// Create our model
+		mModel = new PointAModel();
+
+		// Get from max pretend is empty for now
+		mProviders = mModel.getConfig();
+		
+		// Create empty params list to start
+		mCurrentSelectionParamList = new ParamList();
 	}
 
 	// ===========================================================
@@ -45,6 +53,7 @@ public enum PointAController {
 	// ===========================================================
 
 	public void onPriorityChanged(int pNewPriority){
+		mCurrentSelection.setPriority(pNewPriority);
 		System.out.println("Priority changed to: "+pNewPriority);	
 	}
 
@@ -53,18 +62,33 @@ public enum PointAController {
 
 		ProviderMetaData newProvider = getProvider(pNewSelection);
 
+		if(mCurrentSelection != null)
+			mCurrentSelectionParamList.updateParameters(mCurrentSelection.getParams());
+
 		if(newProvider != null)
-			mModel.setPersons(newProvider.getParams());
+			mCurrentSelectionParamList.setParameters(newProvider.getParams());
+
+		mCurrentSelection = newProvider;
 
 	}
 
 	public void onEnableChanged(Boolean pEnabled){
+		//Cool they enabled it, lets add it to our list
+		if(pEnabled){
+			mCurrentSelection.setEnabled(true);
+			mProviders.get(mCurrentSelection.getType()).add(mCurrentSelection);
+		}
+		else{
+			mCurrentSelection.setEnabled(false);
+			mProviders.get(mCurrentSelection.getType()).remove(mCurrentSelection);
+		}
+
 		System.out.println("Enable button changed to: "+pEnabled);	
 	}
 
 
-	public List<ProviderParamSet> getCurrentProviderParams() {
-		return mModel.getPersons();
+	public List<ParamMap> getCurrentProviderParams() {
+		return mCurrentSelectionParamList.getParameters();
 	}
 
 	public ProviderMetaData getProvider(String pName){
@@ -103,7 +127,7 @@ public enum PointAController {
 						newParams.put(paramKey, "");
 					}
 
-					ProviderMetaData newProvider = new ProviderMetaData(pName, newParams);
+					ProviderMetaData newProvider = new ProviderMetaData(pName, newParams, 0, false, lService);
 					return newProvider;
 				}
 			}
@@ -116,6 +140,22 @@ public enum PointAController {
 
 	public void onSaveButtonPressed() {
 		System.out.println("Save button pressed");		
+		System.out.println("We should save the following to the config.xml");
+
+		for (Services lService : Services.values()) {
+			List<ProviderMetaData> lProviders = mProviders.get(lService);
+			System.out.println(lService.name());
+			for(ProviderMetaData lProvider : lProviders){
+
+				System.out.println("Provider:" + lProvider.getName());
+				System.out.println("    Priority:" + lProvider.getPriority());
+
+			}
+			System.out.println("---------------------");
+		}
+
+		// TODO: Uncomment once model works
+		//mModel.saveChanges(mProviders);
 	}
 
 	public void onRevertButtonPressed() {

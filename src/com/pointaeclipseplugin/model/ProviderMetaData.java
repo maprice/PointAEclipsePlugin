@@ -2,6 +2,8 @@ package com.pointaeclipseplugin.model;
 
 import java.util.Map;
 
+import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
+
 /**
  * Container class of service provider specific data
  * @version 1.0
@@ -25,6 +27,7 @@ public class ProviderMetaData{
 	final private Map<String, String> mParams;
 	private int mPriority;
 	private boolean mEnabled;
+	private Services mType;
 
 	// ===========================================================
 	// Constructors
@@ -41,11 +44,12 @@ public class ProviderMetaData{
 		mEnabled = true;
 	}
 
-	public ProviderMetaData(String pName, Map<String, String> pParams, int pPriority, boolean pEnabled){
+	public ProviderMetaData(String pName, Map<String, String> pParams, int pPriority, boolean pEnabled, Services pType){
 		mName = pName;
 		mParams = pParams;
 		mPriority = pPriority;
 		mEnabled = pEnabled;
+		mType = pType;
 	}
 
 	// ===========================================================
@@ -66,6 +70,18 @@ public class ProviderMetaData{
 
 	public int getPriority(){
 		return mPriority;
+	}
+	
+	public Services getType(){
+		return mType;
+	}
+
+	public void setEnabled(boolean pEnabled) {
+		mEnabled = pEnabled;
+	}
+
+	public void setPriority(int pPriority) {
+		mPriority = pPriority;
 	}
 
 }

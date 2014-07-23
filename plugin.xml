@@ -101,7 +101,7 @@
             name="PointA">
          <property
                name="aboutText"
-               value="RCP Mail template created by PDE">
+               value="PointA is....">
          </property>
          <property
                name="windowImages"

@@ -5,7 +5,7 @@ import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TextCellEditor;
 
-import com.pointaeclipseplugin.model.ProviderParamSet;
+import com.pointaeclipseplugin.model.ParamMap;
 
 public class EditValueEditingSupport extends EditingSupport {
 
@@ -30,12 +30,12 @@ public class EditValueEditingSupport extends EditingSupport {
 
 	@Override
 	protected Object getValue(Object element) {
-		return ((ProviderParamSet) element).getFirstName();
+		return ((ParamMap) element).getParameterKey();
 	}
 
 	@Override
 	protected void setValue(Object element, Object userInputValue) {
-		((ProviderParamSet) element).setLastName(String.valueOf(userInputValue));
+		((ParamMap) element).setParameterValue(String.valueOf(userInputValue));
 		viewer.update(element, null);
 	}
 } 

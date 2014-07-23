@@ -1,5 +1,9 @@
 package com.pointaeclipseplugin.model;
 
+import java.util.HashMap;
+import java.util.List;
+
+import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
 import com.pointaeclipseplugin.model.filebuilder.FileBuilderManager;
 import com.pointaeclipseplugin.model.filereader.ConfigManager;
 import com.pointaeclipseplugin.model.filereader.ConfigSettings;
@@ -43,15 +47,15 @@ public class PointAModel {
 	// Methods
 	// ===========================================================
 
-	public void saveChanges(ConfigSettings pNewConfig){
+	public void saveChanges(HashMap<Services, List<ProviderMetaData>> mProviders){
 		//Synchronous start
-		mConfigManager.updateConfig(pNewConfig);
-		mFileBuilderManager.updateFiles(pNewConfig);
-		mJarDownloaderManager.updateJars(pNewConfig);
+		mConfigManager.updateConfig(mProviders);
+		mFileBuilderManager.updateFiles(mProviders);
+		mJarDownloaderManager.updateJars(mProviders);
 		//Synchronous end
 	}
 	
-	public ConfigSettings getConfig(){
+	public HashMap<Services, List<ProviderMetaData>> getConfig(){
 		mConfigManager.parseConfig();
 		return mConfigManager.getConfig();
 	}

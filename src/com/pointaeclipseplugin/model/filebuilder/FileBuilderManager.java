@@ -1,6 +1,11 @@
 package com.pointaeclipseplugin.model.filebuilder;
 
+import java.util.HashMap;
+import java.util.List;
+
+import com.pointaeclipseplugin.model.ProviderMetaData;
 import com.pointaeclipseplugin.model.constants.FileConstants;
+import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
 import com.pointaeclipseplugin.model.filereader.ConfigSettings;
 import com.pointaeclipseplugin.model.filewriter.WritableFile;
 
@@ -33,12 +38,12 @@ public class FileBuilderManager {
 	// Methods
 	// ===========================================================
 
-	public void updateFiles(ConfigSettings pNewConfig) {
+	public void updateFiles(HashMap<Services, List<ProviderMetaData>> mProviders) {
 		WritableFile lManifest, lClassPath, lConfig;
 
-		lManifest = buildManifest(pNewConfig);
-		lClassPath = buildClassPath(pNewConfig);
-		lConfig = buildConfig(pNewConfig);
+		lManifest = buildManifest(mProviders);
+		lClassPath = buildClassPath(mProviders);
+		lConfig = buildConfig(mProviders);
 
 		// Synchronous start
 		lManifest.writeToFile(FileConstants.MANIFEST_PATH);
@@ -48,7 +53,7 @@ public class FileBuilderManager {
 
 	}
 
-	private WritableFile buildManifest(ConfigSettings pNewConfig){
+	private WritableFile buildManifest(HashMap<Services, List<ProviderMetaData>> mProviders){
 		ManifestBuilder mManifestBuilder = new ManifestBuilder();
 
 		mManifestBuilder.addPreInject(FileConstants.MANIFEST_HEADER);
@@ -63,7 +68,7 @@ public class FileBuilderManager {
 		return mManifestBuilder.getFile();
 	}
 
-	private WritableFile buildClassPath(ConfigSettings pNewConfig){
+	private WritableFile buildClassPath(HashMap<Services, List<ProviderMetaData>> mProviders){
 		ClassPathBuilder mClassPathBuilder = new ClassPathBuilder();
 
 		mClassPathBuilder.addPreInject(FileConstants.CLASSPATH_HEADER);
@@ -78,7 +83,7 @@ public class FileBuilderManager {
 		return mClassPathBuilder.getFile();
 	}
 
-	private WritableFile buildConfig(ConfigSettings pNewConfig){
+	private WritableFile buildConfig(HashMap<Services, List<ProviderMetaData>> mProviders){
 		ConfigBuilder mConfigBuilder = new ConfigBuilder();
 
 		mConfigBuilder.addPreInject(FileConstants.CONFIG_HEADER);
