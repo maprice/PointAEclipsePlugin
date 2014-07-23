@@ -25,12 +25,12 @@ public enum PointAController {
 	// Fields
 	// ===========================================================
 
-	
+
 
 	private PointAModel mModel;
 
 	private HashMap<Services, List<ProviderMetaData>> mProviders;
-	
+
 	private ProviderMetaData mCurrentSelection;
 	private ParamList mCurrentSelectionParamList;
 	// ===========================================================
@@ -43,7 +43,7 @@ public enum PointAController {
 
 		// Get from max pretend is empty for now
 		mProviders = mModel.getConfig();
-		
+
 		// Create empty params list to start
 		mCurrentSelectionParamList = new ParamList();
 	}
@@ -65,10 +65,11 @@ public enum PointAController {
 		if(mCurrentSelection != null)
 			mCurrentSelectionParamList.updateParameters(mCurrentSelection.getParams());
 
-		if(newProvider != null)
+		if(newProvider != null){
 			mCurrentSelectionParamList.setParameters(newProvider.getParams());
+			mCurrentSelection = newProvider;
+		}
 
-		mCurrentSelection = newProvider;
 
 	}
 
