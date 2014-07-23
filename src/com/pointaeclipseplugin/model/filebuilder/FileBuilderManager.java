@@ -1,11 +1,10 @@
 package com.pointaeclipseplugin.model.filebuilder;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 import com.pointaeclipseplugin.model.ProviderMetaData;
+import com.pointaeclipseplugin.model.PointAServiceConstants.Services;
 import com.pointaeclipseplugin.model.constants.FileConstants;
-import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
 import com.pointaeclipseplugin.model.filereader.ConfigSettings;
 import com.pointaeclipseplugin.model.filewriter.WritableFile;
 
@@ -38,11 +37,11 @@ public class FileBuilderManager {
 	// Methods
 	// ===========================================================
 
-	public void updateFiles(HashMap<Services, List<ProviderMetaData>> mProviders) {
+	public void updateFiles(ConfigSettings pNewConfig, Map<Services,ProviderMetaData[]> mProviders) {
 		WritableFile lManifest, lClassPath, lConfig;
 
-		lManifest = buildManifest(mProviders);
-		lClassPath = buildClassPath(mProviders);
+		lManifest = buildManifest(pNewConfig);
+		lClassPath = buildClassPath(pNewConfig);
 		lConfig = buildConfig(mProviders);
 
 		// Synchronous start
@@ -53,7 +52,7 @@ public class FileBuilderManager {
 
 	}
 
-	private WritableFile buildManifest(HashMap<Services, List<ProviderMetaData>> mProviders){
+	private WritableFile buildManifest(ConfigSettings pNewConfig){
 		ManifestBuilder mManifestBuilder = new ManifestBuilder();
 
 		mManifestBuilder.addPreInject(FileConstants.MANIFEST_HEADER);
@@ -61,14 +60,14 @@ public class FileBuilderManager {
 		//Read from config to get permission list
 		int totalPermission = 10;
 		for(int i = 0; i < totalPermission; i++)
-			mManifestBuilder.addInject("PermissionName");
+			mManifestBuilder.addInject("jkhb");
 
 		mManifestBuilder.addPostInject(FileConstants.MANIFEST_FOOTER);
 
 		return mManifestBuilder.getFile();
 	}
 
-	private WritableFile buildClassPath(HashMap<Services, List<ProviderMetaData>> mProviders){
+	private WritableFile buildClassPath(ConfigSettings pNewConfig){
 		ClassPathBuilder mClassPathBuilder = new ClassPathBuilder();
 
 		mClassPathBuilder.addPreInject(FileConstants.CLASSPATH_HEADER);
@@ -83,16 +82,33 @@ public class FileBuilderManager {
 		return mClassPathBuilder.getFile();
 	}
 
-	private WritableFile buildConfig(HashMap<Services, List<ProviderMetaData>> mProviders){
+	private WritableFile buildConfig(Map<Services,ProviderMetaData[]> mProviders){
 		ConfigBuilder mConfigBuilder = new ConfigBuilder();
 
 		mConfigBuilder.addPreInject(FileConstants.CONFIG_HEADER);
 
-		//Read from config to get service providers
-		int totalPermission = 10;
-		for(int i = 0; i < totalPermission; i++)
-			mConfigBuilder.addInject("Provider information");
+		for (Services serType: mProviders.keySet())
+		{
+			for (int providerIndex = 0; providerIndex < mProviders.get(serType).length; providerIndex++)
+			{
+				String typeInject = serType.toString();
+				
+				String providerInject = mProviders.get(serType)[providerIndex].getName();
+				
+				String priorityInject = Integer.toString(providerIndex);
 
+				String paramsInject = "";
+				for (String key: mProviders.get(serType)[providerIndex].getParams().keySet())
+				{
+					paramsInject += "<" + key + ">";
+					paramsInject += mProviders.get(serType)[providerIndex].getParams().get(key);
+					paramsInject += "</" + key + ">";
+				}
+
+				mConfigBuilder.addInject(typeInject, providerInject, priorityInject, paramsInject);
+			}
+		}
+		
 		mConfigBuilder.addPostInject(FileConstants.CONFIG_FOOTER);
 
 		return mConfigBuilder.getFile();
