@@ -1,4 +1,4 @@
-package com.PointA.eclipse;
+package com.pointaeclipseplugin.eclipse;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;

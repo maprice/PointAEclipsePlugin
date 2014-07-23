@@ -7,7 +7,7 @@
          point="org.eclipse.core.runtime.applications">
       <application>
          <run
-               class="com.PointA.Application">
+               class="com.pointaeclipseplugin.Application">
          </run>
       </application>
    </extension>
@@ -16,7 +16,7 @@
          point="org.eclipse.core.runtime.applications">
       <application>
          <run
-               class="com.PointA.Application">
+               class="com.pointaeclipseplugin.Application">
          </run>
       </application>
    </extension>
@@ -26,7 +26,7 @@
          point="org.eclipse.ui.perspectives">
       <perspective
             name="RCP Perspective"
-            class="com.PointA.view.Perspective"
+            class="com.pointaeclipseplugin.view.Perspective"
             id="MikeTest.perspective">
       </perspective>
    </extension>
@@ -36,14 +36,14 @@
       <view
             name="Mailboxes"
             allowMultiple="true"
-            class="com.PointA.view.ServicePickerView"
+            class="com.pointaeclipseplugin.view.ServicePickerView"
             id="MikeTest.navigationView">
       </view>
             <view
             name="Delta"
             allowMultiple="true"
             icon="icons/sample2.gif"
-            class="com.PointA.view.ServiceView"
+            class="com.pointaeclipseplugin.view.ServiceView"
             id="MikeTest.view2">
       </view>
        
@@ -51,7 +51,7 @@
             name="Delta"
             allowMultiple="true"
             icon="icons/sample2.gif"
-            class="com.PointA.view.ServiceView"
+            class="com.pointaeclipseplugin.view.ServiceView"
             id="de.vogella.jface.tableviewer.view">
       </view>
       

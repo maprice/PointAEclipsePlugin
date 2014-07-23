@@ -1,4 +1,4 @@
-package com.PointA.model;
+package com.pointaeclipseplugin.model;
 
 import java.util.ArrayList;
 import java.util.List;

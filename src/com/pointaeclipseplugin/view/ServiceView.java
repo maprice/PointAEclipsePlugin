@@ -1,4 +1,4 @@
-package com.PointA.view;
+package com.pointaeclipseplugin.view;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
@@ -13,8 +13,8 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.ViewPart;
 
-import com.PointA.controller.PointAController;
-import com.PointA.view.table.ParameterTableViewer;
+import com.pointaeclipseplugin.controller.PointAController;
+import com.pointaeclipseplugin.view.table.ParameterTableViewer;
 
 
 

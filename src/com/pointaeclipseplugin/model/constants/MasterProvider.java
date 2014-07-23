@@ -1,9 +1,9 @@
-package com.PointA.model.server;
+package com.pointaeclipseplugin.model.constants;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.PointA.model.server.MasterProviderInfo.Services;
+import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
 
 public class MasterProvider {
 	public String name;

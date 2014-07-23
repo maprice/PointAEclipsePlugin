@@ -1,10 +1,10 @@
-package com.PointA.eclipse;
+package com.pointaeclipseplugin.eclipse;
 
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
-import com.PointA.view.Perspective;
+import com.pointaeclipseplugin.view.Perspective;
 
 /**
  * This workbench advisor creates the window advisor, and specifies

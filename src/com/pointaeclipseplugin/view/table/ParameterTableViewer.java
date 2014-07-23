@@ -1,4 +1,4 @@
-package com.PointA.view.table;
+package com.pointaeclipseplugin.view.table;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
-import com.PointA.model.ModelProvider;
-import com.PointA.model.Provider2;
+import com.pointaeclipseplugin.model.ModelProvider;
+import com.pointaeclipseplugin.model.Provider2;
 
 public class ParameterTableViewer extends TableViewer{
 

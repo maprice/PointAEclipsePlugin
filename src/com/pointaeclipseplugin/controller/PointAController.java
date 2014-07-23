@@ -1,9 +1,9 @@
-package com.PointA.controller;
+package com.pointaeclipseplugin.controller;
 
 import java.util.List;
 
-import com.PointA.model.ModelProvider;
-import com.PointA.model.Provider2;
+import com.pointaeclipseplugin.model.ModelProvider;
+import com.pointaeclipseplugin.model.Provider2;
 
 public enum PointAController {
 	INSTANCE;

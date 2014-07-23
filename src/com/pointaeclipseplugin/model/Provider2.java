@@ -1,4 +1,4 @@
-package com.PointA.model;
+package com.pointaeclipseplugin.model;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

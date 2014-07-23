@@ -1,4 +1,4 @@
-package com.PointA;
+package com.pointaeclipseplugin;
 
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
@@ -6,7 +6,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
-import com.PointA.eclipse.ApplicationWorkbenchAdvisor;
+import com.pointaeclipseplugin.eclipse.ApplicationWorkbenchAdvisor;
 
 /**
  * This class controls all aspects of the application's execution

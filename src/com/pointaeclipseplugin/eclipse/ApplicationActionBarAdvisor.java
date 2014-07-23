@@ -1,4 +1,4 @@
-package com.PointA.eclipse;
+package com.pointaeclipseplugin.eclipse;
 
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.ICoolBarManager;

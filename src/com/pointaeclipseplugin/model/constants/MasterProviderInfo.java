@@ -1,4 +1,4 @@
-package com.PointA.model.server;
+package com.pointaeclipseplugin.model.constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;

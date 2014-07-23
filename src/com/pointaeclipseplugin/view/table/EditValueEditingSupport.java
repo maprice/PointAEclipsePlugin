@@ -1,11 +1,11 @@
-package com.PointA.view.table;
+package com.pointaeclipseplugin.view.table;
 
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TextCellEditor;
 
-import com.PointA.model.Provider2;
+import com.pointaeclipseplugin.model.Provider2;
 
 public class EditValueEditingSupport extends EditingSupport {
 

@@ -1,4 +1,4 @@
-package com.PointA.view;
+package com.pointaeclipseplugin.view;
 
 import java.util.ArrayList;
 
