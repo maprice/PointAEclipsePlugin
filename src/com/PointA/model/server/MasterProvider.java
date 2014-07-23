@@ -1,18 +1,18 @@
-package com.pointaeclipseplugin.model;
+package com.PointA.model.server;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pointaeclipseplugin.model.PointAServiceConstants.Services;
+import com.PointA.model.server.MasterProviderInfo.Services;
 
-public class Provider {
+public class MasterProvider {
 	public String name;
 	public Services type; // make enum
 	public String jarLocation;
 	
 	public List<String> params;
 	
-	public Provider(String name, Services type, String jarLocation){
+	public MasterProvider(String name, Services type, String jarLocation){
 		this.name = name;
 		this.type = type;
 		this.jarLocation = jarLocation;
