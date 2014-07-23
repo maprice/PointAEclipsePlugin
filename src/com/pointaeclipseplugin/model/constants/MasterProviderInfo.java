@@ -17,29 +17,29 @@ public class MasterProviderInfo {
 	}
 	// Could have a list of all providers,  OR a hashmap with key = serviceType value = ArrayList<Providers> (Better) 
 	//final ArrayList<Provider> providerMasterList;
-	static HashMap<Services, List<MasterProvider>> providerMasterList;
+	static HashMap<Services, List<MasterProviderMeta>> providerMasterList;
 
 
 
 	private static void initMasterProviderInfo(){
-		providerMasterList = new HashMap<Services, List<MasterProvider>>();
+		providerMasterList = new HashMap<Services, List<MasterProviderMeta>>();
 
 		//====================
 		// ADS
 		//====================
-		MasterProvider admob = new MasterProvider("Admob", Services.Ads, null);
+		MasterProviderMeta admob = new MasterProviderMeta("Admob", Services.Ads, null);
 		admob.params.add("Size");
 		admob.params.add("Unit ID");
 
-		MasterProvider adsense = new MasterProvider("AdSense", Services.Ads, null);
+		MasterProviderMeta adsense = new MasterProviderMeta("AdSense", Services.Ads, null);
 		adsense.params.add("Size2");
 		adsense.params.add("Unit ID2");
 
-		MasterProvider burstly = new MasterProvider("Burstly", Services.Ads, null);
+		MasterProviderMeta burstly = new MasterProviderMeta("Burstly", Services.Ads, null);
 		burstly.params.add("Size3");
 		burstly.params.add("Unit ID3");
 
-		List<MasterProvider> adsList = new ArrayList<MasterProvider>();
+		List<MasterProviderMeta> adsList = new ArrayList<MasterProviderMeta>();
 		adsList.add(admob);
 		adsList.add(adsense);
 		adsList.add(burstly);
@@ -49,15 +49,15 @@ public class MasterProviderInfo {
 		//====================
 		// ANALYTICS
 		//====================
-		MasterProvider googleanalytics = new MasterProvider("Google Analytics", Services.Analytics, null);
+		MasterProviderMeta googleanalytics = new MasterProviderMeta("Google Analytics", Services.Analytics, null);
 		googleanalytics.params.add("App ID");
 		googleanalytics.params.add("Client Key");
 
-		MasterProvider parseanalytics = new MasterProvider("Parse Analytics", Services.Analytics, null);
+		MasterProviderMeta parseanalytics = new MasterProviderMeta("Parse Analytics", Services.Analytics, null);
 		parseanalytics.params.add("App ID");
 		parseanalytics.params.add("Client Key");
 
-		List<MasterProvider> analyticsList = new ArrayList<MasterProvider>();
+		List<MasterProviderMeta> analyticsList = new ArrayList<MasterProviderMeta>();
 		analyticsList.add(googleanalytics);
 		analyticsList.add(parseanalytics);
 
@@ -66,16 +66,16 @@ public class MasterProviderInfo {
 		//====================
 		// CRASH
 		//====================
-		MasterProvider bugsense = new MasterProvider("BugSense", Services.CrashReporter, null);
+		MasterProviderMeta bugsense = new MasterProviderMeta("BugSense", Services.CrashReporter, null);
 		bugsense.params.add("App ID");
 
-		MasterProvider bugsnag = new MasterProvider("BugSnag", Services.CrashReporter, null);
+		MasterProviderMeta bugsnag = new MasterProviderMeta("BugSnag", Services.CrashReporter, null);
 		bugsnag.params.add("App ID");
 
-		MasterProvider crittercism = new MasterProvider("Crittercism", Services.CrashReporter, null);
+		MasterProviderMeta crittercism = new MasterProviderMeta("Crittercism", Services.CrashReporter, null);
 		crittercism.params.add("App ID");
 
-		List<MasterProvider> crashList = new ArrayList<MasterProvider>();
+		List<MasterProviderMeta> crashList = new ArrayList<MasterProviderMeta>();
 		crashList.add(bugsense);
 		crashList.add(bugsnag);
 		crashList.add(crittercism);
@@ -85,11 +85,11 @@ public class MasterProviderInfo {
 		//====================
 		// PUSH
 		//====================
-		MasterProvider parse = new MasterProvider("Parse", Services.Push, null);
+		MasterProviderMeta parse = new MasterProviderMeta("Parse", Services.Push, null);
 		parse.params.add("App ID");
 		parse.params.add("Client Key");
 
-		List<MasterProvider> parseList = new ArrayList<MasterProvider>();
+		List<MasterProviderMeta> parseList = new ArrayList<MasterProviderMeta>();
 		parseList.add(parse);
 
 		providerMasterList.put(Services.Push, parseList);
@@ -97,13 +97,13 @@ public class MasterProviderInfo {
 		//====================
 		// RATING
 		//====================
-		MasterProvider amazon = new MasterProvider("Amazon", Services.Rating, null);
+		MasterProviderMeta amazon = new MasterProviderMeta("Amazon", Services.Rating, null);
 		amazon.params.add("URI");
 
-		MasterProvider googleplay = new MasterProvider("Google Play", Services.Rating, null);
+		MasterProviderMeta googleplay = new MasterProviderMeta("Google Play", Services.Rating, null);
 		googleplay.params.add("URI");
 
-		List<MasterProvider> ratingList = new ArrayList<MasterProvider>();
+		List<MasterProviderMeta> ratingList = new ArrayList<MasterProviderMeta>();
 		ratingList.add(amazon);
 		ratingList.add(googleplay);
 
@@ -112,11 +112,11 @@ public class MasterProviderInfo {
 		//====================
 		// TWITTER
 		//====================
-		MasterProvider twitter = new MasterProvider("Twitter", Services.Twitter, null);
+		MasterProviderMeta twitter = new MasterProviderMeta("Twitter", Services.Twitter, null);
 		twitter.params.add("Consumer Key");
 		twitter.params.add("Consumer Secret");
 
-		List<MasterProvider> twitterList = new ArrayList<MasterProvider>();
+		List<MasterProviderMeta> twitterList = new ArrayList<MasterProviderMeta>();
 		twitterList.add(twitter);
 
 		providerMasterList.put(Services.Twitter, twitterList);
@@ -126,7 +126,7 @@ public class MasterProviderInfo {
 	}
 
 	// UI reads me
-	public static HashMap<Services, List<MasterProvider>> getProviders(){
+	public static HashMap<Services, List<MasterProviderMeta>> getProviders(){
 		if(providerMasterList == null){
 			initMasterProviderInfo();
 		}

@@ -14,6 +14,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.ViewPart;
 
 import com.pointaeclipseplugin.controller.PointAController;
+import com.pointaeclipseplugin.model.ProviderMetaData;
 import com.pointaeclipseplugin.view.table.ParameterTableViewer;
 
 
@@ -38,7 +39,7 @@ public class ServiceView extends ViewPart {
 			else if(e.widget == mRevertButton){
 				mController.onRevertButtonPressed();
 			}
-			else if(e.widget == mPriorityCombo){
+			else if(e.widget == mEnableButton){
 				mController.onEnableChanged(mPriorityCombo.getEnabled());
 			}
 		}
@@ -54,7 +55,12 @@ public class ServiceView extends ViewPart {
 		public void selectionChanged(IWorkbenchPart sourcepart, ISelection selection) {
 			// We ignore our own selections
 			if (sourcepart != ServiceView.this) {
-				mController.onCurrentSelectionChanged(selection.toString());
+
+				String lRaw = selection.toString();
+				String lProviderName = lRaw.substring(1, lRaw.length()-1);
+
+				mController.onCurrentSelectionChanged(lProviderName);
+				update(mController.getProvider(lProviderName));
 			}
 		}
 	};
@@ -108,7 +114,7 @@ public class ServiceView extends ViewPart {
 		mEnableButton.addSelectionListener(mViewListener);
 
 		// Set Text (Should all be in constants somewhere)
-		mServiceTypeLabel.setText("Ad: ");
+		mServiceTypeLabel.setText("Service Provider ");
 		mProviderNameLabel.setText("AdMob");
 		mEnableButtonLabel.setText("Enable");
 		mPriorityComboLabel.setText("Priority");
@@ -120,6 +126,24 @@ public class ServiceView extends ViewPart {
 		getSite().setSelectionProvider(mTableViewer);
 		getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(mProviderSelectionListener);
 
+	}
+
+	public void update(ProviderMetaData x){
+		if(x!= null){
+			mProviderNameLabel.setText(x.getName());
+
+			setProviderEnabled(x.getEnabled());
+
+			mTableViewer.refresh();
+		}
+	}
+
+	private void setProviderEnabled(boolean pEnabled) {
+		mEnableButton.setSelection(pEnabled);
+		mTableViewer.getTable().setEnabled(pEnabled);
+		mTableViewer.getTable().setEnabled(pEnabled);
+		mPriorityComboLabel.setEnabled(pEnabled);
+		mPriorityCombo.setEnabled(pEnabled);
 	}
 
 	public void setFocus() {

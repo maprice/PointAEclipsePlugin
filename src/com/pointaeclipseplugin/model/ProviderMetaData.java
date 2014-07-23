@@ -21,18 +21,33 @@ public class ProviderMetaData{
 	// Fields
 	// ===========================================================
 
-	final private String mName;//provider name
+	final private String mName;
 	final private Map<String, String> mParams;
+	private int mPriority;
+	private boolean mEnabled;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
-	
+
+	/**
+	 *
+	 * @deprecated use {@link  ProviderMetaData(String pName, Map<String, String> pParams, int pPriority, boolean pEnabled)} instead.  
+	 */
 	public ProviderMetaData(String pName, Map<String, String> pParams){
 		mName = pName;
 		mParams = pParams;
+		mPriority = 0;
+		mEnabled = true;
 	}
-	
+
+	public ProviderMetaData(String pName, Map<String, String> pParams, int pPriority, boolean pEnabled){
+		mName = pName;
+		mParams = pParams;
+		mPriority = pPriority;
+		mEnabled = pEnabled;
+	}
+
 	// ===========================================================
 	// Methods
 	// ===========================================================
@@ -40,9 +55,17 @@ public class ProviderMetaData{
 	public String getName(){
 		return mName;
 	}
-	
+
 	public Map<String, String> getParams(){
 		return mParams;
+	}
+
+	public boolean getEnabled(){
+		return mEnabled;
+	}
+
+	public int getPriority(){
+		return mPriority;
 	}
 
 }

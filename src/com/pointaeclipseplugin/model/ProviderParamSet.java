@@ -3,7 +3,7 @@ package com.pointaeclipseplugin.model;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class Provider2 {
+public class ProviderParamSet {
   private String firstName;
   private String lastName;
   private boolean married;
@@ -11,10 +11,10 @@ public class Provider2 {
   private Integer age;
   private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
-  public Provider2() {
+  public ProviderParamSet() {
   }
 
-  public Provider2(String firstName, String lastName) {
+  public ProviderParamSet(String firstName, String lastName) {
     super();
     this.firstName = firstName;
     this.lastName = lastName;

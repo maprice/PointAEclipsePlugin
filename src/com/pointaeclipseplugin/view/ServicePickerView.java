@@ -1,33 +1,34 @@
 package com.pointaeclipseplugin.view;
 
+import java.security.Provider.Service;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+
+import com.pointaeclipseplugin.model.constants.MasterProviderMeta;
+import com.pointaeclipseplugin.model.constants.MasterProviderInfo;
+import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
 
 public class ServicePickerView extends ViewPart {
 	public static final String ID = "MikeTest.navigationView";
 	private TreeViewer viewer;
-	 
+
 	class TreeObject {
 		private String name;
 		private TreeParent parent;
-		
+
 		public TreeObject(String name) {
 			this.name = name;
 		}
@@ -44,7 +45,7 @@ public class ServicePickerView extends ViewPart {
 			return getName();
 		}
 	}
-	
+
 	class TreeParent extends TreeObject {
 		private ArrayList children;
 		public TreeParent(String name) {
@@ -68,25 +69,25 @@ public class ServicePickerView extends ViewPart {
 	}
 
 	class ViewContentProvider implements IStructuredContentProvider, 
-										   ITreeContentProvider {
+	ITreeContentProvider {
 
-        public void inputChanged(Viewer v, Object oldInput, Object newInput) {
+		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
 		}
-        
+
 		public void dispose() {
 		}
-        
+
 		public Object[] getElements(Object parent) {
 			return getChildren(parent);
 		}
-        
+
 		public Object getParent(Object child) {
 			if (child instanceof TreeObject) {
 				return ((TreeObject)child).getParent();
 			}
 			return null;
 		}
-        
+
 		public Object[] getChildren(Object parent) {
 			if (parent instanceof TreeParent) {
 				return ((TreeParent)parent).getChildren();
@@ -94,13 +95,13 @@ public class ServicePickerView extends ViewPart {
 			return new Object[0];
 		}
 
-        public boolean hasChildren(Object parent) {
+		public boolean hasChildren(Object parent) {
 			if (parent instanceof TreeParent)
 				return ((TreeParent)parent).hasChildren();
 			return false;
 		}
 	}
-	
+
 	class ViewLabelProvider extends LabelProvider {
 
 		public String getText(Object obj) {
@@ -109,73 +110,54 @@ public class ServicePickerView extends ViewPart {
 		public Image getImage(Object obj) {
 			String imageKey = ISharedImages.IMG_OBJ_ELEMENT;
 			if (obj instanceof TreeParent)
-			   imageKey = ISharedImages.IMG_OBJ_FOLDER;
+				imageKey = ISharedImages.IMG_OBJ_FOLDER;
 			return PlatformUI.getWorkbench().getSharedImages().getImage(imageKey);
 		}
 	}
 
-    /**
-     * We will set up a dummy model to initialize tree heararchy. In real
-     * code, you will connect to a real model and expose its hierarchy.
-     */
-    private TreeObject createDummyModel() {
-        TreeObject to1 = new TreeObject("Admob");
-        TreeObject to2 = new TreeObject("AdSense");
-        TreeObject to3 = new TreeObject("Google");
-        TreeParent p1 = new TreeParent("Adddds");
-        p1.addChild(to1);
-        p1.addChild(to2);
-        p1.addChild(to3);
 
-        TreeObject to4 = new TreeObject("Parse.com");
-        TreeObject to5 = new TreeObject("Google");
-        TreeObject to6 = new TreeObject("MixPanel");
-        TreeParent p2 = new TreeParent("Analytics");
-        p2.addChild(to4);
-        p2.addChild(to5);
-        p2.addChild(to6);
-        
-        TreeObject to7 = new TreeObject("Bug Finder");
-        TreeObject to8 = new TreeObject("BugSense");
-        TreeObject to9 = new TreeObject("Crashlytics");
-        TreeParent p3 = new TreeParent("Crash Reporter");
-        p3.addChild(to7);
-        p3.addChild(to8);
-        p3.addChild(to9);
+	private TreeObject populateFromModel() {
 
-        TreeParent root = new TreeParent("");
-        root.addChild(p1);
-        root.addChild(p2);
-        root.addChild(p3);
-        return root;
-    }
-
-    ISelectionChangedListener x = new ISelectionChangedListener(){
+		HashMap<Services, List<MasterProviderMeta>> mProviders =  MasterProviderInfo.getProviders();
+		TreeParent lRoot = new TreeParent("");
 
 
-		@Override
-		public void selectionChanged(SelectionChangedEvent event) {
-			System.out.println("FUCK");
+		for (Services lService : Services.values()) {
+			//TODO: Override .name() function
+			TreeParent lParent = new TreeParent(lService.name());
+
+			List<MasterProviderMeta> lProviders = mProviders.get(lService);
+
+			for(MasterProviderMeta lProvider : lProviders){
+
+				TreeObject lProviderTreeObject = new TreeObject(lProvider.name);
+				lParent.addChild(lProviderTreeObject);
+			}
+
+
+			lRoot.addChild(lParent);
 		}
-    	
-    };
-    
+
+		return lRoot;
+	}
+
+
 	/**
-     * This is a callback that will allow us to create the viewer and initialize
-     * it.
-     */
+	 * This is a callback that will allow us to create the viewer and initialize
+	 * it.
+	 */
 	public void createPartControl(Composite parent) {
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
 		viewer.setContentProvider(new ViewContentProvider());
 		viewer.setLabelProvider(new ViewLabelProvider());
-		viewer.setInput(createDummyModel());
+		viewer.setInput(populateFromModel());
 		getSite().setSelectionProvider(viewer);
-		
-		
+
+
 	}
 
-	
-		
+
+
 	/**
 	 * Passing the focus request to the viewer's control.
 	 */
