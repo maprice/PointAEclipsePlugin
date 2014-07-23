@@ -1,30 +1,19 @@
 package com.pointaeclipseplugin.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.pointaeclipseplugin.model.MasterProviderDoc;
+import com.pointaeclipseplugin.model.ParamList;
 import com.pointaeclipseplugin.model.PointAModel;
-import com.pointaeclipseplugin.model.PointAServiceConstants;
-import com.pointaeclipseplugin.model.Provider;
 import com.pointaeclipseplugin.model.ProviderMetaData;
-import com.pointaeclipseplugin.model.PointAServiceConstants.Services;
-import com.pointaeclipseplugin.model.filereader.ConfigSettings;
-import com.pointaeclipseplugin.view.PointAView;
+import com.pointaeclipseplugin.model.ParamMap;
+import com.pointaeclipseplugin.model.constants.MasterProviderInfo;
+import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
+import com.pointaeclipseplugin.model.constants.MasterProviderMeta;
 
-
-
-/**
- * Contains all meta data on all service providers
- * @version 1.0
- * @since July 08, 2014
- *
- */
-
-public class PointAController {
+public enum PointAController {
+	INSTANCE;
 
 	// ===========================================================
 	// Constants
@@ -36,90 +25,124 @@ public class PointAController {
 	// Fields
 	// ===========================================================
 
-	private PointAModel mModel;
-	private PointAView mView;
-	private ActionListener mButtonListener;
+	
 
+	private PointAModel mModel;
+
+	private HashMap<Services, List<ProviderMetaData>> mProviders;
+	
+	private ProviderMetaData mCurrentSelection;
+	private ParamList mCurrentSelectionParamList;
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public PointAController(PointAModel pModel, PointAView pView){
-		mModel = pModel;
-		mView = pView;
+	private PointAController(){
+		// Create our model
+		mModel = new PointAModel();
+
+		// Get from max pretend is empty for now
+		mProviders = mModel.getConfig();
 		
-		this.populateView();
-		this.setListeners();
+		// Create empty params list to start
+		mCurrentSelectionParamList = new ParamList();
 	}
-	
+
 	// ===========================================================
 	// Methods
 	// ===========================================================
-	public HashMap<Services, ProviderMetaData[]> getMProviders(){
-		
-		//Get data from MasterProviderDoc
-		MasterProviderDoc mpd = new MasterProviderDoc();
-		HashMap<Services, List<Provider>> mpdProviders = mpd.getProviders();	
-		
-		//Create instance of mProviders to be returned
-		HashMap<Services, ProviderMetaData[]> mProviders = new HashMap<Services, ProviderMetaData[]>();
-		
-		int num_providers;
-		int num_fields;
-		
-		//Populate mProviders
-		
-		//Loop through all Service Types
-		for(Services pluginservice:PointAServiceConstants.Services.values()){
-			List<Provider> providerList = mpdProviders.get(pluginservice);
-			num_providers = providerList.size();
-			
-			ProviderMetaData[] providermetadata = new ProviderMetaData[num_providers];
-			
-			//System.out.println("Looking at Service:" + pluginservice.name());
-			//Loop through all Service Providers
-			for(int i = 0; i < num_providers; i++){	
-				Provider provider = providerList.get(i);
-				
-				//System.out.println("Provider: " + provider.name);
-				 
-				num_fields = provider.params.size();
-				Map<String, String> pParams = new HashMap<String, String>();
-				
-				pParams.put("Disabled", "1");
-				pParams.put("Priority", null);
-				
-				//Loop through all Service Provider Fields
-				for(int j = 0; j < num_fields; j++){
-					//System.out.println("Adding Field: " + provider.params.get(j));
-					pParams.put(provider.params.get(j), null);
-				}	
-				providermetadata[i] = new ProviderMetaData(provider.name, pParams);
-			}	
-			mProviders.put(pluginservice, providermetadata);
+
+	public void onPriorityChanged(int pNewPriority){
+		mCurrentSelection.setPriority(pNewPriority);
+		System.out.println("Priority changed to: "+pNewPriority);	
+	}
+
+	public void onCurrentSelectionChanged(String pNewSelection){
+		System.out.println("Current selection changed to: "+pNewSelection);	
+
+		ProviderMetaData newProvider = getProvider(pNewSelection);
+
+		if(mCurrentSelection != null)
+			mCurrentSelectionParamList.updateParameters(mCurrentSelection.getParams());
+
+		if(newProvider != null)
+			mCurrentSelectionParamList.setParameters(newProvider.getParams());
+
+		mCurrentSelection = newProvider;
+
+	}
+
+	public void onEnableChanged(Boolean pEnabled){
+		//Cool they enabled it, lets add it to our list
+		if(pEnabled){
+			mCurrentSelection.setEnabled(true);
+			mProviders.get(mCurrentSelection.getType()).add(mCurrentSelection);
 		}
-		return mProviders;
-	}
-	
+		else{
+			mCurrentSelection.setEnabled(false);
+			mProviders.get(mCurrentSelection.getType()).remove(mCurrentSelection);
+		}
 
-	private void setListeners() {
-		 mButtonListener = new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-           	 // Get new config settings from view
-           	 ConfigSettings lConfigSettings = null;
-           	 
-           	 // Tell model to make changes
-           	 mModel.saveChanges(lConfigSettings);
-            }
-      };      
-      
-      // Add action listener to view
-      //mView.getButton().addActionListener(actionListener);  
-      
+		System.out.println("Enable button changed to: "+pEnabled);	
 	}
 
-	private void populateView() {
-		// Populate view with data from model
+
+	public List<ParamMap> getCurrentProviderParams() {
+		return mCurrentSelectionParamList.getParameters();
 	}
-	
+
+	public ProviderMetaData getProvider(String pName){
+		// Find Provider in our list and return it
+		//	HashMap<Services, List<MasterProviderMeta>> fProvider = MasterProviderInfo.getProviders();
+
+		for (Services lService : Services.values()) {
+			List<ProviderMetaData> lProviders = mProviders.get(lService);
+
+			if(lProviders == null || lProviders.isEmpty()){
+				break;
+			}
+			for(ProviderMetaData lProvider : lProviders){
+				if(lProvider.getName().equals(pName)){
+					return lProvider;
+				}
+			}
+		}
+		// We don't currently have an instance of this provider in our current config, so we will create a new one
+		// We don't add it right away however, we wait until the user enables it
+		return ProviderMetaData.buildEmptyProvider(pName);
+	}
+
+
+
+	public void onSaveButtonPressed() {
+		System.out.println("Save button pressed");		
+		System.out.println("We should save the following to the config.xml");
+
+		for (Services lService : Services.values()) {
+			List<ProviderMetaData> lProviders = mProviders.get(lService);
+			System.out.println(lService.name());
+			for(ProviderMetaData lProvider : lProviders){
+
+				System.out.println("Provider:" + lProvider.getName());
+				System.out.println("    Priority:" + lProvider.getPriority());
+
+			}
+			System.out.println("---------------------");
+		}
+
+		// TODO: Uncomment once model works
+		//mModel.saveChanges(mProviders);
+	}
+
+	public void onRevertButtonPressed() {
+		System.out.println("Revert button pressed");		
+	}
+
+	public ProviderMetaData getConfigProvider(String lProviderName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
 }

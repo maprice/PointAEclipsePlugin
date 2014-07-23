@@ -1,5 +1,10 @@
 package com.pointaeclipseplugin.model.jar;
 
+import java.util.HashMap;
+import java.util.List;
+
+import com.pointaeclipseplugin.model.ProviderMetaData;
+import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
 import com.pointaeclipseplugin.model.filereader.ConfigSettings;
 
 
@@ -37,7 +42,7 @@ public class JarDownloaderManager {
 	// Methods
 	// ===========================================================
 
-	public void updateJars(ConfigSettings pNewConfig) {
+	public void updateJars(HashMap<Services, List<ProviderMetaData>> mProviders) {
 		//for(Number of Jars to download){
 		
 			// Get the Jar's URL
