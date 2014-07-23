@@ -51,17 +51,19 @@ public class ServiceView extends ViewPart {
 		}
 
 	};
-
+	private String currentFocus = "";
+	
 	private ISelectionListener mProviderSelectionListener = new ISelectionListener() {
 		public void selectionChanged(IWorkbenchPart sourcepart, ISelection selection) {
 			// We ignore our own selections
-			if (sourcepart != ServiceView.this) {
+			if (sourcepart != ServiceView.this && !currentFocus.equals(selection.toString())) {
 
 				String lRaw = selection.toString();
+				currentFocus = lRaw;
 				String lProviderName = lRaw.substring(1, lRaw.length()-1);
-
-				mController.onCurrentSelectionChanged(lProviderName);
-				update(mController.getProvider(lProviderName));
+				ProviderMetaData newProvider = mController.getProvider(lProviderName);
+				mController.onCurrentSelectionChanged(newProvider);
+				update(newProvider);
 			}
 		}
 	};

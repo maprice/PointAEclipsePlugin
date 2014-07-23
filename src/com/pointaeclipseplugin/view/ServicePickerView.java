@@ -25,6 +25,7 @@ public class ServicePickerView extends ViewPart {
 	public static final String ID = "MikeTest.navigationView";
 	private TreeViewer viewer;
 
+	
 	class TreeObject {
 		private String name;
 		private TreeParent parent;

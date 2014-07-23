@@ -57,15 +57,15 @@ public enum PointAController {
 		System.out.println("Priority changed to: "+pNewPriority);	
 	}
 
-	public void onCurrentSelectionChanged(String pNewSelection){
-		System.out.println("Current selection changed to: "+pNewSelection);	
+	public void onCurrentSelectionChanged(ProviderMetaData newProvider){
+		
 
-		ProviderMetaData newProvider = getProvider(pNewSelection);
-
-		if(mCurrentSelection != null)
+		if(mCurrentSelection != null){
 			mCurrentSelectionParamList.updateParameters(mCurrentSelection.getParams());
-
+		}
+			
 		if(newProvider != null){
+			System.out.println("Current selection changed to: "+newProvider.getName());	
 			mCurrentSelectionParamList.setParameters(newProvider.getParams());
 			mCurrentSelection = newProvider;
 		}
@@ -77,10 +77,12 @@ public enum PointAController {
 		//Cool they enabled it, lets add it to our list
 		if(pEnabled){
 			mCurrentSelection.setEnabled(true);
+			System.out.println("Adding: " + mCurrentSelection.getName());
 			mProviders.get(mCurrentSelection.getType()).add(mCurrentSelection);
 		}
 		else{
 			mCurrentSelection.setEnabled(false);
+			System.out.println("Removing: " + mCurrentSelection.getName());
 			mProviders.get(mCurrentSelection.getType()).remove(mCurrentSelection);
 		}
 
@@ -99,11 +101,12 @@ public enum PointAController {
 		for (Services lService : Services.values()) {
 			List<ProviderMetaData> lProviders = mProviders.get(lService);
 
-			if(lProviders == null || lProviders.isEmpty()){
+			if(lProviders == null){
 				break;
 			}
 			for(ProviderMetaData lProvider : lProviders){
 				if(lProvider.getName().equals(pName)){
+					System.out.println("Provider already in our config! We will return it");
 					return lProvider;
 				}
 			}
