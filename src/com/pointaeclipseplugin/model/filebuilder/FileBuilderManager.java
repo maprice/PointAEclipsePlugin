@@ -3,8 +3,8 @@ package com.pointaeclipseplugin.model.filebuilder;
 import java.util.Map;
 
 import com.pointaeclipseplugin.model.ProviderMetaData;
-import com.pointaeclipseplugin.model.PointAServiceConstants.Services;
 import com.pointaeclipseplugin.model.constants.FileConstants;
+import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
 import com.pointaeclipseplugin.model.filereader.ConfigSettings;
 import com.pointaeclipseplugin.model.filewriter.WritableFile;
 
