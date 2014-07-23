@@ -1,7 +1,11 @@
 package com.pointaeclipseplugin.model;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.pointaeclipseplugin.model.constants.MasterProviderInfo;
+import com.pointaeclipseplugin.model.constants.MasterProviderMeta;
 import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
 
 /**
@@ -82,6 +86,32 @@ public class ProviderMetaData{
 
 	public void setPriority(int pPriority) {
 		mPriority = pPriority;
+	}
+	
+	public static ProviderMetaData buildEmptyProvider(String pName) {
+		HashMap<Services, List<MasterProviderMeta>> fProvider = MasterProviderInfo.getProviders();
+
+		for (Services lService : Services.values()) {
+			List<MasterProviderMeta> lProviders = fProvider.get(lService);
+
+			for(MasterProviderMeta lProvider : lProviders){
+				if(lProvider.name.equals(pName)){
+					// Create the new meta object
+					Map<String,String> newParams = new HashMap<String, String>();
+
+					for(String paramKey : lProvider.params){
+						newParams.put(paramKey, "");
+					}
+
+					ProviderMetaData newProvider = new ProviderMetaData(pName, newParams, 0, false, lService);
+					return newProvider;
+				}
+			}
+		}
+		// Throw exception
+		// This means user has messed up config
+		return null;
+
 	}
 
 }

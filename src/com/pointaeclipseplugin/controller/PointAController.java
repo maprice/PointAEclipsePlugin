@@ -109,34 +109,10 @@ public enum PointAController {
 		}
 		// We don't currently have an instance of this provider in our current config, so we will create a new one
 		// We don't add it right away however, we wait until the user enables it
-		return buildEmptyProvider(pName);
+		return ProviderMetaData.buildEmptyProvider(pName);
 	}
 
-	private ProviderMetaData buildEmptyProvider(String pName) {
-		HashMap<Services, List<MasterProviderMeta>> fProvider = MasterProviderInfo.getProviders();
 
-		for (Services lService : Services.values()) {
-			List<MasterProviderMeta> lProviders = fProvider.get(lService);
-
-			for(MasterProviderMeta lProvider : lProviders){
-				if(lProvider.name.equals(pName)){
-					// Create the new meta object
-					Map<String,String> newParams = new HashMap<String, String>();
-
-					for(String paramKey : lProvider.params){
-						newParams.put(paramKey, "");
-					}
-
-					ProviderMetaData newProvider = new ProviderMetaData(pName, newParams, 0, false, lService);
-					return newProvider;
-				}
-			}
-		}
-		// Throw exception
-		// This means user has messed up config
-		return null;
-
-	}
 
 	public void onSaveButtonPressed() {
 		System.out.println("Save button pressed");		
