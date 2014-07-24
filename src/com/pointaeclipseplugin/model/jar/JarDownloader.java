@@ -1,5 +1,9 @@
 package com.pointaeclipseplugin.model.jar;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+
 
 
 /**
@@ -22,6 +26,7 @@ public class JarDownloader implements Runnable{
 	// ===========================================================
 
 	private String mTargetURL;
+	private String mTargetDestination;
 
 	// ===========================================================
 	// Constructors
@@ -33,12 +38,39 @@ public class JarDownloader implements Runnable{
 
 
 	public JarDownloader(String pURL) {
-		mTargetURL = pURL;
+		//Downloads 914bbs.txt into PointA/jars folder. Set Destination to match your machine
+		mTargetURL = "http://textfiles.com/100/914bbs.txt";
+		//mTargetDestination = "C:\\Users\\Pablo\\Documents\\GitHub\\PointA\\jars";
+		mTargetDestination = "C:\\Users\\Mike Price\\Desktop";
 	}
 
 	@Override
-	public void run() {
+	public void run(){
 		// Download Jar from URL
-		System.out.println("Downloaded Jar from:" + mTargetURL);
+		try {
+			System.out.println("Downloading Jar from:" + mTargetURL);
+			String fileName = mTargetURL.substring(mTargetURL.lastIndexOf("/")+ 1);
+			URL url = new URL(mTargetURL);
+			
+			InputStream is = url.openStream();
+			FileOutputStream fos = new FileOutputStream(mTargetDestination + "/" + fileName);
+			
+			byte[] buffer = new byte[4096];
+			int bytesRead = 0;
+			
+			while ((bytesRead = is.read(buffer)) != -1){
+				System.out.print("."); //Progress bar
+				fos.write(buffer, 0, bytesRead);
+			}
+			
+			System.out.println("Finished downloading " + fileName);
+			fos.close();
+			is.close();
+		}
+		catch(Exception e){
+			System.out.println(e);
+			System.out.println("Failed to download from " + mTargetURL);
+		}
+		
 	}
 }
