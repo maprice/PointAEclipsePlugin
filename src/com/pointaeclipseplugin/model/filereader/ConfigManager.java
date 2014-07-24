@@ -1,7 +1,10 @@
 package com.pointaeclipseplugin.model.filereader;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +49,7 @@ public class ConfigManager {
 	// ===========================================================
 	// Methods
 	// ===========================================================
-	private final Map<Services,ArrayList<ProviderMetaData>> mProviders;
+	private final HashMap<Services, ArrayList<ProviderMetaData>> mProviders;
 
 
 	public void parseConfig() {
@@ -69,8 +72,9 @@ public class ConfigManager {
 			//XmlPullParser xrp = defaultContext.getResources().getXml(R.xml.config);
 
 			XmlPullParser xrp = factory.newPullParser();
-			xrp.setInput(new StringReader(xmlc)); 
-
+			//File localfile = new File("C:/temp/config.xml");
+			//xrp.setInput("<?xml version=\"1.0\" encoding=\"UTF-8\"?><pointAconfig><service><type>Ads</type><provider>Admob</provider><priority>1</priority><Unit ID>3</Unit ID><Size>2</Size></service></pointAconfig>");
+			xrp.setInput(new FileReader("C:/temp/config.xml"));
 
 			// InputStream inputStream = defaultContext.getResources().openRawResource(R.raw.config);
 
@@ -255,7 +259,6 @@ public class ConfigManager {
 				}
 
 			}
-			xrp.close();
 
 		} catch (XmlPullParserException e) {
 			//	Log.e(LOG_TAG, "Parser Error: XMLPullParser Exception");
@@ -285,7 +288,7 @@ public class ConfigManager {
 			pretendConfig.put(dir, serviceList);
 		}
 
-		return pretendConfig;
+		return mProviders;
 	}
 
 
