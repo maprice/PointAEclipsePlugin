@@ -1,11 +1,11 @@
 package com.pointaeclipseplugin.model.filebuilder;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import com.pointaeclipseplugin.model.ProviderMetaData;
-import com.pointaeclipseplugin.model.PointAServiceConstants.Services;
 import com.pointaeclipseplugin.model.constants.FileConstants;
-import com.pointaeclipseplugin.model.filereader.ConfigSettings;
+import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
 import com.pointaeclipseplugin.model.filewriter.WritableFile;
 
 
@@ -37,11 +37,11 @@ public class FileBuilderManager {
 	// Methods
 	// ===========================================================
 
-	public void updateFiles(ConfigSettings pNewConfig, Map<Services,ProviderMetaData[]> mProviders) {
+	public void updateFiles(Map<Services,ArrayList<ProviderMetaData>> mProviders) {
 		WritableFile lManifest, lClassPath, lConfig;
 
-		lManifest = buildManifest(pNewConfig);
-		lClassPath = buildClassPath(pNewConfig);
+		lManifest = buildManifest(mProviders);
+		lClassPath = buildClassPath(mProviders);
 		lConfig = buildConfig(mProviders);
 
 		// Synchronous start
@@ -52,7 +52,7 @@ public class FileBuilderManager {
 
 	}
 
-	private WritableFile buildManifest(ConfigSettings pNewConfig){
+	private WritableFile buildManifest(Map<Services, ArrayList<ProviderMetaData>> mProviders){
 		ManifestBuilder mManifestBuilder = new ManifestBuilder();
 
 		mManifestBuilder.addPreInject(FileConstants.MANIFEST_HEADER);
@@ -67,7 +67,7 @@ public class FileBuilderManager {
 		return mManifestBuilder.getFile();
 	}
 
-	private WritableFile buildClassPath(ConfigSettings pNewConfig){
+	private WritableFile buildClassPath(Map<Services, ArrayList<ProviderMetaData>> mProviders){
 		ClassPathBuilder mClassPathBuilder = new ClassPathBuilder();
 
 		mClassPathBuilder.addPreInject(FileConstants.CLASSPATH_HEADER);
@@ -82,26 +82,26 @@ public class FileBuilderManager {
 		return mClassPathBuilder.getFile();
 	}
 
-	private WritableFile buildConfig(Map<Services,ProviderMetaData[]> mProviders){
+	private WritableFile buildConfig(Map<Services, ArrayList<ProviderMetaData>> mProviders){
 		ConfigBuilder mConfigBuilder = new ConfigBuilder();
 
 		mConfigBuilder.addPreInject(FileConstants.CONFIG_HEADER);
 
 		for (Services serType: mProviders.keySet())
 		{
-			for (int providerIndex = 0; providerIndex < mProviders.get(serType).length; providerIndex++)
+			for (int providerIndex = 0; providerIndex < mProviders.get(serType).size(); providerIndex++)
 			{
 				String typeInject = serType.toString();
 				
-				String providerInject = mProviders.get(serType)[providerIndex].getName();
+				String providerInject = mProviders.get(serType).get(providerIndex).getName();
 				
 				String priorityInject = Integer.toString(providerIndex);
 
 				String paramsInject = "";
-				for (String key: mProviders.get(serType)[providerIndex].getParams().keySet())
+				for (String key: mProviders.get(serType).get(providerIndex).getParams().keySet())
 				{
 					paramsInject += "<" + key + ">";
-					paramsInject += mProviders.get(serType)[providerIndex].getParams().get(key);
+					paramsInject += mProviders.get(serType).get(providerIndex).getParams().get(key);
 					paramsInject += "</" + key + ">";
 				}
 

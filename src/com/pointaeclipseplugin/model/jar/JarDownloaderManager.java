@@ -1,5 +1,6 @@
 package com.pointaeclipseplugin.model.jar;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class JarDownloaderManager {
 	// Methods
 	// ===========================================================
 
-	public void updateJars(HashMap<Services, List<ProviderMetaData>> mProviders) {
+	public void updateJars(HashMap<Services, ArrayList<ProviderMetaData>> mProviders) {
 		//for(Number of Jars to download){
 		
 			// Get the Jar's URL

@@ -2,13 +2,9 @@ package com.pointaeclipseplugin.model.filereader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import com.pointaeclipseplugin.model.ProviderMetaData;
-import com.pointaeclipseplugin.model.constants.MasterProviderInfo;
 import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
-import com.pointaeclipseplugin.model.constants.MasterProviderMeta;
 
 
 
@@ -46,18 +42,18 @@ public class ConfigManager {
 
 	}
 
-	public void updateConfig(HashMap<Services, List<ProviderMetaData>> mProviders) {
+	public void updateConfig(HashMap<Services, ArrayList<ProviderMetaData>> mProviders) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public HashMap<Services, List<ProviderMetaData>> getConfig(){
+	public HashMap<Services, ArrayList<ProviderMetaData>> getConfig(){
 		
 		// just returning non-empty config so i dont get errors
-		HashMap<Services, List<ProviderMetaData>> pretendConfig = new HashMap<Services, List<ProviderMetaData>>();
+		HashMap<Services, ArrayList<ProviderMetaData>> pretendConfig = new HashMap<Services, ArrayList<ProviderMetaData>>();
 
 		for (Services dir : Services.values()) {
-			List<ProviderMetaData> serviceList = new ArrayList<ProviderMetaData>();
+			ArrayList<ProviderMetaData> serviceList = new ArrayList<ProviderMetaData>();
 
 			pretendConfig.put(dir, serviceList);
 		}

@@ -1,5 +1,6 @@
 package com.pointaeclipseplugin.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,7 @@ public enum PointAController {
 
 	private PointAModel mModel;
 
-	private HashMap<Services, List<ProviderMetaData>> mProviders;
+	private HashMap<Services, ArrayList<ProviderMetaData>> mProviders;
 
 	private ProviderMetaData mCurrentSelection;
 	private ParamList mCurrentSelectionParamList;
@@ -123,7 +124,7 @@ public enum PointAController {
 		System.out.println("We should save the following to the config.xml");
 
 		for (Services lService : Services.values()) {
-			List<ProviderMetaData> lProviders = mProviders.get(lService);
+			ArrayList<ProviderMetaData> lProviders = mProviders.get(lService);
 			System.out.println(lService.name());
 			for(ProviderMetaData lProvider : lProviders){
 
@@ -135,7 +136,7 @@ public enum PointAController {
 		}
 
 		// TODO: Uncomment once model works
-		//mModel.saveChanges(mProviders);
+		mModel.saveChanges(mProviders);
 	}
 
 	public void onRevertButtonPressed() {

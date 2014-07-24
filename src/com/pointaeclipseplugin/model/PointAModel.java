@@ -1,12 +1,12 @@
 package com.pointaeclipseplugin.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
 import com.pointaeclipseplugin.model.filebuilder.FileBuilderManager;
 import com.pointaeclipseplugin.model.filereader.ConfigManager;
-import com.pointaeclipseplugin.model.filereader.ConfigSettings;
 import com.pointaeclipseplugin.model.jar.JarDownloaderManager;
 
 
@@ -47,15 +47,15 @@ public class PointAModel {
 	// Methods
 	// ===========================================================
 
-	public void saveChanges(HashMap<Services, List<ProviderMetaData>> mProviders){
+	public void saveChanges(HashMap<Services, ArrayList<ProviderMetaData>> mProviders){
 		//Synchronous start
-		mConfigManager.updateConfig(mProviders);
+		//mConfigManager.updateConfig(mProviders);
 		mFileBuilderManager.updateFiles(mProviders);
-		mJarDownloaderManager.updateJars(mProviders);
+		//mJarDownloaderManager.updateJars(mProviders);
 		//Synchronous end
 	}
 	
-	public HashMap<Services, List<ProviderMetaData>> getConfig(){
+	public HashMap<Services, ArrayList<ProviderMetaData>> getConfig(){
 		mConfigManager.parseConfig();
 		return mConfigManager.getConfig();
 	}
