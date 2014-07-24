@@ -50,10 +50,11 @@ public class MasterProviderInfo {
 		// ADS
 		//====================
 		MasterProviderMeta admob = new MasterProviderMeta("Admob", Services.Ads, "http://www.aptoide.org/export/1394/libraries/aptoide-4.2.0-libs/mopub-sdk/libs/GoogleAdMobAdsSdk-6.4.1.jar");
-		admob.params.add("Size");
-		admob.params.add("Unit ID");
+		admob.params.add("bannerUnitID");
+		admob.params.add("interstitialUnitID");
 		admob.addPermission(Permissions.INTERNET);
-
+		
+		
 	/*	MasterProviderMeta adsense = new MasterProviderMeta("AdSense", Services.Ads, null);
 		adsense.params.add("Size2");
 		adsense.params.add("Unit ID2");

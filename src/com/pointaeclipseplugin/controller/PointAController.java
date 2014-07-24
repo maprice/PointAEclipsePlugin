@@ -3,15 +3,12 @@ package com.pointaeclipseplugin.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.pointaeclipseplugin.model.ParamList;
+import com.pointaeclipseplugin.model.ParamMap;
 import com.pointaeclipseplugin.model.PointAModel;
 import com.pointaeclipseplugin.model.ProviderMetaData;
-import com.pointaeclipseplugin.model.ParamMap;
-import com.pointaeclipseplugin.model.constants.MasterProviderInfo;
 import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
-import com.pointaeclipseplugin.model.constants.MasterProviderMeta;
 
 public enum PointAController {
 	INSTANCE;
