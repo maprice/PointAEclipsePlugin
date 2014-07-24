@@ -16,7 +16,7 @@ public class ConfigBuilder extends FileBuilder{
 	// ===========================================================
 
 	static final String LOG_TAG =  ConfigBuilder.class.getSimpleName();
-	private String configInject = "<service><type>%s</type>\n<provider>%s</provider>\n<priority>%s</priority>%s</service>";
+	private String configInject = "<service>\n<type>%s</type>\n<provider>%s</provider>\n<priority>%s</priority>\n%s</service>\n";
 	// last %s is provider-specific parameters
 	
 
@@ -37,6 +37,9 @@ public class ConfigBuilder extends FileBuilder{
 
 	//Overloaded:
 	public FileBuilder addInject(String typeInject, String providerInject, String priorityInject, String paramsInject) {
+		if(mInject == null){
+			mInject = new String();
+		}
 		String serviceInfo = String.format(configInject, typeInject, providerInject, priorityInject, paramsInject);
 		this.mInject += serviceInfo;
 		return this;

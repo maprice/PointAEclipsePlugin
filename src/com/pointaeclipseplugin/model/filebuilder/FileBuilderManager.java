@@ -124,33 +124,25 @@ public class FileBuilderManager {
 
 	private WritableFile buildConfig(Map<Services, ArrayList<ProviderMetaData>> mProviders){
 		ConfigBuilder mConfigBuilder = new ConfigBuilder();
-
 		mConfigBuilder.addPreInject(FileConstants.CONFIG_HEADER);
-
 		for (Services serType: mProviders.keySet())
 		{
 			for (int providerIndex = 0; providerIndex < mProviders.get(serType).size(); providerIndex++)
 			{
 				String typeInject = serType.toString();
-
 				String providerInject = mProviders.get(serType).get(providerIndex).getName();
-
-				String priorityInject = Integer.toString(providerIndex);
-
+				String priorityInject = Integer.toString(providerIndex + 1);
 				String paramsInject = "";
 				for (String key: mProviders.get(serType).get(providerIndex).getParams().keySet())
 				{
 					paramsInject += "<" + key + ">";
 					paramsInject += mProviders.get(serType).get(providerIndex).getParams().get(key);
-					paramsInject += "</" + key + ">";
+					paramsInject += "</" + key + ">\n";
 				}
-
 				mConfigBuilder.addInject(typeInject, providerInject, priorityInject, paramsInject);
 			}
 		}
-
 		mConfigBuilder.addPostInject(FileConstants.CONFIG_FOOTER);
-
 		return mConfigBuilder.getFile();
 	}
 }
