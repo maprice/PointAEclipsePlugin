@@ -25,7 +25,7 @@ public class FileConstants {
 	
 
 	public final static String MANIFEST_PATH = 
-			"/path/to/AndroidManifest.xml";
+			"C:/temp/AndroidManifest.xml";
 
 	// ===========================================================
 	// ClassPath
@@ -44,18 +44,18 @@ public class FileConstants {
 					"</classpath>";
 
 	public final static String CLASSPATH_PATH = 
-			"/path/to/.classpath";
+			"C:/temp/.classpath";
 	
 	// ===========================================================
 	// Config
 	// ===========================================================
 	
-	public final static String CONFIG_HEADER = "<pointAconfig>";
+	public final static String CONFIG_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<pointAconfig>\n";
 	public final static String CONFIG_FOOTER = "</pointAconfig>";
 	public final static String CONFIG_PATH = 
-			"/path/to/.classpath";
+			"C:/temp/config.xml";
 	
 	
 	public final static String JAR_PATH = 
-			"/path/to/.jar";
+			"C:/temp/";
 }
