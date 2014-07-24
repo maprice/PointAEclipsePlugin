@@ -72,12 +72,12 @@ public class MasterProviderInfo {
 		//====================
 		// ANALYTICS
 		//====================
-		MasterProviderMeta googleanalytics = new MasterProviderMeta("Google Analytics", Services.Analytics, null);
+		MasterProviderMeta googleanalytics = new MasterProviderMeta("Google", Services.Analytics, null);
 		googleanalytics.params.add("App ID");
 		googleanalytics.params.add("Client Key");
 		googleanalytics.addPermission(Permissions.INTERNET);
 
-		MasterProviderMeta parseanalytics = new MasterProviderMeta("Parse Analytics", Services.Analytics, null);
+		MasterProviderMeta parseanalytics = new MasterProviderMeta("Parse", Services.Analytics, null);
 		parseanalytics.params.add("App ID");
 		parseanalytics.params.add("Client Key");
 		parseanalytics.addPermission(Permissions.INTERNET);
