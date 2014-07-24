@@ -123,6 +123,8 @@ public enum PointAController {
 		System.out.println("Save button pressed");		
 		System.out.println("We should save the following to the config.xml");
 
+		mCurrentSelectionParamList.updateParameters(mCurrentSelection.getParams());
+		
 		for (Services lService : Services.values()) {
 			ArrayList<ProviderMetaData> lProviders = mProviders.get(lService);
 			System.out.println(lService.name());
