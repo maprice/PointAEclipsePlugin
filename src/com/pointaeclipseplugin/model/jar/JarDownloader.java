@@ -39,7 +39,7 @@ public class JarDownloader implements Runnable{
 
 	public JarDownloader(String pURL) {
 		//Downloads 914bbs.txt into PointA/jars folder. Set Destination to match your machine
-		mTargetURL = "http://textfiles.com/100/914bbs.txt";
+		mTargetURL = pURL;
 		//mTargetDestination = "C:\\Users\\Pablo\\Documents\\GitHub\\PointA\\jars";
 		mTargetDestination = "C:\\Users\\Mike Price\\Desktop";
 	}

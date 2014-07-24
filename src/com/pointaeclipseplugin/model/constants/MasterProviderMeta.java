@@ -3,6 +3,7 @@ package com.pointaeclipseplugin.model.constants;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pointaeclipseplugin.model.ProviderMetaData;
 import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
 
 public class MasterProviderMeta {
@@ -17,5 +18,7 @@ public class MasterProviderMeta {
 		this.type = type;
 		this.jarLocation = jarLocation;
 		this.params = new ArrayList<String>();
-	}	
+	}
+
+	
 }

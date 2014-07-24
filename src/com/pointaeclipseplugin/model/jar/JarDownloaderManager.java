@@ -2,11 +2,10 @@ package com.pointaeclipseplugin.model.jar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import com.pointaeclipseplugin.model.ProviderMetaData;
+import com.pointaeclipseplugin.model.constants.MasterProviderInfo;
 import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
-import com.pointaeclipseplugin.model.filereader.ConfigSettings;
 
 
 
@@ -46,15 +45,24 @@ public class JarDownloaderManager {
 	public void updateJars(HashMap<Services, ArrayList<ProviderMetaData>> mProviders) {
 		//for(Number of Jars to download){
 		
-			// Get the Jar's URL
-			String URL = "http://JarLocation.com";
-		
-			// Create new thread
-			JarDownloader lJarDownloader = new JarDownloader(URL);
-		
-			// Add thread to pool
-			mPool.addThread(lJarDownloader);
+		for (Services lService : Services.values()) {
+			ArrayList<ProviderMetaData> lProviders = mProviders.get(lService);
 			
-		//}
+			for(ProviderMetaData lProvider : lProviders){
+
+			String lUrl = MasterProviderInfo.getJarURL(lProvider);
+			
+			if(lUrl != null && !lUrl.isEmpty()){
+				// Create new thread
+				JarDownloader lJarDownloader = new JarDownloader(lUrl);
+			
+				// Add thread to pool
+				mPool.addThread(lJarDownloader);
+			}
+
+			}
+			System.out.println("---------------------");
+		}
+		
 	}
 }

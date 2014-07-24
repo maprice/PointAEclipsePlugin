@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.pointaeclipseplugin.model.ProviderMetaData;
+
 public class MasterProviderInfo {
 	
 	public static enum Services {		
@@ -12,7 +14,7 @@ public class MasterProviderInfo {
 		CrashReporter,
 		Rating,
 		Push,
-		Twitter
+		Billing
 		//...
 	}
 	// Could have a list of all providers,  OR a hashmap with key = serviceType value = ArrayList<Providers> (Better) 
@@ -27,22 +29,22 @@ public class MasterProviderInfo {
 		//====================
 		// ADS
 		//====================
-		MasterProviderMeta admob = new MasterProviderMeta("Admob", Services.Ads, null);
+		MasterProviderMeta admob = new MasterProviderMeta("Admob", Services.Ads, "http://www.aptoide.org/export/1394/libraries/aptoide-4.2.0-libs/mopub-sdk/libs/GoogleAdMobAdsSdk-6.4.1.jar");
 		admob.params.add("Size");
 		admob.params.add("Unit ID");
 
-		MasterProviderMeta adsense = new MasterProviderMeta("AdSense", Services.Ads, null);
+	/*	MasterProviderMeta adsense = new MasterProviderMeta("AdSense", Services.Ads, null);
 		adsense.params.add("Size2");
 		adsense.params.add("Unit ID2");
 
 		MasterProviderMeta burstly = new MasterProviderMeta("Burstly", Services.Ads, null);
 		burstly.params.add("Size3");
 		burstly.params.add("Unit ID3");
-
+*/
 		List<MasterProviderMeta> adsList = new ArrayList<MasterProviderMeta>();
 		adsList.add(admob);
-		adsList.add(adsense);
-		adsList.add(burstly);
+	//	adsList.add(adsense);
+	//	adsList.add(burstly);
 
 		providerMasterList.put(Services.Ads, adsList);
 
@@ -66,13 +68,13 @@ public class MasterProviderInfo {
 		//====================
 		// CRASH
 		//====================
-		MasterProviderMeta bugsense = new MasterProviderMeta("BugSense", Services.CrashReporter, null);
+		MasterProviderMeta bugsense = new MasterProviderMeta("BugSense", Services.CrashReporter, "https://s3.amazonaws.com/bugsenseplugins/bugsense-3.6.1.jar");
 		bugsense.params.add("App ID");
 
-		MasterProviderMeta bugsnag = new MasterProviderMeta("BugSnag", Services.CrashReporter, null);
+		MasterProviderMeta bugsnag = new MasterProviderMeta("BugSnag", Services.CrashReporter, "http://central.maven.org/maven2/com/bugsnag/bugsnag-android/2.2.0/bugsnag-android-2.2.0.jar");
 		bugsnag.params.add("App ID");
 
-		MasterProviderMeta crittercism = new MasterProviderMeta("Crittercism", Services.CrashReporter, null);
+		MasterProviderMeta crittercism = new MasterProviderMeta("Crittercism", Services.CrashReporter, "http://central.maven.org/maven2/com/crittercism/crittercism-android-agent/4.5.3/crittercism-android-agent-4.5.3.jar");
 		crittercism.params.add("App ID");
 
 		List<MasterProviderMeta> crashList = new ArrayList<MasterProviderMeta>();
@@ -110,16 +112,19 @@ public class MasterProviderInfo {
 		providerMasterList.put(Services.Rating, ratingList);
 
 		//====================
-		// TWITTER
+		// BILLING
 		//====================
-		MasterProviderMeta twitter = new MasterProviderMeta("Twitter", Services.Twitter, null);
-		twitter.params.add("Consumer Key");
-		twitter.params.add("Consumer Secret");
+		MasterProviderMeta googleBilling = new MasterProviderMeta("Google Play", Services.Billing, null);
+		
 
+		MasterProviderMeta amazonBilling = new MasterProviderMeta("Amazon Market", Services.Billing, null);
+	
+		
 		List<MasterProviderMeta> twitterList = new ArrayList<MasterProviderMeta>();
-		twitterList.add(twitter);
+		twitterList.add(googleBilling);
+		twitterList.add(amazonBilling);
 
-		providerMasterList.put(Services.Twitter, twitterList);
+		providerMasterList.put(Services.Billing, twitterList);
 
 		//Create other stuff..........
 
@@ -131,5 +136,19 @@ public class MasterProviderInfo {
 			initMasterProviderInfo();
 		}
 		return providerMasterList;
+	}
+
+	public static String getJarURL(ProviderMetaData lProvider) {
+		HashMap<Services, List<MasterProviderMeta>> lMaster = MasterProviderInfo.getProviders();
+		
+		List<MasterProviderMeta> lMasterService = lMaster.get(lProvider.getType());
+		
+		for(MasterProviderMeta lData : lMasterService){
+			if(lData.name.equals(lProvider.getName())){
+				return lData.jarLocation;
+			}
+		}
+		
+		return null;
 	}
 }
