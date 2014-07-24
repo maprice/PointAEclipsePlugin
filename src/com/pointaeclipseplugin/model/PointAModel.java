@@ -50,8 +50,7 @@ public class PointAModel {
 	public void saveChanges(HashMap<Services, ArrayList<ProviderMetaData>> mProviders){
 		//Synchronous start
 
-		//mConfigManager.updateConfig(mProviders);
-		//mFileBuilderManager.updateFiles(mProviders);
+		mFileBuilderManager.updateFiles(mProviders);
 		mJarDownloaderManager.updateJars(mProviders);
 
 		//Synchronous end

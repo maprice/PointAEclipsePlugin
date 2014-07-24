@@ -50,7 +50,7 @@ public class FileConstants {
 	// Config
 	// ===========================================================
 	
-	public final static String CONFIG_HEADER = "<pointAconfig>";
+	public final static String CONFIG_HEADER = "<pointAconfig>\n";
 	public final static String CONFIG_FOOTER = "</pointAconfig>";
 	public final static String CONFIG_PATH = 
 			"/path/to/.classpath";
