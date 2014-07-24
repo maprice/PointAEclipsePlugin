@@ -38,9 +38,10 @@ public class WritableFile{
 	// ===========================================================
 
 	public WritableFile(FileBuilder pFileBuilder) {
-		mFile.concat(pFileBuilder.preInject());
-		mFile.concat(pFileBuilder.inject());
-		mFile.concat(pFileBuilder.postInject());
+		mFile = new String();
+		mFile += (pFileBuilder.preInject());
+		mFile += (pFileBuilder.inject());
+		mFile += (pFileBuilder.postInject());
 	}
 
 
@@ -49,6 +50,8 @@ public class WritableFile{
 	// ===========================================================
 
 	public void writeToFile(String pFileLocation) {
+		
+		System.out.println("We are writing :" + mFile + " to " + pFileLocation);
 
 		File configFile = new File(pFileLocation);
 		if (configFile.exists())
@@ -66,6 +69,7 @@ public class WritableFile{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 

@@ -44,7 +44,7 @@ public abstract class FileBuilder {
 	}
 	
 	public FileBuilder addPostInject(String pPostInject){
-		mPreInject = pPostInject;
+		mPostInject = pPostInject;
 		return this;
 	}
 	

@@ -17,7 +17,7 @@ public class ClassPathBuilder extends FileBuilder{
 
 	static final String LOG_TAG =  ClassPathBuilder.class.getSimpleName();
 
-	private String mExcludeInject =  "<classpathentry excluding=\"com/pointa/service/%s.java\" kind=\"src\" path=\"src\"/>";
+	private String mExcludeInject =  "<classpathentry excluding=\"com/pointa/service/%sProvider.java\" kind=\"src\" path=\"src\"/>\n";
 	
 
 	// ===========================================================
@@ -35,6 +35,10 @@ public class ClassPathBuilder extends FileBuilder{
 
 	@Override
 	public FileBuilder addInject(String pInject) {
+		if(mInject == null){
+			mInject = new String();
+		}
+		
 		String lExlude = String.format(mExcludeInject, pInject);
 		this.mInject += lExlude;
 		return this;

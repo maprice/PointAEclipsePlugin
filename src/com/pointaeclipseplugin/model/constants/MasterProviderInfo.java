@@ -7,16 +7,34 @@ import java.util.List;
 import com.pointaeclipseplugin.model.ProviderMetaData;
 
 public class MasterProviderInfo {
-	
-	public static enum Services {		
-		Ads,
-		Analytics,
-		CrashReporter,
-		Rating,
-		Push,
-		Billing
+		
+	public enum Services{
+		Ads("ads", "Ads"),
+		Analytics("analytics", "Analytics"),
+		CrashReporter("crashreporter", "CrashReporter"),
+		Rating("rating", "Rating"),
+		Push("push", "Push"),
+		Billing("billing", "Billing");
 		//...
+
+
+		private Services(final String pPackage, final String pClass) {
+			this.mPackage = pPackage;
+			this.mClass = pClass;
+		}
+
+		private final String mPackage;
+		private final String mClass;
+
+		public String getPackageName() {
+			return mPackage;
+		}
+
+		public String getClassName() {
+			return mClass;
+		}
 	}
+	
 	// Could have a list of all providers,  OR a hashmap with key = serviceType value = ArrayList<Providers> (Better) 
 	//final ArrayList<Provider> providerMasterList;
 	static HashMap<Services, List<MasterProviderMeta>> providerMasterList;

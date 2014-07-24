@@ -1,11 +1,15 @@
 package com.pointaeclipseplugin.model.filebuilder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.pointaeclipseplugin.model.ProviderMetaData;
 import com.pointaeclipseplugin.model.constants.FileConstants;
+import com.pointaeclipseplugin.model.constants.MasterProviderInfo;
 import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
+import com.pointaeclipseplugin.model.constants.MasterProviderMeta;
 import com.pointaeclipseplugin.model.filewriter.WritableFile;
 
 
@@ -73,9 +77,31 @@ public class FileBuilderManager {
 		mClassPathBuilder.addPreInject(FileConstants.CLASSPATH_HEADER);
 
 		//Read from config to get exlusion list
-		int totalPermission = 10;
-		for(int i = 0; i < totalPermission; i++)
-			mClassPathBuilder.addInject("Name of class to be exluded");
+		HashMap<Services, List<MasterProviderMeta>> lMasterProviders = MasterProviderInfo.getProviders();
+
+		// Super ineffeiecnt should really be using hashsets for everything.
+		for (Services lService : Services.values()) {
+			List<MasterProviderMeta> lSuperSet = lMasterProviders.get(lService);
+			List<ProviderMetaData> lSubset = mProviders.get(lService);
+
+
+			for(MasterProviderMeta lSuperProvider : lSuperSet){
+				boolean found = false;
+				for(ProviderMetaData lSubProvider : lSubset){
+					if(lSubProvider.getName().equals(lSuperProvider.name)){
+						found = true;
+						break;
+					}
+				}
+				if(!found)
+					mClassPathBuilder.addInject(
+							lSuperProvider.type.getPackageName() +
+							"/" + 
+							lSuperProvider.name +
+							lSuperProvider.type.getClassName()
+							);
+			}
+		}
 
 		mClassPathBuilder.addPostInject(FileConstants.CLASSPATH_FOOTER);
 
@@ -92,9 +118,9 @@ public class FileBuilderManager {
 			for (int providerIndex = 0; providerIndex < mProviders.get(serType).size(); providerIndex++)
 			{
 				String typeInject = serType.toString();
-				
+
 				String providerInject = mProviders.get(serType).get(providerIndex).getName();
-				
+
 				String priorityInject = Integer.toString(providerIndex);
 
 				String paramsInject = "";
@@ -108,7 +134,7 @@ public class FileBuilderManager {
 				mConfigBuilder.addInject(typeInject, providerInject, priorityInject, paramsInject);
 			}
 		}
-		
+
 		mConfigBuilder.addPostInject(FileConstants.CONFIG_FOOTER);
 
 		return mConfigBuilder.getFile();
