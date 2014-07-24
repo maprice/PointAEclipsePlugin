@@ -7,5 +7,5 @@ Bundle-Activator: com.pointaeclipseplugin.eclipse.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime
 Bundle-ActivationPolicy: lazy
-Bundle-ClassPath: libs/xmlpull_1_0_5.jar,
- .
+Bundle-ClassPath: .,
+ libs/kxml2-2.3.0.jar
