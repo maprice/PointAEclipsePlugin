@@ -5,7 +5,7 @@
 
 ##Overview
 
-The PointA Eclipse Plugin is an Eclipse GUI that allows users to configure the settings for each service providers and save the settings to an xml file which the PointA library can parse the data. It also takes care of dependencies to run the service such as downloading jars to the correct folder, building the file paths and modifying xml files. The goal is to minimize the amount of redundant work that a developer has to do to set up the service, so he/she can focus on developing his/her application. 
+The PointA Eclipse Plugin is an extensible Eclipse application that allows users to configure the settings for each service provider through a GUI and save the settings to a xml file. It also takes care of dependencies such as downloading jars to the correct folder, building the file paths and modifying xml files. The goal is to minimize the amount of redundant work that a developer has to do to set up the service, so they can focus on developing his/her application. 
 
 ##Functional Features
 
