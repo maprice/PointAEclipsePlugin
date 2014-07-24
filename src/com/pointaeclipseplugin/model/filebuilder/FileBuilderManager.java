@@ -2,6 +2,7 @@ package com.pointaeclipseplugin.model.filebuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import com.pointaeclipseplugin.model.constants.FileConstants;
 import com.pointaeclipseplugin.model.constants.MasterProviderInfo;
 import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
 import com.pointaeclipseplugin.model.constants.MasterProviderMeta;
+import com.pointaeclipseplugin.model.constants.Permissions;
 import com.pointaeclipseplugin.model.filewriter.WritableFile;
 
 
@@ -61,10 +63,22 @@ public class FileBuilderManager {
 
 		mManifestBuilder.addPreInject(FileConstants.MANIFEST_HEADER);
 
-		//Read from config to get permission list
-		int totalPermission = 10;
-		for(int i = 0; i < totalPermission; i++)
-			mManifestBuilder.addInject("jkhb");
+		HashSet<Permissions> lTotalPermissions = new HashSet<Permissions>();
+
+		// Make minimum set of permissions
+		for (Services lService : Services.values()) {
+			List<ProviderMetaData> lSubset = mProviders.get(lService);
+
+			for(ProviderMetaData lSubProvider : lSubset){
+				lTotalPermissions.addAll(MasterProviderInfo.getPermissions(lSubProvider));
+			}
+		}
+
+		// Inject our minimum set
+		for(Permissions lPermission : lTotalPermissions){
+			mManifestBuilder.addInject(lPermission.name());
+		}
+
 
 		mManifestBuilder.addPostInject(FileConstants.MANIFEST_FOOTER);
 

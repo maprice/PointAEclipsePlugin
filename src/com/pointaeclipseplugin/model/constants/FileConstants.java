@@ -18,7 +18,7 @@ public class FileConstants {
 				"package=\"com.maprice.pointa\"" + "\n" +
 				"android:versionCode=\"1\"" + "\n" +
 				"android:versionName=\"1.0\">" + "\n" +
-				"<uses-sdk android:minSdkVersion=\"8\" android:targetSdkVersion=\"15\" />";
+				"<uses-sdk android:minSdkVersion=\"8\" android:targetSdkVersion=\"15\" />" + "\n";
 
 	public final static String MANIFEST_FOOTER = 
 			"</manifest>";
@@ -54,4 +54,8 @@ public class FileConstants {
 	public final static String CONFIG_FOOTER = "</pointAconfig>";
 	public final static String CONFIG_PATH = 
 			"/path/to/.classpath";
+	
+	
+	public final static String JAR_PATH = 
+			"/path/to/.jar";
 }

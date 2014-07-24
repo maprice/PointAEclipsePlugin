@@ -2,7 +2,9 @@ package com.pointaeclipseplugin.model.constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.pointaeclipseplugin.model.ProviderMetaData;
 
@@ -50,6 +52,7 @@ public class MasterProviderInfo {
 		MasterProviderMeta admob = new MasterProviderMeta("Admob", Services.Ads, "http://www.aptoide.org/export/1394/libraries/aptoide-4.2.0-libs/mopub-sdk/libs/GoogleAdMobAdsSdk-6.4.1.jar");
 		admob.params.add("Size");
 		admob.params.add("Unit ID");
+		admob.addPermission(Permissions.INTERNET);
 
 	/*	MasterProviderMeta adsense = new MasterProviderMeta("AdSense", Services.Ads, null);
 		adsense.params.add("Size2");
@@ -72,11 +75,18 @@ public class MasterProviderInfo {
 		MasterProviderMeta googleanalytics = new MasterProviderMeta("Google Analytics", Services.Analytics, null);
 		googleanalytics.params.add("App ID");
 		googleanalytics.params.add("Client Key");
+		googleanalytics.addPermission(Permissions.INTERNET);
 
 		MasterProviderMeta parseanalytics = new MasterProviderMeta("Parse Analytics", Services.Analytics, null);
 		parseanalytics.params.add("App ID");
 		parseanalytics.params.add("Client Key");
-
+		parseanalytics.addPermission(Permissions.INTERNET);
+		parseanalytics.addPermission(Permissions.WAKE_LOCK);
+		parseanalytics.addPermission(Permissions.VIBRATE);
+		parseanalytics.addPermission(Permissions.RECEIVE_BOOT_COMPLETED);
+		parseanalytics.addPermission(Permissions.GET_ACCOUNTS);
+		parseanalytics.addPermission(Permissions.RECEIVE);
+		
 		List<MasterProviderMeta> analyticsList = new ArrayList<MasterProviderMeta>();
 		analyticsList.add(googleanalytics);
 		analyticsList.add(parseanalytics);
@@ -88,13 +98,17 @@ public class MasterProviderInfo {
 		//====================
 		MasterProviderMeta bugsense = new MasterProviderMeta("BugSense", Services.CrashReporter, "https://s3.amazonaws.com/bugsenseplugins/bugsense-3.6.1.jar");
 		bugsense.params.add("App ID");
-
+		bugsense.addPermission(Permissions.INTERNET);
+		
 		MasterProviderMeta bugsnag = new MasterProviderMeta("BugSnag", Services.CrashReporter, "http://central.maven.org/maven2/com/bugsnag/bugsnag-android/2.2.0/bugsnag-android-2.2.0.jar");
 		bugsnag.params.add("App ID");
+		bugsnag.addPermission(Permissions.INTERNET);
 
 		MasterProviderMeta crittercism = new MasterProviderMeta("Crittercism", Services.CrashReporter, "http://central.maven.org/maven2/com/crittercism/crittercism-android-agent/4.5.3/crittercism-android-agent-4.5.3.jar");
 		crittercism.params.add("App ID");
-
+		crittercism.addPermission(Permissions.INTERNET);
+		
+		
 		List<MasterProviderMeta> crashList = new ArrayList<MasterProviderMeta>();
 		crashList.add(bugsense);
 		crashList.add(bugsnag);
@@ -120,7 +134,7 @@ public class MasterProviderInfo {
 		MasterProviderMeta amazon = new MasterProviderMeta("Amazon", Services.Rating, null);
 		amazon.params.add("URI");
 
-		MasterProviderMeta googleplay = new MasterProviderMeta("Google Play", Services.Rating, null);
+		MasterProviderMeta googleplay = new MasterProviderMeta("GooglePlay", Services.Rating, null);
 		googleplay.params.add("URI");
 
 		List<MasterProviderMeta> ratingList = new ArrayList<MasterProviderMeta>();
@@ -132,10 +146,10 @@ public class MasterProviderInfo {
 		//====================
 		// BILLING
 		//====================
-		MasterProviderMeta googleBilling = new MasterProviderMeta("Google Play", Services.Billing, null);
+		MasterProviderMeta googleBilling = new MasterProviderMeta("GooglePlay", Services.Billing, null);
 		
 
-		MasterProviderMeta amazonBilling = new MasterProviderMeta("Amazon Market", Services.Billing, null);
+		MasterProviderMeta amazonBilling = new MasterProviderMeta("AmazonMarket", Services.Billing, null);
 	
 		
 		List<MasterProviderMeta> twitterList = new ArrayList<MasterProviderMeta>();
@@ -168,5 +182,20 @@ public class MasterProviderInfo {
 		}
 		
 		return null;
+	}
+
+	public static Set<Permissions> getPermissions(ProviderMetaData lProvider) {
+		
+	HashMap<Services, List<MasterProviderMeta>> lMaster = MasterProviderInfo.getProviders();
+		
+		List<MasterProviderMeta> lMasterService = lMaster.get(lProvider.getType());
+		
+		for(MasterProviderMeta lData : lMasterService){
+			if(lData.name.equals(lProvider.getName())){
+				return lData.getPermission();
+			}
+		}
+		
+		return new HashSet<Permissions>();
 	}
 }

@@ -4,6 +4,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 
+import com.pointaeclipseplugin.model.constants.FileConstants;
+
 
 
 /**
@@ -41,7 +43,7 @@ public class JarDownloader implements Runnable{
 		//Downloads 914bbs.txt into PointA/jars folder. Set Destination to match your machine
 		mTargetURL = pURL;
 		//mTargetDestination = "C:\\Users\\Pablo\\Documents\\GitHub\\PointA\\jars";
-		mTargetDestination = "C:\\Users\\Mike Price\\Desktop";
+		mTargetDestination = FileConstants.JAR_PATH;
 	}
 
 	@Override

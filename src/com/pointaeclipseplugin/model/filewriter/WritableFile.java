@@ -50,7 +50,7 @@ public class WritableFile{
 	// ===========================================================
 
 	public void writeToFile(String pFileLocation) {
-		
+
 		System.out.println("We are writing :" + mFile + " to " + pFileLocation);
 
 		File configFile = new File(pFileLocation);
@@ -69,7 +69,7 @@ public class WritableFile{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 

@@ -17,7 +17,7 @@ public class ManifestBuilder extends FileBuilder{
 
 	static final String LOG_TAG =  ManifestBuilder.class.getSimpleName();
 
-	private String mPermissionInject =  "<uses-permission android:name=\"android.permission.%s\" />";
+	private String mPermissionInject =  "<uses-permission android:name=\"android.permission.%s\" />\n";
 
 	// ===========================================================
 	// Fields
@@ -34,6 +34,10 @@ public class ManifestBuilder extends FileBuilder{
 
 	@Override
 	public FileBuilder addInject(String pInject) {
+		if(mInject == null){
+			mInject = new String();
+		}
+		
 		String lPremission = String.format(mPermissionInject, pInject);
 		this.mInject += lPremission;
 		return this;
