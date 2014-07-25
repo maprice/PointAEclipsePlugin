@@ -3,15 +3,17 @@ package com.pointaeclipseplugin.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Shell;
 
 import com.pointaeclipseplugin.model.ParamList;
+import com.pointaeclipseplugin.model.ParamMap;
 import com.pointaeclipseplugin.model.PointAModel;
 import com.pointaeclipseplugin.model.ProviderMetaData;
-import com.pointaeclipseplugin.model.ParamMap;
-import com.pointaeclipseplugin.model.constants.MasterProviderInfo;
 import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
-import com.pointaeclipseplugin.model.constants.MasterProviderMeta;
 
 public enum PointAController {
 	INSTANCE;
@@ -59,31 +61,32 @@ public enum PointAController {
 	}
 
 	public void onCurrentSelectionChanged(ProviderMetaData newProvider){
-		
+
 
 		if(mCurrentSelection != null){
 			mCurrentSelectionParamList.updateParameters(mCurrentSelection.getParams());
+			System.out.println("Moving away from " + mCurrentSelection.getName());
+			System.out.println("Current Params selection changed: " + mCurrentSelection.getParams().toString());
+
 		}
-			
+
 		if(newProvider != null){
 			System.out.println("Current selection changed to: "+newProvider.getName());	
 			mCurrentSelectionParamList.setParameters(newProvider.getParams());
 			mCurrentSelection = newProvider;
 		}
-
-
 	}
 
 	public void onEnableChanged(Boolean pEnabled){
 		//Cool they enabled it, lets add it to our list
 		if(pEnabled){
+
 			mCurrentSelection.setEnabled(true);
-			System.out.println("Adding: " + mCurrentSelection.getName());
 			mProviders.get(mCurrentSelection.getType()).add(mCurrentSelection);
 		}
 		else{
 			mCurrentSelection.setEnabled(false);
-			System.out.println("Removing: " + mCurrentSelection.getName());
+
 			mProviders.get(mCurrentSelection.getType()).remove(mCurrentSelection);
 		}
 
@@ -123,6 +126,8 @@ public enum PointAController {
 		System.out.println("Save button pressed");		
 		System.out.println("We should save the following to the config.xml");
 
+		mCurrentSelectionParamList.updateParameters(mCurrentSelection.getParams());
+
 		for (Services lService : Services.values()) {
 			ArrayList<ProviderMetaData> lProviders = mProviders.get(lService);
 			System.out.println(lService.name());
@@ -140,7 +145,44 @@ public enum PointAController {
 	}
 
 	public void onRevertButtonPressed() {
-		System.out.println("Revert button pressed");		
+				
+	     // System.out.println("CALLED!");
+	      
+	     final Display display = Display.getDefault();
+
+	     display.syncExec(new Runnable() {
+	    	    public void run() {
+	    	    	
+	    	    	Shell shell = new Shell(display);
+	    	    
+	    	    	String path;
+	    	    	
+	    			FileDialog dialog = new FileDialog(shell, SWT.SAVE);
+	    			
+	    			
+	    			dialog.setFilterNames(new String[] { ".xml", "All Files (*.*)" });
+	    		    dialog.setFilterExtensions(new String[] { ".xml", "All Files (*.*)" }); // Windows
+	    		                                    // wild
+	    		                                    // cards
+	    		    dialog.setFilterPath("c:\\"); // Windows path
+	    		    //dialog.setFileName("fred.bat");
+	    		    
+	    		    
+	    		    path = dialog.open();
+	    		    
+	    		 
+	    		    System.out.println("Save to: " + path);
+	    		    
+	    		      
+	    		    while (!shell.isDisposed()) {
+	    		      if (!display.readAndDispatch())
+	    		        display.sleep();
+	    		    }
+	    		    display.dispose();
+
+	    	    }
+	    	});
+	
 	}
 
 	public ProviderMetaData getConfigProvider(String lProviderName) {

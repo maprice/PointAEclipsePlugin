@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.pointaeclipseplugin.model.constants.MasterProviderInfo;
-import com.pointaeclipseplugin.model.constants.MasterProviderMeta;
 import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
+import com.pointaeclipseplugin.model.constants.MasterProviderMeta;
 
 /**
  * Container class of service provider specific data

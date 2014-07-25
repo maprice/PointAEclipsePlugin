@@ -1,6 +1,5 @@
 package com.pointaeclipseplugin.view;
 
-import java.security.Provider.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,9 +16,9 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
-import com.pointaeclipseplugin.model.constants.MasterProviderMeta;
 import com.pointaeclipseplugin.model.constants.MasterProviderInfo;
 import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
+import com.pointaeclipseplugin.model.constants.MasterProviderMeta;
 
 public class ServicePickerView extends ViewPart {
 	public static final String ID = "MikeTest.navigationView";

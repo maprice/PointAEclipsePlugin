@@ -57,7 +57,7 @@ public class ServiceView extends ViewPart {
 		public void selectionChanged(IWorkbenchPart sourcepart, ISelection selection) {
 			// We ignore our own selections
 			if (sourcepart != ServiceView.this && !currentFocus.equals(selection.toString())) {
-
+				
 				String lRaw = selection.toString();
 				currentFocus = lRaw;
 				String lProviderName = lRaw.substring(1, lRaw.length()-1);
@@ -124,7 +124,8 @@ public class ServiceView extends ViewPart {
 		mPriorityCombo.setItems(lPriorities);
 		mSaveButton.setText("Save and export");
 		mRevertButton.setText("Revert Changes");
-
+		mEnableButton.setEnabled(false);
+		
 		// Set Global Listeners
 		getSite().setSelectionProvider(mTableViewer);
 		getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(mProviderSelectionListener);
@@ -134,6 +135,8 @@ public class ServiceView extends ViewPart {
 
 	public void update(ProviderMetaData pProvider){
 		if(pProvider!= null){
+			mEnableButton.setEnabled(true);
+			
 			mProviderNameLabel.setText(pProvider.getName());
 
 			setProviderEnabled(pProvider.getEnabled());
@@ -144,6 +147,7 @@ public class ServiceView extends ViewPart {
 	}
 
 	private void setProviderEnabled(boolean pEnabled) {
+		
 		mEnableButton.setSelection(pEnabled);
 		mTableViewer.getTable().setEnabled(pEnabled);
 		mTableViewer.getTable().setEnabled(pEnabled);

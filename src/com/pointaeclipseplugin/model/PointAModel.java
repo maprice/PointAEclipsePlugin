@@ -2,7 +2,6 @@ package com.pointaeclipseplugin.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
 import com.pointaeclipseplugin.model.filebuilder.FileBuilderManager;
@@ -50,8 +49,7 @@ public class PointAModel {
 	public void saveChanges(HashMap<Services, ArrayList<ProviderMetaData>> mProviders){
 		//Synchronous start
 
-		//mConfigManager.updateConfig(mProviders);
-		//mFileBuilderManager.updateFiles(mProviders);
+		mFileBuilderManager.updateFiles(mProviders);
 		mJarDownloaderManager.updateJars(mProviders);
 
 		//Synchronous end
