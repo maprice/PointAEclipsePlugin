@@ -75,8 +75,11 @@ public enum PointAController {
 	public void onEnableChanged(Boolean pEnabled){
 		//Cool they enabled it, lets add it to our list
 		if(pEnabled){
-
 			mCurrentSelection.setEnabled(true);
+			if(	mProviders.get(mCurrentSelection.getType()) == null){
+				mProviders.put(mCurrentSelection.getType(), new ArrayList<ProviderMetaData>());
+			}
+			
 			mProviders.get(mCurrentSelection.getType()).add(mCurrentSelection);
 		}
 		else{
@@ -121,11 +124,17 @@ public enum PointAController {
 		System.out.println("Save button pressed");		
 		System.out.println("We should save the following to the config.xml");
 
-		mCurrentSelectionParamList.updateParameters(mCurrentSelection.getParams());
+		if(mCurrentSelection != null)
+			mCurrentSelectionParamList.updateParameters(mCurrentSelection.getParams());
 
 		for (Services lService : Services.values()) {
 			ArrayList<ProviderMetaData> lProviders = mProviders.get(lService);
 			System.out.println(lService.name());
+			
+			if(lProviders == null){
+				continue;
+			}
+			
 			for(ProviderMetaData lProvider : lProviders){
 
 				System.out.println("Provider:" + lProvider.getName());
@@ -134,6 +143,7 @@ public enum PointAController {
 			}
 			System.out.println("---------------------");
 		}
+
 
 		// TODO: Uncomment once model works
 		mModel.saveChanges(mProviders);
