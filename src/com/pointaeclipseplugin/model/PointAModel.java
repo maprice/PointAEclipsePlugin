@@ -2,7 +2,6 @@ package com.pointaeclipseplugin.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
 import com.pointaeclipseplugin.model.filebuilder.FileBuilderManager;

@@ -3,7 +3,6 @@ package com.pointaeclipseplugin.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
@@ -11,12 +10,10 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
 import com.pointaeclipseplugin.model.ParamList;
+import com.pointaeclipseplugin.model.ParamMap;
 import com.pointaeclipseplugin.model.PointAModel;
 import com.pointaeclipseplugin.model.ProviderMetaData;
-import com.pointaeclipseplugin.model.ParamMap;
-import com.pointaeclipseplugin.model.constants.MasterProviderInfo;
 import com.pointaeclipseplugin.model.constants.MasterProviderInfo.Services;
-import com.pointaeclipseplugin.model.constants.MasterProviderMeta;
 
 public enum PointAController {
 	INSTANCE;

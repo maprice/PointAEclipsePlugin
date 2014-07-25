@@ -49,11 +49,13 @@ public class MasterProviderInfo {
 		//====================
 		// ADS
 		//====================
-		MasterProviderMeta admob = new MasterProviderMeta("Admob", Services.Ads, "http://www.aptoide.org/export/1394/libraries/aptoide-4.2.0-libs/mopub-sdk/libs/GoogleAdMobAdsSdk-6.4.1.jar");
-		admob.params.add("Size");
-		admob.params.add("Unit ID");
-		admob.addPermission(Permissions.INTERNET);
 
+		MasterProviderMeta admob = new MasterProviderMeta("AdMob", Services.Ads, "http://www.aptoide.org/export/1394/libraries/aptoide-4.2.0-libs/mopub-sdk/libs/GoogleAdMobAdsSdk-6.4.1.jar");
+		admob.params.add("bannerUnitID");
+		admob.params.add("interstitialUnitID");
+		admob.addPermission(Permissions.INTERNET);
+		
+		
 	/*	MasterProviderMeta adsense = new MasterProviderMeta("AdSense", Services.Ads, null);
 		adsense.params.add("Size2");
 		adsense.params.add("Unit ID2");
@@ -72,12 +74,12 @@ public class MasterProviderInfo {
 		//====================
 		// ANALYTICS
 		//====================
-		MasterProviderMeta googleanalytics = new MasterProviderMeta("Google Analytics", Services.Analytics, null);
+		MasterProviderMeta googleanalytics = new MasterProviderMeta("Google", Services.Analytics, null);
 		googleanalytics.params.add("App ID");
 		googleanalytics.params.add("Client Key");
 		googleanalytics.addPermission(Permissions.INTERNET);
 
-		MasterProviderMeta parseanalytics = new MasterProviderMeta("Parse Analytics", Services.Analytics, null);
+		MasterProviderMeta parseanalytics = new MasterProviderMeta("Parse", Services.Analytics, null);
 		parseanalytics.params.add("App ID");
 		parseanalytics.params.add("Client Key");
 		parseanalytics.addPermission(Permissions.INTERNET);

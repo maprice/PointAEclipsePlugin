@@ -2,9 +2,6 @@ package com.pointaeclipseplugin.view;
 
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IViewReference;
-import org.eclipse.ui.IWorkbenchWindow;
 
 public class Perspective implements IPerspectiveFactory {
 
