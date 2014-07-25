@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Shell;
+
 import com.pointaeclipseplugin.model.ParamList;
 import com.pointaeclipseplugin.model.ParamMap;
 import com.pointaeclipseplugin.model.PointAModel;
@@ -150,7 +155,44 @@ public enum PointAController {
 	}
 
 	public void onRevertButtonPressed() {
-		System.out.println("Revert button pressed");		
+				
+	     // System.out.println("CALLED!");
+	      
+	     final Display display = Display.getDefault();
+
+	     display.syncExec(new Runnable() {
+	    	    public void run() {
+	    	    	
+	    	    	Shell shell = new Shell(display);
+	    	    
+	    	    	String path;
+	    	    	
+	    			FileDialog dialog = new FileDialog(shell, SWT.SAVE);
+	    			
+	    			
+	    			dialog.setFilterNames(new String[] { ".xml", "All Files (*.*)" });
+	    		    dialog.setFilterExtensions(new String[] { ".xml", "All Files (*.*)" }); // Windows
+	    		                                    // wild
+	    		                                    // cards
+	    		    dialog.setFilterPath("c:\\"); // Windows path
+	    		    //dialog.setFileName("fred.bat");
+	    		    
+	    		    
+	    		    path = dialog.open();
+	    		    
+	    		 
+	    		    System.out.println("Save to: " + path);
+	    		    
+	    		      
+	    		    while (!shell.isDisposed()) {
+	    		      if (!display.readAndDispatch())
+	    		        display.sleep();
+	    		    }
+	    		    display.dispose();
+
+	    	    }
+	    	});
+	
 	}
 
 	public ProviderMetaData getConfigProvider(String lProviderName) {
