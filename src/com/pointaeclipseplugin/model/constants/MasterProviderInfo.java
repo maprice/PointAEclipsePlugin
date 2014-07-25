@@ -53,14 +53,19 @@ public class MasterProviderInfo {
 		admob.params.add("Size");
 		admob.params.add("Unit ID");
 		admob.addPermission(Permissions.INTERNET);
+		admob.addPermission(Permissions.ACCESS_NETWORK_STATE);
 
 	/*	MasterProviderMeta adsense = new MasterProviderMeta("AdSense", Services.Ads, null);
 		adsense.params.add("Size2");
 		adsense.params.add("Unit ID2");
+		adsense.addPermission(Permissions.INTERNET);
+		adsense.addPermission(Permissions.ACCESS_NETWORK_STATE);
 
 		MasterProviderMeta burstly = new MasterProviderMeta("Burstly", Services.Ads, null);
 		burstly.params.add("Size3");
 		burstly.params.add("Unit ID3");
+		burstly.addPermission(Permissions.INTERNET);
+		burstly.addPermission(Permissions.ACCESS_NETWORK_STATE);
 */
 		List<MasterProviderMeta> adsList = new ArrayList<MasterProviderMeta>();
 		adsList.add(admob);
