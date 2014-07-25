@@ -55,7 +55,7 @@ public class JarDownloader implements Runnable{
 			URL url = new URL(mTargetURL);
 			
 			InputStream is = url.openStream();
-			FileOutputStream fos = new FileOutputStream(mTargetDestination + "/" + fileName);
+			FileOutputStream fos = new FileOutputStream(mTargetDestination + "../../libs"  + "/" + fileName);
 			
 			byte[] buffer = new byte[4096];
 			int bytesRead = 0;

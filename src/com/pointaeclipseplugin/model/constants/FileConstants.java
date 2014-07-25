@@ -25,7 +25,7 @@ public class FileConstants {
 	
 
 	public final static String MANIFEST_PATH = 
-			"AndroidManifest.xml";
+			"../../AndroidManifest.xml";
 
 	// ===========================================================
 	// ClassPath
@@ -44,7 +44,7 @@ public class FileConstants {
 					"</classpath>";
 
 	public final static String CLASSPATH_PATH = 
-			".classpath";
+			"../../.classpath";
 	
 	// ===========================================================
 	// Config
