@@ -17,9 +17,12 @@ public class ClassPathBuilder extends FileBuilder{
 
 	static final String LOG_TAG =  ClassPathBuilder.class.getSimpleName();
 
-	private String mExcludeInject =  "<classpathentry excluding=\"com/pointa/service/%sProvider.java\" kind=\"src\" path=\"src\"/>\n";
+	private String mExcludeInject =  "<classpathentry excluding=\"%s\" kind=\"src\" path=\"src\"/>\n";
+	private String mExludeItem = "com/pointa/service/%sProvider.java";
+	private int numExclude = 0;
+	private String mExcludeFull = "";
 	
-
+	
 	// ===========================================================
 	// Fields
 	// ===========================================================
@@ -39,8 +42,20 @@ public class ClassPathBuilder extends FileBuilder{
 			mInject = new String();
 		}
 		
-		String lExlude = String.format(mExcludeInject, pInject);
-		this.mInject += lExlude;
+		String lExludeItem = String.format(mExludeItem, pInject);
+		
+		numExclude++;
+		
+		if(numExclude > 1){
+			mExcludeFull += "|";	
+		}
+		
+		mExcludeFull += lExludeItem;
+		
+		
+		
+	
+		this.mInject = String.format(mExcludeInject, mExcludeFull);;
 		return this;
 	}
 }

@@ -47,7 +47,9 @@ public class JarDownloaderManager {
 		
 		for (Services lService : Services.values()) {
 			ArrayList<ProviderMetaData> lProviders = mProviders.get(lService);
-			
+			if(lProviders == null){
+				continue;
+			}
 			for(ProviderMetaData lProvider : lProviders){
 
 			String lUrl = MasterProviderInfo.getJarURL(lProvider);

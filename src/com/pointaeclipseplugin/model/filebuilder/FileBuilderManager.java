@@ -69,6 +69,10 @@ public class FileBuilderManager {
 		for (Services lService : Services.values()) {
 			List<ProviderMetaData> lSubset = mProviders.get(lService);
 
+			if(lSubset == null){
+				continue;
+			}
+			
 			for(ProviderMetaData lSubProvider : lSubset){
 				lTotalPermissions.addAll(MasterProviderInfo.getPermissions(lSubProvider));
 			}
@@ -101,11 +105,14 @@ public class FileBuilderManager {
 
 			for(MasterProviderMeta lSuperProvider : lSuperSet){
 				boolean found = false;
+				if(lSubset != null){
+				
 				for(ProviderMetaData lSubProvider : lSubset){
 					if(lSubProvider.getName().equals(lSuperProvider.name)){
 						found = true;
 						break;
 					}
+				}
 				}
 				if(!found)
 					mClassPathBuilder.addInject(
