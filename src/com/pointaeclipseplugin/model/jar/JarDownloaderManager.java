@@ -42,7 +42,7 @@ public class JarDownloaderManager {
 	// Methods
 	// ===========================================================
 
-	public void updateJars(HashMap<Services, ArrayList<ProviderMetaData>> mProviders) {
+	public void updateJars(HashMap<Services, ArrayList<ProviderMetaData>> mProviders, String filePath) {
 		//for(Number of Jars to download){
 		
 		for (Services lService : Services.values()) {
@@ -56,7 +56,7 @@ public class JarDownloaderManager {
 			
 			if(lUrl != null && !lUrl.isEmpty()){
 				// Create new thread
-				JarDownloader lJarDownloader = new JarDownloader(lUrl);
+				JarDownloader lJarDownloader = new JarDownloader(lUrl, filePath);
 			
 				// Add thread to pool
 				mPool.addThread(lJarDownloader);

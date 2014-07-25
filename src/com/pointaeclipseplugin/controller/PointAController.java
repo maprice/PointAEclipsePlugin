@@ -1,5 +1,6 @@
 package com.pointaeclipseplugin.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -148,10 +149,56 @@ public enum PointAController {
 			}
 			System.out.println("---------------------");
 		}
+		
+		
+	     final Display display = Display.getDefault();
+	     
+		    // final String path;
+
+		     display.syncExec(new Runnable() {
+		    	    public void run() {
+		    	    	
+		    	    	Shell shell = new Shell(display);
+		    	    
+		    	    	String path;
+		    	    	
+		    			FileDialog dialog = new FileDialog(shell, SWT.SAVE);
+		    			
+		    			
+		    			dialog.setFilterNames(new String[] { ".xml", "All Files (*.*)" });
+		    		    dialog.setFilterExtensions(new String[] { ".xml", "All Files (*.*)" }); // Windows
+		    		                                    // wild
+		    		                                    // cards
+		    		    dialog.setFilterPath("c:\\"); // Windows path
+		    		    //dialog.setFileName("fred.bat");
+		    		    
+		    		    
+		    		    path = dialog.open();
+		    		    
+		    		    File file = new File(path);
+		    		    String absolutePath = file.getAbsolutePath();
+		    		    String filePath = absolutePath.
+		    		        substring(0,absolutePath.lastIndexOf(File.separator));
+		    		    
+		    		    filePath = filePath + File.separator;
+		    		    
+		    		    System.out.println("Save to: " + filePath); 
+		    		    
+		    			mModel.saveChanges(mProviders, filePath);
+		    		      
+		    		    while (!shell.isDisposed()) {
+		    		      if (!display.readAndDispatch())
+		    		        display.sleep();
+		    		    }
+		    		    display.dispose();
+		    		    
+		    	    }
+		    	});
+
 
 
 		// TODO: Uncomment once model works
-		mModel.saveChanges(mProviders);
+
 	}
 
 	public void onRevertButtonPressed() {

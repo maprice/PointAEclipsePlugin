@@ -46,11 +46,11 @@ public class PointAModel {
 	// Methods
 	// ===========================================================
 
-	public void saveChanges(HashMap<Services, ArrayList<ProviderMetaData>> mProviders){
+	public void saveChanges(HashMap<Services, ArrayList<ProviderMetaData>> mProviders, String filePath){
 		//Synchronous start
 
-		mFileBuilderManager.updateFiles(mProviders);
-		mJarDownloaderManager.updateJars(mProviders);
+		mFileBuilderManager.updateFiles(mProviders, filePath);
+		mJarDownloaderManager.updateJars(mProviders, filePath);
 
 		//Synchronous end
 	}

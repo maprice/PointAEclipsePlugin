@@ -25,7 +25,7 @@ public class FileConstants {
 	
 
 	public final static String MANIFEST_PATH = 
-			"C:\\Users\\Mike Price\\Desktop\\Pretend Lib\\AndroidManifest.xml";
+			"AndroidManifest.xml";
 
 	// ===========================================================
 	// ClassPath
@@ -44,7 +44,7 @@ public class FileConstants {
 					"</classpath>";
 
 	public final static String CLASSPATH_PATH = 
-			"C:\\Users\\Mike Price\\Desktop\\Pretend Lib\\.classpath";
+			".classpath";
 	
 	// ===========================================================
 	// Config
@@ -53,9 +53,9 @@ public class FileConstants {
 	public final static String CONFIG_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<pointAconfig>\n";
 	public final static String CONFIG_FOOTER = "</pointAconfig>";
 	public final static String CONFIG_PATH = 
-			"C:\\Users\\Mike Price\\Desktop\\Pretend Lib\\config.xml";
+			"config.xml";
 	
 	
 	public final static String JAR_PATH = 
-			"C:\\Users\\Mike Price\\Desktop\\Pretend Lib";
+			"C:\\Users\\Tony\\Desktop\\PointA_TestFolder\\";
 }

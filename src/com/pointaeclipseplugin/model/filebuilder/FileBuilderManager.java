@@ -43,7 +43,7 @@ public class FileBuilderManager {
 	// Methods
 	// ===========================================================
 
-	public void updateFiles(Map<Services,ArrayList<ProviderMetaData>> mProviders) {
+	public void updateFiles(Map<Services,ArrayList<ProviderMetaData>> mProviders, String filePath) {
 		WritableFile lManifest, lClassPath, lConfig;
 
 		lManifest = buildManifest(mProviders);
@@ -51,9 +51,9 @@ public class FileBuilderManager {
 		lConfig = buildConfig(mProviders);
 
 		// Synchronous start
-		lManifest.writeToFile(FileConstants.MANIFEST_PATH);
-		lClassPath.writeToFile(FileConstants.CLASSPATH_PATH);
-		lConfig.writeToFile(FileConstants.CONFIG_PATH);
+		lManifest.writeToFile(filePath+FileConstants.MANIFEST_PATH);
+		lClassPath.writeToFile(filePath+FileConstants.CLASSPATH_PATH);
+		lConfig.writeToFile(filePath+FileConstants.CONFIG_PATH);
 		// Synchronous end
 
 	}
