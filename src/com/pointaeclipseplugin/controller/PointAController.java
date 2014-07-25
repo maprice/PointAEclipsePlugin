@@ -166,7 +166,7 @@ public enum PointAController {
 		    			
 		    			
 		    			dialog.setFilterNames(new String[] { ".xml", "All Files (*.*)" });
-		    		    dialog.setFilterExtensions(new String[] { ".xml", "All Files (*.*)" }); // Windows
+		    		    dialog.setFilterExtensions(new String[] { "*.xml", "All Files (*.*)" }); // Windows
 		    		                                    // wild
 		    		                                    // cards
 		    		    dialog.setFilterPath("c:\\"); // Windows path

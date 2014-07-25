@@ -70,7 +70,7 @@ public class ConfigManager {
 			XmlPullParser xrp = factory.newPullParser();
 			//File localfile = new File("C:/temp/config.xml");
 			//xrp.setInput("<?xml version=\"1.0\" encoding=\"UTF-8\"?><pointAconfig><service><type>Ads</type><provider>Admob</provider><priority>1</priority><Unit ID>3</Unit ID><Size>2</Size></service></pointAconfig>");
-			xrp.setInput(new FileReader("C:\\Users\\Mike Price\\Documents\\BitBucket\\Project_PointA\\PointA\\res\\xml\\config.xml"));
+			xrp.setInput(new FileReader("C:\\Users\\Mike Price\\Desktop\\Pretend Lib\\config.xml"));
 
 			// InputStream inputStream = defaultContext.getResources().openRawResource(R.raw.config);
 

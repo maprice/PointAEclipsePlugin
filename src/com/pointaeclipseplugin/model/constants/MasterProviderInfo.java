@@ -56,37 +56,22 @@ public class MasterProviderInfo {
 		admob.addPermission(Permissions.INTERNET);
 		admob.addPermission(Permissions.ACCESS_NETWORK_STATE);
 
-
-		MasterProviderMeta adsense = new MasterProviderMeta("AdSense", Services.Ads, null);
-		adsense.params.add("Size2");
-		adsense.params.add("Unit ID2");
-		adsense.addPermission(Permissions.INTERNET);
-		adsense.addPermission(Permissions.ACCESS_NETWORK_STATE);
-
-		MasterProviderMeta burstly = new MasterProviderMeta("Burstly", Services.Ads, null);
-		burstly.params.add("Size3");
-		burstly.params.add("Unit ID3");
-		burstly.addPermission(Permissions.INTERNET);
-		burstly.addPermission(Permissions.ACCESS_NETWORK_STATE);
-
 		List<MasterProviderMeta> adsList = new ArrayList<MasterProviderMeta>();
 		adsList.add(admob);
-		adsList.add(adsense);
-		adsList.add(burstly);
-
+		
 		providerMasterList.put(Services.Ads, adsList);
 
 		//====================
 		// ANALYTICS
 		//====================
 		MasterProviderMeta googleanalytics = new MasterProviderMeta("Google", Services.Analytics, null);
-		googleanalytics.params.add("App ID");
-		googleanalytics.params.add("Client Key");
+		googleanalytics.params.add("appID");
+		googleanalytics.params.add("clientID");
 		googleanalytics.addPermission(Permissions.INTERNET);
 
 		MasterProviderMeta parseanalytics = new MasterProviderMeta("Parse", Services.Analytics, null);
-		parseanalytics.params.add("App ID");
-		parseanalytics.params.add("Client Key");
+		parseanalytics.params.add("appId");
+		parseanalytics.params.add("clientKey");
 		parseanalytics.addPermission(Permissions.INTERNET);
 		parseanalytics.addPermission(Permissions.WAKE_LOCK);
 		parseanalytics.addPermission(Permissions.VIBRATE);
@@ -104,15 +89,15 @@ public class MasterProviderInfo {
 		// CRASH
 		//====================
 		MasterProviderMeta bugsense = new MasterProviderMeta("BugSense", Services.CrashReporter, "https://s3.amazonaws.com/bugsenseplugins/bugsense-3.6.1.jar");
-		bugsense.params.add("App ID");
+		bugsense.params.add("appId");
 		bugsense.addPermission(Permissions.INTERNET);
 		
 		MasterProviderMeta bugsnag = new MasterProviderMeta("BugSnag", Services.CrashReporter, "http://central.maven.org/maven2/com/bugsnag/bugsnag-android/2.2.0/bugsnag-android-2.2.0.jar");
-		bugsnag.params.add("App ID");
+		bugsnag.params.add("appId");
 		bugsnag.addPermission(Permissions.INTERNET);
 
 		MasterProviderMeta crittercism = new MasterProviderMeta("Crittercism", Services.CrashReporter, "http://central.maven.org/maven2/com/crittercism/crittercism-android-agent/4.5.3/crittercism-android-agent-4.5.3.jar");
-		crittercism.params.add("App ID");
+		crittercism.params.add("appId");
 		crittercism.addPermission(Permissions.INTERNET);
 		
 		
@@ -127,8 +112,8 @@ public class MasterProviderInfo {
 		// PUSH
 		//====================
 		MasterProviderMeta parse = new MasterProviderMeta("Parse", Services.Push, null);
-		parse.params.add("App ID");
-		parse.params.add("Client Key");
+		parse.params.add("AppID");
+		parse.params.add("ClientKey");
 
 		List<MasterProviderMeta> parseList = new ArrayList<MasterProviderMeta>();
 		parseList.add(parse);
